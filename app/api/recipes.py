@@ -2,6 +2,10 @@ from flask import Blueprint, jsonify, request
 from app.models import Recipe, Component, SubRecipe, SubRecipeIngredient, Tag, db
 recipes_routes = Blueprint('recipes', __name__)
 
+@recipes_routes.route('/<int:id>')
+def get_recipe(id):
+    recipe = Recipe.query.get(id)
+    return recipe.to_dict()
 
 @recipes_routes.route('/', methods=['POST'])
 def create_recipe():
@@ -12,6 +16,7 @@ def create_recipe():
         season=body['season'],
         year=body['year'],
         user_id=body['userId'],
+        created_at=body['createdAt']
     )
 
     db.session.add(recipe)
