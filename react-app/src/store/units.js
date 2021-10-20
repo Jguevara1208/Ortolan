@@ -50,8 +50,8 @@ export const createUnit = (unit) => async (dispatch) => {
         },
         body: JSON.stringify(unit)
     });
-    const newUnit = res.json();
-    dispatch(createUnitAction(unit));
+    const newUnit = await res.json();
+    dispatch(createUnitAction(newUnit));
 }
 
 export const deleteUnit = (unit) => async (dispatch) => {
