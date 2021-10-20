@@ -25,17 +25,17 @@ const addTagAction = (tag) => {
     };
 };
 
-const updateTagAction = (tag) => {
+const updateTagAction = (data) => {
     return {
         type: UPDATE_TAG,
-        tag
+        data
     };
 };
 
-const deleteTagAction = (tag) => {
+const deleteTagAction = (name) => {
     return {
         type: DELETE_TAG,
-        tag
+        name
     };
 };
 
@@ -61,7 +61,7 @@ export const addTag = (tag) => async (dispatch) => {
     dispatch(addTagAction(newTag));
 };
 
-export const updateTag = (tag) => async (dispatch) => {
+export const updateTag = (oldTagName, tag) => async (dispatch) => {
     const res = await fetch(`/api/tags/${tag.id}/`, {
         method: "PATCH",
         headers: {
@@ -69,14 +69,14 @@ export const updateTag = (tag) => async (dispatch) => {
         },
         body: JSON.stringify(tag)
     });
-    dispatch(updateTagAction(tag));
+    dispatch(updateTagAction({oldTagName, tag}));
 };
 
 export const deleteTag = (tag) => async (dispatch) => {
-    await fetch(`/api/tags/${tag.id}`, {
+    await fetch(`/api/tags/${tag.id}/`, {
         method: "DELETE"
     });
-    dispatch(deleteTagAction(tag.id));
+    dispatch(deleteTagAction(tag.name));
 };
 
 
@@ -98,11 +98,14 @@ function tagsReducer(state = initialState, action) {
             return newState;
         case UPDATE_TAG:
             newState = {...state};
-            newState[action.tag.name] = action.tag.id
+            console.log(newState[action.data.oldTagName])
+            console.log(newState[action.data.tag.name])
+            delete newState[action.data.oldTagName]
+            newState[action.data.tag.name] = action.data.tag.id
             return newState;
         case DELETE_TAG:
             newState = {...state};
-            delete newState[action.tag.name]
+            delete newState[action.name]
             return newState;
         default:
             return state;

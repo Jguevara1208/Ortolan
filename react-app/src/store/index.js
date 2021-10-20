@@ -1,9 +1,27 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
-import session from './session'
+import session from './session';
+import allRecipesReducer from './allRecipes';
+import currentRecipeReducer from './currentRecipe';
+import ingredientsReducer from './ingredients';
+import orderCategoriesReducer from './orderCategories';
+import projectsReducer from './projects';
+import recentRecipesReducer from './recentRecipes';
+import recipesTreeReducer from './recipesTree';
+import tagsReducer from './tags';
+import unitsReducer from './units';
 
 const rootReducer = combineReducers({
   session,
+  recentRecipes: recentRecipesReducer,
+  projects: projectsReducer,
+  recipesTree: recipesTreeReducer,
+  allRecipes: allRecipesReducer,
+  units: unitsReducer,
+  tags: tagsReducer,
+  orderCatergories: orderCategoriesReducer,
+  ingredients: ingredientsReducer,
+  currentRecipe: currentRecipeReducer
 });
 
 

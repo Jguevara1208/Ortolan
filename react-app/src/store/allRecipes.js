@@ -63,7 +63,7 @@ function allRecipesReducer(state = initialState, action) {
             return newState;
         case UPDATE_ALL_RECIPES:
             newState = {...state};
-            newState[action.recipe.id] = action.recipe;
+            newState[action.recipe.recipeId] = action.recipe;
             return newState;
         case DELETE_ALL_RECIPES:
             newState = {...state};

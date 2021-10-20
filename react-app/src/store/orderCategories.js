@@ -57,7 +57,7 @@ export const addOrderCategory = (category) => async (dispatch) => {
 };
 
 export const deleteOrderCategory = (category) => async (dispatch) => {
-    await fetch(`/api/categories/${category.id}`, {
+    await fetch(`/api/categories/${category.id}/`, {
         method: "DELETE"
     });
     dispatch(deleteOrderCategoryAction(category));
@@ -89,4 +89,4 @@ function orderCategoriesReducer(state = initialState, action) {
     }
 }
 
-export default orderCategoriesReducer
+export default orderCategoriesReducer;

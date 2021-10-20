@@ -6,7 +6,7 @@ categories_routes = Blueprint('categories', __name__)
 @categories_routes.route('/', methods=['POST'])
 def create_category():
     body = request.json
-    category = OrderListCategory(user_id=body['user_id'], name=body['name'])
+    category = OrderListCategory(user_id=body['userId'], name=body['name'])
     db.session.add(category)
     db.session.commit()
     return {"name": category.name, "id": category.id}

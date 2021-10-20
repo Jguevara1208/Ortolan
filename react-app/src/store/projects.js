@@ -74,7 +74,7 @@ export const createProject = (project) => async (dispatch) => {
         },
         body: JSON.stringify(project)
     });
-    const newProject = res.json();
+    const newProject = await res.json();
     dispatch(createProjectAction(newProject));
 }
 
@@ -90,7 +90,7 @@ export const updateProject = (project) => async (dispatch) => {
 };
 
 export const deleteProject = (projectId) => async (dispatch) => {
-    await fetch(`/api/projects/${projectId}`, {
+    await fetch(`/api/projects/${projectId}/`, {
         method: "DELETE"
     });
     dispatch(deleteProjectsAction(projectId));
