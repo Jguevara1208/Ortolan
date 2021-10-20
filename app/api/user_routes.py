@@ -53,7 +53,7 @@ def tree_recipes(id):
     tags_obj = {
         tag.name: [recipe.to_redux_dict() for recipe in all_recipes if tag in recipe.tags]
         for tag in tags 
-        }
+    }
 
     res = {
         "tree": tree,
