@@ -21,8 +21,8 @@ class Recipe(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     author = db.relationship('User', back_populates='recipes')
 
-    components = db.relationship('Component', back_populates='recipe')
-    sub_recipes = db.relationship('SubRecipe', back_populates='recipe')
+    components = db.relationship('Component', back_populates='recipe', cascade='all, delete')
+    sub_recipes = db.relationship('SubRecipe', back_populates='recipe', cascade='all, delete')
     tags = db.relationship('Tag', back_populates='recipe', secondary=recipe_tags)
 
     def to_redux_dict(self):
@@ -38,6 +38,17 @@ class Recipe(db.Model):
             "created_at" : self.created_at
         }
 
+    def to_dict(self):
+        return {
+            "title": self.title,
+            "photo": self.photo,
+            "tags": [tag.to_dict() for tag in self.tags],
+            "season": self.season,
+            "components": {component.id: component.to_dict() for component in self.components},
+            "subRecipes": {sub_recipe.order: sub_recipe.to_dict() for sub_recipe in self.sub_recipes},
+            "id": self.id
+        }
+
 
 class Tag(db.Model):
     __tablename__ = 'tags'
@@ -48,6 +59,12 @@ class Tag(db.Model):
 
     recipe = db.relationship('Recipe', back_populates='tags', secondary=recipe_tags)
     user = db.relationship('User', back_populates='tags')
+
+    def to_dict(self):
+        return {
+            "name": self.name,
+            "id": self.id
+        }
 
 
 

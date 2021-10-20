@@ -10,3 +10,6 @@ class Unit(db.Model):
 
     sub_recipe_units = db.relationship('SubRecipeIngredient', back_populates='unit')
     user = db.relationship('User', back_populates='units')
+
+    def to_dict(self):
+        return self.unit

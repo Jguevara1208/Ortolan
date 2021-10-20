@@ -16,3 +16,12 @@ class SubRecipeIngredient(db.Model):
     ingredient = db.relationship('Ingredient', back_populates='recipe_ingredients')
     unit = db.relationship('Unit', back_populates='sub_recipe_units')
     sub_recipe = db.relationship('SubRecipe', back_populates='sub_recipe_ingredients')
+
+    def to_dict(self):
+        return {
+            "qty:": self.qty,
+            "unit": self.unit.to_dict(),
+            "ingredient": self.ingredient.to_dict(),
+            "description": self.description,
+            "id": self.id
+        }

@@ -18,3 +18,6 @@ class Ingredient(db.Model):
             "id": self.id,
             "category": self.category.to_ingredient_dict()
         }
+
+    def to_dict(self):
+        return self.name

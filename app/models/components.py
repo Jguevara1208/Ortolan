@@ -10,3 +10,5 @@ class Component(db.Model):
 
     recipe = db.relationship('Recipe', back_populates='components')
 
+    def to_dict(self):
+        return self.description
