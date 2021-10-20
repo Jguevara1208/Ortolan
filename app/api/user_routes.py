@@ -66,13 +66,13 @@ def tree_recipes(id):
 @user_routes.route('/<int:id>/allRecipes/')
 def all_recipes(id):
     all_recipes = Recipe.query.filter(Recipe.user_id == id).all()
-    return { "allRecipes" : [ recipe.to_redux_dict() for recipe in all_recipes ]}
+    return { "allRecipes" :  {recipe.id: recipe.to_redux_dict() for recipe in all_recipes} }
 
 
 @user_routes.route('/<int:id>/projects/')
 def projects(id):
     projects = Project.query.filter(Project.user_id == id).all()
-    return {"projects": [project.to_redux_dict() for project in projects]}
+    return {"projects": {project.id: project.to_redux_dict() for project in projects}}
 
 
 @user_routes.route('/<int:id>/ingredients/')

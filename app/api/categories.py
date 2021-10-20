@@ -9,7 +9,7 @@ def create_category():
     category = OrderListCategory(user_id=body['user_id'], name=body['name'])
     db.session.add(category)
     db.session.commit()
-    return {category.name: category.id}
+    return {"name": category.name, "id": category.id}
 
 
 @categories_routes.route('/<int:id>/', methods=['DELETE', 'PATCH'])

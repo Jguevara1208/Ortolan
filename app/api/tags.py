@@ -13,7 +13,7 @@ def create_tag():
 
     db.session.add(tag)
     db.session.commit()
-    return 'ok'
+    return tag.to_dict()
 
 
 @tags_routes.route('/<int:id>/', methods=['DELETE', 'PATCH'])

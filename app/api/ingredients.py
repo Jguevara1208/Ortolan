@@ -13,7 +13,7 @@ def create_ingredient():
 
     db.session.add(ingredient)
     db.session.commit()
-    return {ingredient.name: ingredient.to_redux_dict() }
+    return {"name": ingredient.name, "ingredient": ingredient.to_redux_dict() }
 
 @ingredients_routes.route('/<int:id>/', methods=['DELETE', 'PATCH'])
 def delete_update_ingredient(id):

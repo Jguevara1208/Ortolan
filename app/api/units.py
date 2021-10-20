@@ -9,18 +9,12 @@ def create_unit():
     unit = Unit(unit=body['unit'], user_id=body['userId'])
     db.session.add(unit)
     db.session.commit()
-    return { unit.unit: unit.id }
+    return { "unit": unit.unit, "id": unit.id }
 
 
-@units_routes.route('/<int:id>/', methods=['DELETE', 'PATCH'])
+@units_routes.route('/<int:id>/', methods=['DELETE'])
 def delete_update_unit(id):
-    body = request.json
     unit = Unit.query.get(id)
-    if request.method == 'PATCH':
-        unit.unit = body['unit']
-        db.session.commit()
-        return { unit.unit: unit.id }
-    else:
-        db.session.delete(unit)
-        db.session.commit()
-        return 'ok'
+    db.session.delete(unit)
+    db.session.commit()
+    return 'ok'
