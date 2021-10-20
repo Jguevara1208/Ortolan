@@ -30,10 +30,25 @@ def tree_recipes(id):
     all_recipes = Recipe.query.filter(Recipe.user_id == id).all()
     tags = Tag.query.filter(Tag.user_id == id).all()
 
-    winter = [ recipe.to_redux_dict() for recipe in all_recipes if recipe.season == 'Winter' ]
-    spring = [ recipe.to_redux_dict() for recipe in all_recipes if recipe.season == 'Spring' ]
-    summer = [ recipe.to_redux_dict() for recipe in all_recipes if recipe.season == 'Summer' ]
-    autumn = [ recipe.to_redux_dict() for recipe in all_recipes if recipe.season == 'Autumn' ]
+    tree = {}
+
+    for recipe in all_recipes:
+        season = recipe.season
+        year = recipe.year
+        if year not in tree:
+            tree[year] = {}
+            if season not in tree[year]:
+                tree[year][season] = []
+                tree[year][season].append(recipe.to_redux_dict())
+            else:
+                tree[year][season].append(recipe.to_redux_dict())
+        else:
+            if season not in tree[year]:
+                tree[year][season] = []
+                tree[year][season].append(recipe.to_redux_dict())
+            else:
+                tree[year][season].append(recipe.to_redux_dict())
+
 
     tags_obj = {
         tag.name: [recipe.to_redux_dict() for recipe in all_recipes if tag in recipe.tags]
@@ -41,16 +56,11 @@ def tree_recipes(id):
         }
 
     res = {
-        "season": {
-            "winter": winter,
-            "spring": spring,
-            "summer": summer,
-            "autumn": autumn
-        },
-        "tag": tags_obj
+        "tree": tree,
+        "tags": tags_obj
     }
 
-    return { "res": res }
+    return res
 
 
 @user_routes.route('/<int:id>/allRecipes/')
