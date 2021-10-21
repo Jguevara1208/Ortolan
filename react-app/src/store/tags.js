@@ -43,10 +43,10 @@ const deleteTagAction = (name) => {
 /* --------------------------------Thunks--------------------------------- */
 /* ----------------------------------------------------------------------- */
 
-export const setTags = (userId) => async (dispatch) => {
+export const setTagsOne = (userId) => async (dispatch) => {
     const res = await fetch(`/api/users/${userId}/tags/`);
     const tags = await res.json();
-    dispatch(setTagsAction(tags));
+    return dispatch(setTagsAction(tags));
 };
 
 export const addTag = (tag) => async (dispatch) => {
@@ -98,8 +98,6 @@ function tagsReducer(state = initialState, action) {
             return newState;
         case UPDATE_TAG:
             newState = {...state};
-            console.log(newState[action.data.oldTagName])
-            console.log(newState[action.data.tag.name])
             delete newState[action.data.oldTagName]
             newState[action.data.tag.name] = action.data.tag.id
             return newState;

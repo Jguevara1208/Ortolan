@@ -13,6 +13,7 @@ from .api.projects import projects_routes
 from .api.recipes import recipes_routes
 from .api.tags import tags_routes
 from .api.units import units_routes
+from .api.images import image_routes
 
 from .seeds import seed_commands
 
@@ -32,7 +33,6 @@ def load_user(id):
 
 # Tell flask about our seed commands
 app.cli.add_command(seed_commands)
-
 app.config.from_object(Config)
 app.register_blueprint(user_routes, url_prefix='/api/users')
 app.register_blueprint(auth_routes, url_prefix='/api/auth')
@@ -42,6 +42,8 @@ app.register_blueprint(projects_routes, url_prefix='/api/projects')
 app.register_blueprint(recipes_routes, url_prefix='/api/recipes')
 app.register_blueprint(tags_routes, url_prefix='/api/tags')
 app.register_blueprint(units_routes, url_prefix='/api/units')
+app.register_blueprint(image_routes, url_prefix='/api/images')
+
 db.init_app(app)
 Migrate(app, db)
 

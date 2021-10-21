@@ -15,7 +15,7 @@ class Recipe(db.Model):
     photo = db.Column(db.String(300), nullable=False)
     season = db.Column(db.String(30), nullable=False)
     year = db.Column(db.Integer, nullable=False)
-    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
 
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)

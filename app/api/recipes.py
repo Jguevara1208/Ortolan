@@ -16,7 +16,6 @@ def create_recipe():
         season=body['season'],
         year=body['year'],
         user_id=body['userId'],
-        created_at=body['createdAt']
     )
 
     db.session.add(recipe)

@@ -38,7 +38,7 @@ const deleteIngredientAction = (name) => {
 export const setIngredients = (userId) => async (dispatch) => {
     const res = await fetch(`/api/users/${userId}/ingredients/`);
     const ingredients = await res.json();
-    dispatch(setIngredientsAction(ingredients));
+    return dispatch(setIngredientsAction(ingredients));
 };
 
 export const addIngredient = (ingredient) => async (dispatch) => {
