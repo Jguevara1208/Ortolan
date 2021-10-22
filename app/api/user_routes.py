@@ -97,3 +97,11 @@ def categories(id):
 def units(id):
     units = Unit.query.filter(Unit.user_id == id).all()
     return {unit.unit: unit.id for unit in units}
+
+@user_routes.route('/<int:user_id>/team/')
+def get_team(user_id):
+    user = User.query.get(user_id)
+    restaurant = user.restaurant
+    team = User.query.filter(User.restaurant == restaurant).all()
+    teamDict = [member.to_dict() for member in team]
+    return {"team": teamDict}

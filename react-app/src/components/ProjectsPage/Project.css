@@ -1,0 +1,15 @@
+.cook-avatar {
+    width: 40px;
+    height: 40px;
+    background-position: center;
+    background-size: cover;
+}
+
+.button-hovered {
+    visibility: visible;
+}
+
+.button {
+    visibility: hidden;
+    pointer-events: none;
+}

@@ -56,7 +56,9 @@ class User(db.Model, UserMixin):
     def to_project_dict(self):
         return {
             "id": self.id,
-            "name": f'{self.first_name} {self.last_name}'
+            "name": f'{self.first_name} {self.last_name}',
+            "avatar": self.avatar,
+            "position": self.position
         }
 
 class Project(db.Model):

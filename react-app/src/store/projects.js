@@ -7,6 +7,8 @@ const UPDATE_PROJECTS = 'projects/UPDATE_PROJECTS';
 const ADD_PROJECT_ASSIGNMENTS = 'projects/ADD_PROJECT_ASSIGNMENTS';
 const DELETE_PROJECT_ASSIGNMENTS = 'projects/DELETE_PROJECT_ASSIGNMENTS';
 const CREATE_PROJECT = 'projects/CREATE_PROJECT';
+const UPDATE_TASK = 'pojects/UPDATE_TASK';
+const ADD_TASK = 'pojects/ADD_TASK';
 
 
 /* ----------------------------------------------------------------------- */
@@ -52,6 +54,20 @@ const createProjectAction = (project) => {
     return {
         type: CREATE_PROJECT,
         project
+    };
+};
+
+const updateTaskAction = (task) => {
+    return {
+        type: UPDATE_TASK,
+        task
+    };
+};
+
+const addTaskAction = (task) => {
+    return {
+        type: ADD_TASK,
+        task
     };
 };
 
@@ -119,6 +135,31 @@ export const deleteProjectAssignment = (projectId, userId) => async (dispatch) =
     dispatch(deleteProjectAssignmentsAction( { projectId, userId } ));
 };
 
+export const updateProjectTask = (task) => async (dispatch) => {
+    let res = await fetch(`/api/projects/tasks/${task.id}/`, {
+        method: 'PATCH',
+        headers: {
+            "Content-Type" : "application/json"
+        },
+        body: JSON.stringify(task)
+    });
+    res = await res.json()
+    if (res.ok) {
+        dispatch(updateTaskAction(task))
+    }
+}
+
+export const addTaskThunk = (task) => async (dispatch) => {
+    const res = await fetch(`/api/projects/${task.projectId}/tasks/`, {
+        method: "POST",
+        headers: {
+            "Content-Type" : "application/json"
+        },
+        body: JSON.stringify(task)
+    });
+    const newTask = await res.json()
+    dispatch(addTaskAction(newTask))
+};
 
 /* ----------------------------------------------------------------------- */
 /* -----------------------Initial State & Reducer------------------------- */
@@ -151,6 +192,15 @@ function projectsReducer(state = initialState, action) {
         case DELETE_PROJECT_ASSIGNMENTS:
             newState = {...state};
             newState[action.project.projectId].assigned = newState[action.project.projectId].assigned.filter(user => user.id !== action.project.userId)
+            return newState;
+        case UPDATE_TASK:
+            newState = {...state};
+            let oldTask = newState[action.task.projectId].find(task => task.id === action.task.id);
+            oldTask.completed = action.task.completed;
+            return newState;
+        case ADD_TASK:
+            newState = {...state}
+            newState[action.task.projectId].tasks.push(action.task)
             return newState;
         default:
             return state;

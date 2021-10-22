@@ -10,6 +10,7 @@ import recentRecipesReducer from './recentRecipes';
 import recipesTreeReducer from './recipesTree';
 import tagsReducer from './tags';
 import unitsReducer from './units';
+import teamMembersReducer from './teamMembers';
 
 const rootReducer = combineReducers({
   session,
@@ -21,7 +22,8 @@ const rootReducer = combineReducers({
   tags: tagsReducer,
   orderCategories: orderCategoriesReducer,
   ingredients: ingredientsReducer,
-  currentRecipe: currentRecipeReducer
+  currentRecipe: currentRecipeReducer,
+  teamMembers: teamMembersReducer
 });
 
 

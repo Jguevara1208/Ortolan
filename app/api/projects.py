@@ -51,7 +51,7 @@ def delete_all_assignments(id):
     db.session.commit()
     return 'ok'
 
-@projects_routes.route('/tasks/<int:task_id>', methods=['DELETE', 'PATCH'])
+@projects_routes.route('/tasks/<int:task_id>/', methods=['DELETE', 'PATCH'])
 def delete_update_task(task_id):
     body = request.json
     task = ProjectTask.query.get(task_id)
@@ -66,7 +66,7 @@ def delete_update_task(task_id):
         return 'ok'
 
 
-@projects_routes.route('/<int:project_id>/tasks', methods=['POST'])
+@projects_routes.route('/<int:project_id>/tasks/', methods=['POST'])
 def add_task(project_id):
     body = request.json
     task = ProjectTask(project_id=project_id, description=body['description'], completed=False)
