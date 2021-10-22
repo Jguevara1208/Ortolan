@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from app.models import Project, db, User
+from app.models import Project, db, User, ProjectTask
 projects_routes = Blueprint('projects', __name__)
 
 
@@ -50,3 +50,26 @@ def delete_all_assignments(id):
     project.cooks = []
     db.session.commit()
     return 'ok'
+
+@projects_routes.route('/tasks/<int:task_id>', methods=['DELETE', 'PATCH'])
+def delete_update_task(task_id):
+    body = request.json
+    task = ProjectTask.query.get(task_id)
+
+    if request.method == 'PATCH':
+        task.completed = body['completed']
+        db.session.commit()
+        return 'ok'
+    else:
+        db.session.delete(task)
+        db.session.commit()
+        return 'ok'
+
+
+@projects_routes.route('/<int:project_id>/tasks', methods=['POST'])
+def add_task(project_id):
+    body = request.json
+    task = ProjectTask(project_id=project_id, description=body['description'], completed=False)
+    db.session.add(task)
+    db.session.commit()
+    return task.to_dict()

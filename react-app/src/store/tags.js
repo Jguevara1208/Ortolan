@@ -59,6 +59,7 @@ export const addTag = (tag) => async (dispatch) => {
     });
     const newTag = await res.json();
     dispatch(addTagAction(newTag));
+    return newTag.id
 };
 
 export const updateTag = (oldTagName, tag) => async (dispatch) => {

@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react';
+import { useParams, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { useHistory } from 'react-router';
-import { setTagsOne , addTag } from '../../store/tags';
+import { setTagsOne, addTag } from '../../store/tags';
 import { setUnits, createUnit } from '../../store/units';
 import { setIngredients, addIngredient } from '../../store/ingredients';
 import { setOrderCategories, addOrderCategory } from '../../store/orderCategories';
-import { createCurrentRecipe } from '../../store/currentRecipe'
+import { createCurrentRecipe, deleteCurrentRecipe, setCurrentRecipe } from '../../store/currentRecipe'
 
-function RecipeForm(){
+function RecipeEditForm() {
     const dispatch = useDispatch()
+    const {recipeId} = useParams()
     const history = useHistory()
 
     const userId = useSelector(state => state.session.user.id)
@@ -16,13 +17,15 @@ function RecipeForm(){
     const userTags = useSelector(state => state.tags)
     const ingredients = useSelector(state => state.ingredients)
     const categories = useSelector(state => state.orderCategories)
-    
+    const currentRecipe = useSelector(state=> state.currentRecipe)
+
     const [title, setTitle] = useState('')
     const [season, setSeason] = useState('Winter')
     const [photo, setPhoto] = useState(false)
     const [year, setYear] = useState((new Date()).getFullYear())
     const [component, setComponent] = useState('')
-    const [subRecipes, setSubRecipes] = useState([{ title: '', description: '', ingredients: [{ qty: '', ingredientId: '', unitId: '', description: '', category: ''}]}])
+    const [createdAt, setCreatedAt] = useState('')
+    const [subRecipes, setSubRecipes] = useState([{ title: '', description: '', ingredients: [{ qty: '', ingredientId: '', unitId: '', description: '', category: '' }] }])
     const [tags, setTags] = useState('')
 
     const resetState = () => {
@@ -30,16 +33,55 @@ function RecipeForm(){
         setSeason('Winter')
         setPhoto(false)
         setComponent('')
-        setSubRecipes([{ title: '', description: '', ingredients: [{ qty: '', ingredientId: '', unitId: '', description: '', category: ''}] }])
+        setSubRecipes([{ title: '', description: '', ingredients: [{ qty: '', ingredientId: '', unitId: '', description: '', category: '' }] }])
         setTags('')
     }
 
-    useEffect(()=> {
+    useEffect(() => {
         dispatch(setUnits(userId))
         dispatch(setTagsOne(userId))
         dispatch(setIngredients(userId))
         dispatch(setOrderCategories(userId))
+        dispatch(setCurrentRecipe(recipeId))
     }, [dispatch])
+
+    useEffect(() => {
+        if (currentRecipe) {
+            setTitle(currentRecipe.title)
+            setSeason(currentRecipe.season)
+            setPhoto(currentRecipe.photo)
+            setYear(currentRecipe.year)
+            setComponent(currentRecipe.components)
+            setCreatedAt(currentRecipe.created_at)
+            if(currentRecipe.subRecipes) {
+                const subRecipesArr = Object.values(currentRecipe.subRecipes)
+                const subRec = subRecipesArr.map(sub => {
+                    return {
+                        title: sub.title,
+                        description: sub.title ? sub.title : '', 
+                        ingredients: Object.values(sub.ingredients).map(ing => {
+                            console.log(ing.ingredient)
+                            const temp = {
+                                qty: ing.qty ? `${ing.qty}${ing.unit}` : '',
+                                ingredientId: ing.ingredient,
+                                unitId: ing.unit ? ing.unit : '', 
+                                description: ing.description ? ing.description : '',
+                                category: ingredients[ing.ingredient] ? ingredients[ing.ingredient].category.name : ''
+                            }
+                            return temp
+                    })
+                    }
+                })
+                setSubRecipes(subRec)
+            }
+            console.log(subRecipes[0].ingredients[0])
+            if (currentRecipe.tags) {
+                let tagsArr = currentRecipe.tags.map(tag => tag.name)
+                let tagsForState = tagsArr.join(' ')
+                setTags(tagsForState)
+            }
+        }
+    }, [currentRecipe])
 
     const handleInputChangeSubRecipe = (e, index) => {
         const { name, value } = e.target
@@ -55,7 +97,7 @@ function RecipeForm(){
     }
 
     const handleAddClickSubRecipe = () => {
-        setSubRecipes([...subRecipes, { title: '', description: '', ingredients: [{ qty: '', ingredientId: '', unitId: '', description: '', category: ''}]}])
+        setSubRecipes([...subRecipes, { title: '', description: '', ingredients: [{ qty: '', ingredientId: '', unitId: '', description: '', category: '' }] }])
     }
 
     const handleAddClickSubRecipeIngredient = (subRecipeIndex) => {
@@ -75,7 +117,7 @@ function RecipeForm(){
     const handleInputChangeSubRecipeIngredient = (e, subRecipeIndex, ingredientIndex) => {
         const { name, value } = e.target
         const list = [...subRecipes]
-        if (name ==='ingredientId' && value.length) {
+        if (name === 'ingredientId' && value.length) {
             let formattedValue
             if (value[value.length - 1] === '') {
                 formattedValue = value.split(' ').map(ele => ele[0].toUpperCase() + ele.slice(1).toLowerCase()).join(' ')
@@ -83,7 +125,7 @@ function RecipeForm(){
                 formattedValue = value[0].toUpperCase() + value.slice(1).toLowerCase()
             }
             let temp = {}
-            for(let key in ingredients) {
+            for (let key in ingredients) {
                 temp[key.toLowerCase()] = key
             }
 
@@ -95,6 +137,7 @@ function RecipeForm(){
         }
         list[subRecipeIndex].ingredients[ingredientIndex][name] = value
         setSubRecipes(list)
+        console.log(subRecipes)
     }
 
     const handlePhoto = async (e) => {
@@ -108,23 +151,23 @@ function RecipeForm(){
         if (res.ok) {
             const imgUrl = await res.json()
             setPhoto(imgUrl.url)
-        } 
+        }
     }
 
     const formatSubRecipes = async () => {
         let formatSubRecipe = [...subRecipes]
-        for(let i = 0; i < formatSubRecipe.length; i++) {
+        for (let i = 0; i < formatSubRecipe.length; i++) {
             const subRecipe = formatSubRecipe[i]
             formatSubRecipe[i]['order'] = i
 
-            for(let j = 0; j < subRecipe.ingredients.length; j++){
+            for (let j = 0; j < subRecipe.ingredients.length; j++) {
 
                 const ingredient = subRecipe.ingredients[j]
-                let {qty, unitId, ingredientId, category} = ingredient
+                let { qty, unitId, ingredientId, category } = ingredient
                 let index = null;
 
                 if (qty) {
-                    for(let i = 0; i < qty.length; i++) {
+                    for (let i = 0; i < qty.length; i++) {
                         let current = qty[i]
                         if (current === '.') continue
                         if ((isNaN(+current)) && (index === null)) {
@@ -138,30 +181,30 @@ function RecipeForm(){
                 qty = +qty.slice(0, index).trim()
                 formatSubRecipe[i].ingredients[j].qty = qty
 
-                
+
                 if (!qty) formatSubRecipe[i].ingredients[j].qty = 0
                 if (!unitId) formatSubRecipe[i].ingredients[j].unitId = 'None'
                 if (!category) formatSubRecipe[i].ingredients[j].category = 'None'
                 if (!ingredientId) formatSubRecipe[i].ingredients[j].ingredientId = 'None'
 
                 if (!units[unitId]) {
-                    const newUnitObj = await dispatch(createUnit({"unit": unitId, "userId": userId}))
+                    const newUnitObj = await dispatch(createUnit({ "unit": unitId, "userId": userId }))
                     unitId = newUnitObj.id
                     formatSubRecipe[i].ingredients[j].unitId = unitId
                 } else {
                     formatSubRecipe[i].ingredients[j].unitId = units[unitId]
                 }
 
-                if (!ingredients[ingredientId]){
+                if (!ingredients[ingredientId]) {
                     let formattedCategory
-                    if(category) {
+                    if (category) {
                         formattedCategory = category.split(' ').map(cat => cat[0].toUpperCase() + cat.slice(1).toLowerCase()).join(' ')
                     } else {
                         formattedCategory = 'Other'
                     }
 
-                    if(!categories[formattedCategory]){
-                        let newCatObj = await dispatch(addOrderCategory({"userId": userId, "name": formattedCategory}))
+                    if (!categories[formattedCategory]) {
+                        let newCatObj = await dispatch(addOrderCategory({ "userId": userId, "name": formattedCategory }))
                         category = newCatObj.id
                         formatSubRecipe[i].ingredients[j].category = category
                     } else {
@@ -169,7 +212,7 @@ function RecipeForm(){
                         formatSubRecipe[i].ingredients[j].category = category
                     }
                     const formattedIngredient = ingredientId.split(' ').map(ing => ing[0].toUpperCase() + ing.slice(1).toLowerCase()).join(' ');
-                    const newIngredientObj = await dispatch(addIngredient({"name": formattedIngredient, "categoryId": category, "userId": userId}))
+                    const newIngredientObj = await dispatch(addIngredient({ "name": formattedIngredient, "categoryId": category, "userId": userId }))
                     ingredientId = newIngredientObj.ingredient.id
                     formatSubRecipe[i].ingredients[j].ingredientId = ingredientId
                 } else {
@@ -185,7 +228,7 @@ function RecipeForm(){
     const formatTags = async () => {
         const tagsArray = tags.split(' ')
         const formatted = []
-        for(let i = 0; i < tagsArray.length; i++) {
+        for (let i = 0; i < tagsArray.length; i++) {
             const tag = tagsArray[i]
             const formattedTag = tag[0].toUpperCase() + tag.slice(1).toLowerCase()
             let tag_obj = { "name": formattedTag, "userId": userId }
@@ -216,7 +259,8 @@ function RecipeForm(){
                 "description": component
             },
             "subRecipes": subRecipeRes,
-            "tags": newTags
+            "tags": newTags,
+            created_at: createdAt
         }
         return res
     }
@@ -224,6 +268,8 @@ function RecipeForm(){
     const handleSubmit = async (e) => {
         e.preventDefault()
         const res = await createRequestObject()
+        console.group(res)
+        await dispatch(deleteCurrentRecipe(currentRecipe.id))
         const newRecipeId = await dispatch(createCurrentRecipe(res))
         resetState()
         history.push(`/recipes/${newRecipeId}`)
@@ -234,8 +280,8 @@ function RecipeForm(){
         <div>
             <form onSubmit={handleSubmit} autoComplete="off">
                 <div>
-                    <input 
-                        type="text" 
+                    <input
+                        type="text"
                         placeholder='Dish Title'
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
@@ -250,20 +296,20 @@ function RecipeForm(){
                 <div>
                     {photo
                         ?
-                            <img src={photo} alt="" style={{width: '300px', height: '300px'}}/>
+                        <img src={photo} alt="" style={{ width: '300px', height: '300px' }} />
                         :
-                            <div>
-                                <input
-                                    type="file"
-                                    accept='image/*'
-                                    onChange={handlePhoto}
-                                />
-                            </div>
+                        <div>
+                            <input
+                                type="file"
+                                accept='image/*'
+                                onChange={handlePhoto}
+                            />
+                        </div>
                     }
                 </div>
                 <div>
                     <p>Components</p>
-                    <textarea 
+                    <textarea
                         name="components"
                         cols="30"
                         rows="10"
@@ -283,30 +329,30 @@ function RecipeForm(){
                         </div>
                         {subRecipe.ingredients.map((ingredient, idx) => (
                             <div>
-                                <input 
-                                    type="text" 
+                                <input
+                                    type="text"
                                     placeholder='qty'
                                     name='qty'
                                     value={ingredient.qty}
                                     onChange={(e) => handleInputChangeSubRecipeIngredient(e, i, idx)}
                                 />
-                                <input 
-                                    type="text" 
+                                <input
+                                    type="text"
                                     placeholder='ingredient'
                                     name='ingredientId'
-                                    value={ingredient.ingredient} 
+                                    value={ingredient.ingredientId}
                                     onChange={(e) => handleInputChangeSubRecipeIngredient(e, i, idx)}
                                 />
-                                <input 
-                                    type="text" 
+                                <input
+                                    type="text"
                                     placeholder='ingredient description'
                                     name='description'
                                     value={ingredient.description}
                                     onChange={(e) => handleInputChangeSubRecipeIngredient(e, i, idx)}
                                 />
-                                <input 
+                                <input
                                     id={`category-${i}-${idx}`}
-                                    type="text" 
+                                    type="text"
                                     placeholder='Catergory for ordering'
                                     name='category'
                                     value={ingredient.category}
@@ -325,14 +371,14 @@ function RecipeForm(){
                             />
                         </div>
                         <div>
-                            {subRecipes.length !== 1 && <button onClick={() => handleRemoveClickSubRecipe(i)} >Remove Sub Recipe</button> }
-                            {subRecipes.length -1 === i && <button onClick={handleAddClickSubRecipe}>Add Sub Recipe</button> }
+                            {subRecipes.length !== 1 && <button onClick={() => handleRemoveClickSubRecipe(i)} >Remove Sub Recipe</button>}
+                            {subRecipes.length - 1 === i && <button onClick={handleAddClickSubRecipe}>Add Sub Recipe</button>}
                         </div>
                     </div>
                 ))}
                 <div>
                     <p>Tags</p>
-                    <input 
+                    <input
                         type="text"
                         value={tags}
                         onChange={(e) => setTags(e.target.value)}
@@ -344,4 +390,4 @@ function RecipeForm(){
     );
 };
 
-export default RecipeForm;
+export default RecipeEditForm;

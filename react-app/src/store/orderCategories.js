@@ -54,6 +54,7 @@ export const addOrderCategory = (category) => async (dispatch) => {
 
     const newCat = await res.json();
     dispatch(addOrderCategoryAction(newCat));
+    return newCat;
 };
 
 export const deleteOrderCategory = (category) => async (dispatch) => {

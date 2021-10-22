@@ -44,9 +44,11 @@ class Recipe(db.Model):
             "photo": self.photo,
             "tags": [tag.to_dict() for tag in self.tags],
             "season": self.season,
-            "components": {component.id: component.to_dict() for component in self.components},
+            "components": self.components[0].to_dict(),
             "subRecipes": {sub_recipe.order: sub_recipe.to_dict() for sub_recipe in self.sub_recipes},
-            "id": self.id
+            "id": self.id,
+            "created_at": self.created_at,
+            "year": self.year
         }
 
 

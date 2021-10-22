@@ -117,7 +117,7 @@ def upgrade():
     )
     op.create_table('sub_recipe_ingredients',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('qty', sa.Integer(), nullable=False),
+    sa.Column('qty', sa.Float(), nullable=False),
     sa.Column('description', sa.String(length=300), nullable=True),
     sa.Column('order', sa.Integer(), nullable=False),
     sa.Column('ingredient_id', sa.Integer(), nullable=False),

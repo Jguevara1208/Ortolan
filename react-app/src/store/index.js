@@ -19,7 +19,7 @@ const rootReducer = combineReducers({
   allRecipes: allRecipesReducer,
   units: unitsReducer,
   tags: tagsReducer,
-  orderCatergories: orderCategoriesReducer,
+  orderCategories: orderCategoriesReducer,
   ingredients: ingredientsReducer,
   currentRecipe: currentRecipeReducer
 });

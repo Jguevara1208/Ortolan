@@ -67,11 +67,13 @@ class Project(db.Model):
     description = db.Column(db.String(500))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     cooks = db.relationship("User", back_populates="project_assignments", secondary=assigned_to_projects)
+    tasks = db.relationship("ProjectTask", back_populates='project', cascade='all, delete')
 
     def to_redux_dict(self):
         return {
             'id': self.id,
             'title': self.title,
             'description': self.description,
-            'assigned': [ cook.to_project_dict() for cook in self.cooks ]
+            'assigned': [ cook.to_project_dict() for cook in self.cooks ],
+            'tasks': [task.to_dict() for task in self.tasks]
         }

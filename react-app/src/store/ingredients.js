@@ -52,6 +52,7 @@ export const addIngredient = (ingredient) => async (dispatch) => {
 
     const newIngredient = await res.json();
     dispatch(addIngredientAction(newIngredient));
+    return newIngredient
 };
 
 export const deleteIngredient = (ingredient) => async (dispatch) => {

@@ -11,7 +11,6 @@ const CREATE_UNIT = 'units/CREATE_UNIT'
 /* ----------------------------------------------------------------------- */
 
 const setUnitsAction = (units) => {
-    console.log(units, 'from action')
     return {
         type: SET_UNITS,
         units
@@ -40,7 +39,6 @@ const createUnitAction = (unit) => {
 export const setUnits = (userId) => async (dispatch) => {
     const res = await fetch(`/api/users/${userId}/units/`);
     const units = await res.json();
-    console.log(units)
     dispatch(setUnitsAction(units));
 }
 
@@ -54,6 +52,7 @@ export const createUnit = (unit) => async (dispatch) => {
     });
     const newUnit = await res.json();
     dispatch(createUnitAction(newUnit));
+    return newUnit
 }
 
 export const deleteUnit = (unit) => async (dispatch) => {
@@ -72,12 +71,8 @@ const initialState = {}
 
 function unitsReducer(state = initialState, action) {
     let newState;
-    console.log('im in the reducer')
-    console.log(action.type)
-    console.log(action)
     switch (action.type) {
         case SET_UNITS:
-            console.log('from reducer', action.units)
             newState = action.units;
             return newState;
         case CREATE_UNIT:

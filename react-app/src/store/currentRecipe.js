@@ -37,6 +37,7 @@ export const createCurrentRecipe = (recipe) => async (dispatch) => {
     });
     const newRecipe = await res.json();
     dispatch(setCurrentRecipeAction(newRecipe));
+    return newRecipe.id
 }
 
 export const deleteCurrentRecipe = (recipeId) => async () => {

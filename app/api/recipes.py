@@ -1,6 +1,8 @@
 from flask import Blueprint, jsonify, request
 from app.models import Recipe, Component, SubRecipe, SubRecipeIngredient, Tag, db
+from datetime import datetime
 recipes_routes = Blueprint('recipes', __name__)
+
 
 @recipes_routes.route('/<int:id>')
 def get_recipe(id):
@@ -10,12 +12,20 @@ def get_recipe(id):
 @recipes_routes.route('/', methods=['POST'])
 def create_recipe():
     body = request.json
+    tags = Tag.query.filter(Tag.user_id == body['userId']).all()
+    tags_obj = {tag.id : tag for tag in tags}
+
+    if 'created_at' not in body:
+        body['created_at'] = datetime.utcnow()
+        print(body['created_at'])
+
     recipe = Recipe(
         title=body['title'],
         photo=body['photo'],
         season=body['season'],
         year=body['year'],
         user_id=body['userId'],
+        created_at=body['created_at']
     )
 
     db.session.add(recipe)
@@ -44,8 +54,7 @@ def create_recipe():
             db.session.add(sub_ingredient)
     
     for tag in body['tags']:
-        t = Tag(name=tag['name'], user_id=tag['userId'])
-        db.session.add(t)
+        t = tags_obj[tag]
         recipe.tags.append(t)
 
     db.session.commit()

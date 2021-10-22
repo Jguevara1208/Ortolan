@@ -8,4 +8,5 @@ from .sub_recipe_ingredients import SubRecipeIngredient
 from .sub_recipes import SubRecipe
 from .units import Unit
 from .recipes import Recipe, Tag
+from .project_tasks import ProjectTask
 

@@ -5,7 +5,7 @@ class SubRecipeIngredient(db.Model):
     __tablename__ = 'sub_recipe_ingredients'
 
     id = db.Column(db.Integer, primary_key=True)
-    qty = db.Column(db.Integer, nullable=False)
+    qty = db.Column(db.Float, nullable=False)
     description = db.Column(db.String(300))
     order = db.Column(db.Integer, nullable=False)
 
@@ -19,7 +19,7 @@ class SubRecipeIngredient(db.Model):
 
     def to_dict(self):
         return {
-            "qty:": self.qty,
+            "qty": self.qty,
             "unit": self.unit.to_dict(),
             "ingredient": self.ingredient.to_dict(),
             "description": self.description,
