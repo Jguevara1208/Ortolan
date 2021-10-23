@@ -30,9 +30,6 @@ function Project({project}){
                 if (task.completed) acc += 1
                 return acc
             }, 0);
-            console.log(tasks)
-            console.log(totalTasks)
-            console.log(totalCompletedTasks)
             percent = ((totalCompletedTasks / totalTasks) * 100)
             percent >= 100 ? percent = +(percent.toString().slice(0, 3)) : percent = +(percent.toString().slice(0, 2))
         }
@@ -40,7 +37,6 @@ function Project({project}){
     }
 
     useEffect(() => {
-        console.log('im in here')
         calculateCompletion()
     }, [projects])
 

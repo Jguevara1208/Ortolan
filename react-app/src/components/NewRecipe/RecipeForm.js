@@ -30,7 +30,7 @@ function RecipeForm(){
         setSeason('Winter')
         setPhoto(false)
         setComponent('')
-        setSubRecipes([{ title: '', description: '', ingredients: [{ qty: '', ingredientId: '', unitId: '', description: '', category: ''}] }])
+        setSubRecipes([{ title: '', description: '', ingredients: [{ qty: '', ingredientId: '', unitId: '', description: '', category: '' }] }])
         setTags('')
     }
 
@@ -75,6 +75,7 @@ function RecipeForm(){
     const handleInputChangeSubRecipeIngredient = (e, subRecipeIndex, ingredientIndex) => {
         const { name, value } = e.target
         const list = [...subRecipes]
+
         if (name ==='ingredientId' && value.length) {
             let formattedValue
             if (value[value.length - 1] === '') {
@@ -93,6 +94,7 @@ function RecipeForm(){
                 cat.value = ingredients[temp[formattedValue.toLowerCase()]].category.name
             }
         }
+
         list[subRecipeIndex].ingredients[ingredientIndex][name] = value
         setSubRecipes(list)
     }
@@ -128,21 +130,23 @@ function RecipeForm(){
                         let current = qty[i]
                         if (current === '.') continue
                         if ((isNaN(+current)) && (index === null)) {
-                            console.log('im here')
                             index = i
                         }
                     }
+                    unitId = qty.slice(index).trim()
+                    qty = +qty.slice(0, index).trim()
+                    formatSubRecipe[i].ingredients[j].qty = qty
                 }
 
-                unitId = qty.slice(index).trim()
-                qty = +qty.slice(0, index).trim()
-                formatSubRecipe[i].ingredients[j].qty = qty
 
                 
                 if (!qty) formatSubRecipe[i].ingredients[j].qty = 0
                 if (!unitId) formatSubRecipe[i].ingredients[j].unitId = 'None'
                 if (!category) formatSubRecipe[i].ingredients[j].category = 'None'
-                if (!ingredientId) formatSubRecipe[i].ingredients[j].ingredientId = 'None'
+                if (!ingredientId) {
+                    formatSubRecipe[i].ingredients[j].ingredientId = 'None'
+                    ingredientId = 'None'
+                }
 
                 if (!units[unitId]) {
                     const newUnitObj = await dispatch(createUnit({"unit": unitId, "userId": userId}))
@@ -152,30 +156,31 @@ function RecipeForm(){
                     formatSubRecipe[i].ingredients[j].unitId = units[unitId]
                 }
 
-                if (!ingredients[ingredientId]){
-                    let formattedCategory
-                    if(category) {
-                        formattedCategory = category.split(' ').map(cat => cat[0].toUpperCase() + cat.slice(1).toLowerCase()).join(' ')
+                    if (!ingredients[ingredientId]){
+                        let formattedCategory
+                        if(category) {
+                            formattedCategory = category.split(' ').map(cat => cat[0].toUpperCase() + cat.slice(1).toLowerCase()).join(' ')
+                        } else {
+                            formattedCategory = 'Other'
+                        }
+                            
+                        if(!categories[formattedCategory]){
+                            let newCatObj = await dispatch(addOrderCategory({"userId": userId, "name": formattedCategory}))
+                            category = newCatObj.id
+                            formatSubRecipe[i].ingredients[j].category = category
+                        } else {
+                            category = categories[formattedCategory]
+                            formatSubRecipe[i].ingredients[j].category = category
+                        }
+                        const formattedIngredient = ingredientId.split(' ').map(ing => ing[0].toUpperCase() + ing.slice(1).toLowerCase()).join(' ');
+                        const newIngredientObj = await dispatch(addIngredient({"name": formattedIngredient, "categoryId": category, "userId": userId}))
+                        ingredientId = newIngredientObj.ingredient.id
+                        formatSubRecipe[i].ingredients[j].ingredientId = ingredientId
                     } else {
-                        formattedCategory = 'Other'
+                        ingredientId = ingredients[ingredientId].id
+                        formatSubRecipe[i].ingredients[j].ingredientId = ingredientId
                     }
-
-                    if(!categories[formattedCategory]){
-                        let newCatObj = await dispatch(addOrderCategory({"userId": userId, "name": formattedCategory}))
-                        category = newCatObj.id
-                        formatSubRecipe[i].ingredients[j].category = category
-                    } else {
-                        category = categories[formattedCategory]
-                        formatSubRecipe[i].ingredients[j].category = category
-                    }
-                    const formattedIngredient = ingredientId.split(' ').map(ing => ing[0].toUpperCase() + ing.slice(1).toLowerCase()).join(' ');
-                    const newIngredientObj = await dispatch(addIngredient({"name": formattedIngredient, "categoryId": category, "userId": userId}))
-                    ingredientId = newIngredientObj.ingredient.id
-                    formatSubRecipe[i].ingredients[j].ingredientId = ingredientId
-                } else {
-                    ingredientId = ingredients[ingredientId].id
-                    formatSubRecipe[i].ingredients[j].ingredientId = ingredientId
-                }
+                    
                 formatSubRecipe[i].ingredients[j]['order'] = j
             }
         }

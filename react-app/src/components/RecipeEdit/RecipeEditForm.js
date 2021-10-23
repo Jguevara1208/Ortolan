@@ -60,7 +60,6 @@ function RecipeEditForm() {
                         title: sub.title,
                         description: sub.title ? sub.title : '', 
                         ingredients: Object.values(sub.ingredients).map(ing => {
-                            console.log(ing.ingredient)
                             const temp = {
                                 qty: ing.qty ? `${ing.qty}${ing.unit}` : '',
                                 ingredientId: ing.ingredient,
@@ -74,7 +73,6 @@ function RecipeEditForm() {
                 })
                 setSubRecipes(subRec)
             }
-            console.log(subRecipes[0].ingredients[0])
             if (currentRecipe.tags) {
                 let tagsArr = currentRecipe.tags.map(tag => tag.name)
                 let tagsForState = tagsArr.join(' ')
@@ -137,7 +135,6 @@ function RecipeEditForm() {
         }
         list[subRecipeIndex].ingredients[ingredientIndex][name] = value
         setSubRecipes(list)
-        console.log(subRecipes)
     }
 
     const handlePhoto = async (e) => {
@@ -171,7 +168,6 @@ function RecipeEditForm() {
                         let current = qty[i]
                         if (current === '.') continue
                         if ((isNaN(+current)) && (index === null)) {
-                            console.log('im here')
                             index = i
                         }
                     }

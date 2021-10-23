@@ -87,7 +87,6 @@ export const setProjects = (userId) => async (dispatch) => {
     let res = await fetch(`/api/users/${userId}/projects/`);
     res = await res.json();
     const projects = res.projects;
-    console.log(projects)
     dispatch(setProjectsAction(projects));
 };
 

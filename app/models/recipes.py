@@ -17,7 +17,6 @@ class Recipe(db.Model):
     year = db.Column(db.Integer, nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
-
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     author = db.relationship('User', back_populates='recipes')
 
@@ -28,7 +27,10 @@ class Recipe(db.Model):
     def to_redux_dict(self):
         return {
             "recipeId": self.id,
-            "title": self.title
+            "title": self.title,
+            "photo": self.photo,
+            "created_at": self.created_at,
+            "id": self.id
         }
 
     def to_recent_dict(self):
