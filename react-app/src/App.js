@@ -13,6 +13,7 @@ import SingleRecipePage from './components/SingleRecipePage/SingleRecipePage';
 import ProjectsPage from './components/ProjectsPage/ProjectsPage';
 import Dashboard from './components/Dashboard/DashBoard';
 import Splash from './components/Splash/Splash';
+import Settings from './components/SettingsPage/Settings';
 import { authenticate } from './store/session';
 
 function App() {
@@ -39,6 +40,9 @@ function App() {
       <Switch>
         <ProtectedRoute path='/projects' exact={true}>
           <ProjectsPage />
+        </ProtectedRoute>
+        <ProtectedRoute path='/settings' exact={true}>
+          <Settings />
         </ProtectedRoute>
         <ProtectedRoute path='/recipes' exact={true}>
           <RecipesPage />

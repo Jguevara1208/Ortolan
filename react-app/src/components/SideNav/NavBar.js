@@ -3,11 +3,12 @@ import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 const SideNav = () => {
-  const user = useSelector(state => state.session.user)
+  
+  const userName = useSelector(state => state.session.user.name)
 
   return (
     <nav>
-      <p>{user.name}</p>
+      <p>{userName}</p>
       <NavLink to='/' exact={true} activeClassName='active'>
         Dashboard
       </NavLink>

@@ -1,6 +1,6 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, request
 from flask_login import login_required
-from app.models import User, Recipe, Project, Ingredient, Tag, OrderListCategory, Unit
+from app.models import User, Recipe, Project, Ingredient, Tag, OrderListCategory, Unit, db
 from colors import *
 
 user_routes = Blueprint('users', __name__)
@@ -105,3 +105,20 @@ def get_team(user_id):
     team = User.query.filter(User.restaurant == restaurant).all()
     teamDict = [member.to_dict() for member in team]
     return {"team": teamDict}
+
+@user_routes.route('/<int:id>/name', methods=["PATCH"])
+def edit_name(id):
+    body = request.json
+    user = User.query.get(id)
+    user.first_name = body['firstName']
+    user.last_name = body['lastName']
+    db.session.commit()
+    return 'ok'
+
+@user_routes.route('/<int:id>/position', methods=["PATCH"])
+def edit_position(id):
+    body = request.json
+    user = User.query.get(id)
+    user.position = body['position']
+    db.session.commit()
+    return 'ok'

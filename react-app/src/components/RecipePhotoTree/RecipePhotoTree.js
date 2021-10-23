@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import './RecipePhotoTree.css'
@@ -8,17 +8,12 @@ function RecipePhotoTree(){
     const recipesTree = useSelector(state => state.recipesTree)
     
     const [type, setType] = useState('')
-
-    const [yearFilter, setYearFilter] = useState(false)
     const [year, setYear] = useState('')
-    const [seasonFilter, setSeasonFilter] = useState(false)
     const [season, setSeason] = useState('')
 
     const [tag, setTag] = useState('')
 
     const handleSetType = (t) => {
-        setYearFilter(false)
-        setSeasonFilter(false)
         setTag(false)
         setSeason('')
         setYear('')
@@ -26,8 +21,6 @@ function RecipePhotoTree(){
     }
 
     const handleYear = (yr) => {
-        setYearFilter(true)
-        setSeasonFilter(false)
         setSeason('')
         setTag('')
         setYear(yr.toString())
