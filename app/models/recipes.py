@@ -35,6 +35,7 @@ class Recipe(db.Model):
         return {
             "id" : self.id,
             "img" : self.photo,
+            "title" : self.title,
             "created_at" : self.created_at
         }
 

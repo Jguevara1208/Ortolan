@@ -55,7 +55,6 @@ def delete_all_assignments(id):
 def delete_update_task(task_id):
     body = request.json
     task = ProjectTask.query.get(task_id)
-
     if request.method == 'PATCH':
         task.completed = body['completed']
         db.session.commit()

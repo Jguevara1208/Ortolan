@@ -8,7 +8,8 @@ const ADD_PROJECT_ASSIGNMENTS = 'projects/ADD_PROJECT_ASSIGNMENTS';
 const DELETE_PROJECT_ASSIGNMENTS = 'projects/DELETE_PROJECT_ASSIGNMENTS';
 const CREATE_PROJECT = 'projects/CREATE_PROJECT';
 const UPDATE_TASK = 'pojects/UPDATE_TASK';
-const ADD_TASK = 'pojects/ADD_TASK';
+const ADD_TASK = 'projects/ADD_TASK';
+const REMOVE_TASK = 'projects/REMOVE_TASK';
 
 
 /* ----------------------------------------------------------------------- */
@@ -71,6 +72,13 @@ const addTaskAction = (task) => {
     };
 };
 
+const deleteTaskAction = (task) => {
+    return {
+        type: REMOVE_TASK,
+        task
+    };
+};
+
 /* ----------------------------------------------------------------------- */
 /* --------------------------------Thunks--------------------------------- */
 /* ----------------------------------------------------------------------- */
@@ -79,6 +87,7 @@ export const setProjects = (userId) => async (dispatch) => {
     let res = await fetch(`/api/users/${userId}/projects/`);
     res = await res.json();
     const projects = res.projects;
+    console.log(projects)
     dispatch(setProjectsAction(projects));
 };
 
@@ -92,6 +101,7 @@ export const createProject = (project) => async (dispatch) => {
     });
     const newProject = await res.json();
     dispatch(createProjectAction(newProject));
+    return newProject
 }
 
 export const updateProject = (project) => async (dispatch) => {
@@ -143,10 +153,16 @@ export const updateProjectTask = (task) => async (dispatch) => {
         },
         body: JSON.stringify(task)
     });
-    res = await res.json()
     if (res.ok) {
         dispatch(updateTaskAction(task))
     }
+}
+
+export const deleteTaskThunk = (task) => async (dispatch) => {
+    await fetch(`/api/projects/tasks/${task.id}/`, {
+        method: "DELETE"
+    });
+    dispatch(deleteTaskAction(task))
 }
 
 export const addTaskThunk = (task) => async (dispatch) => {
@@ -195,13 +211,15 @@ function projectsReducer(state = initialState, action) {
             return newState;
         case UPDATE_TASK:
             newState = {...state};
-            let oldTask = newState[action.task.projectId].find(task => task.id === action.task.id);
-            oldTask.completed = action.task.completed;
             return newState;
         case ADD_TASK:
             newState = {...state}
             newState[action.task.projectId].tasks.push(action.task)
             return newState;
+        case REMOVE_TASK:
+            newState = {...state}
+            newState[action.task.projectId].tasks = newState[action.task.projectId].tasks.filter(task => task.id !== action.task.id)
+            return newState
         default:
             return state;
     }

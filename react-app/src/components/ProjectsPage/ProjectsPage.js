@@ -26,7 +26,7 @@ function ProjectsPage(){
             <button onClick={() => setShowModal(!showModal)}>Add New Project</button>
             {showModal && (
                 <Modal onClose={() => setShowModal(false)} >
-                    <NewProject userId={userId}/>
+                    <NewProject userId={userId} showModal={setShowModal}/>
                 </Modal>
             )}
         </div>
