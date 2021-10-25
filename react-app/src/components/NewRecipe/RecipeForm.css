@@ -1,0 +1,303 @@
+.form-container {
+    display: flex;
+    padding: 30px;
+    width: 65%;
+    justify-content: center;
+}
+
+.nr-form {
+    background-color: white;
+    padding: 30px;
+    border-radius: 15px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.nr-form > h3 {
+    margin-bottom: 40px;
+}
+
+.title-season {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    margin: 30px 0px;
+}
+
+.sub-recipe {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+}
+
+.sr-ingredient-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sub-recipe-buttons {
+    display: flex;
+    gap: 20px;
+}
+
+.add-sr, .remove-sr {
+    padding: 10px 20px;
+    background-color: var(--green);
+    border-radius: 15px;
+    color: white;
+    font-weight: 500;
+}
+
+.qty {
+    width: 12%;
+}
+
+.qty-input {
+    width: 100%;
+}
+
+.sr-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    border: 1px solid var(--green);
+    padding: 30px;
+    border-radius: 15px;
+    width: 80%;
+}
+
+.ol-input > .description ~ label {
+    position: absolute;
+    transform: translateY(-50%);
+    background-color: white;
+    color: var(--green);
+    text-align: center;
+    transition: .2s cubic-bezier(.65,.05,.36,1);
+    pointer-events: none;
+    padding: 0 5px;
+    top: 0px;
+    left: 10px;
+    font-size: 1rem;
+}
+
+.ol-input {
+    position: relative;
+}
+
+.ol-input .description {
+    padding: 25px;
+    min-height: 5em;
+    border: 1px solid var(--green);
+    resize: none;
+    max-height: 50vh;
+    max-width: 808px;
+    color: var(--green);
+    height: 2.7rem;
+    width: 87%;
+    outline: 1px solid var(--green);
+    border-radius: 5px;
+    border: none;
+    background-color: white;
+    padding: 25px;
+    font-size: 1.1rem;
+    transition: .1s cubic-bezier(.65,.05,.36,1);
+}
+
+.ol-input input {
+    color: var(--green);
+    height: 2.7rem;
+    outline: 1px solid var(--green);
+    border-radius: 5px;
+    border: none;
+    background-color: white;
+    padding-left: 20px;
+    font-size: 1.1rem;
+    transition: .1s cubic-bezier(.65,.05,.36,1);
+}
+
+.ol-input label {
+    position: absolute;
+    top: 50%;
+    left: 5%;
+    transform: translateY(-50%);
+    background-color: white;
+    color: var(--green);
+    text-align: center;
+    transition: .2s cubic-bezier(.65,.05,.36,1);
+    font-size: 1.1rem;
+    pointer-events: none;
+    padding: 0 5px;
+}
+
+.ol-input input:not(:placeholder-shown) ~ label,
+.ol-input input:focus ~ label {
+    top: 0px;
+    left: 10px;
+    font-size: 1rem;
+}
+
+.ol-input input:focus {
+    outline: 1px solid var(--green) !important;
+}
+
+.ol-input input:hover {
+    outline: 1px solid var(--gold);
+}
+
+.ol-input input:focus ~ label {
+    color: var(--green) !important;
+}
+
+.sri-button {
+    color: var(--green);
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.photo-components-container {
+    display: flex;
+    width: 80%;
+    justify-content: space-between;
+    margin-bottom: 50px;
+    margin-top: 20px;
+}
+
+.ol-input > .components ~ label {
+    position: absolute;
+    transform: translateY(-50%);
+    background-color: white;
+    color: var(--green);
+    text-align: center;
+    transition: .2s cubic-bezier(.65,.05,.36,1);
+    pointer-events: none;
+    padding: 0 5px;
+    top: 0px;
+    left: 10px;
+    font-size: 1rem;
+}
+.ol-input .components {
+    padding: 25px;
+    height: 5em;
+    min-height: 20em;
+    border: 1px solid var(--green);
+    resize: none;
+    max-height: 50vh;
+    color: var(--green);
+    width: 25em;
+    outline: 1px solid var(--green);
+    border-radius: 5px;
+    border: none;
+    background-color: white;
+    padding: 25px;
+    font-size: 1.1rem;
+    transition: .1s cubic-bezier(.65,.05,.36,1);
+}
+
+.photo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    max-height: 405px;
+}
+
+.inputfile {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+.fileChooser {
+    border: 1px solid var(--green);
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: var(--green);
+    cursor: pointer;
+}
+
+.rf-photo {
+    width: 100%;
+    height: 100%;
+    background-position: center;
+    background-size: cover;
+}
+
+.tags-container {
+    display: flex;
+    margin-top: 50px;
+    width: 80%;
+}
+
+.nr-submit {
+    width: 80%;
+    margin-top: 50px;
+}
+
+.nr-submit-button {
+    padding: 10px 20px;
+    border: 4px solid var(--green);
+    color: var(--green);
+    font-size: 1.4rem;
+    font-weight: 600;
+    border-radius: 15px;
+}
+
+.nr-submit-button:hover {
+    background-color: var(--green);
+    color: white;
+}
+
+.season-select,
+.season-select * {
+  margin: 0;
+  padding: 0;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.season-select {
+    border: 1px solid var(--green);
+    color: var(--green);
+    outline: none;
+    position: relative;
+    background-color: white;
+    border-radius: 5px;
+}
+
+.season-select select {
+    font-size: 1rem;
+    font-weight: normal;
+    max-width: 100%;
+    padding: 8px 24px 8px 10px;
+    border: none;
+    background-color: transparent;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.season-select select:active, .season-select select:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.season-select:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  width: 0;
+  height: 0;
+  margin-top: -2px;
+  border-top: 5px solid #aaa;
+  border-right: 5px solid transparent;
+  border-left: 5px solid transparent;
+}
