@@ -36,43 +36,45 @@ function App() {
   return (
     <BrowserRouter>
       <TopNav />
-      {user && <SideNav />}
-      <Switch>
-        <ProtectedRoute path='/projects' exact={true}>
-          <ProjectsPage />
-        </ProtectedRoute>
-        <ProtectedRoute path='/settings' exact={true}>
-          <Settings />
-        </ProtectedRoute>
-        <ProtectedRoute path='/recipes' exact={true}>
-          <RecipesPage />
-        </ProtectedRoute>
-        <ProtectedRoute path='/recipes/new' exact={true}>
-          <RecipeForm />
-        </ProtectedRoute>
-        <ProtectedRoute path='/recipes/:recipeId' exact={true}>
-          <SingleRecipePage/>
-        </ProtectedRoute>
-        <ProtectedRoute path='/recipes/:recipeId/edit/' exact={true}>
-          <RecipeEditForm />
-        </ProtectedRoute>
-        <Route path='/login' exact={true}>
-          <LoginForm />
-        </Route>
-        <Route path='/signup' exact={true}>
-          <SignUpForm />
-        </Route>
-        {user 
-          ? 
-            <ProtectedRoute path='/' exact={true} >
-              <Dashboard />
-            </ProtectedRoute>
-          :
-            <Route path='/' exact={true} >
-              <Splash />
-            </Route>
-        }
-      </Switch>
+      <div className='main-body'>
+        {user && <SideNav />}
+        <Switch>
+          <ProtectedRoute path='/projects' exact={true}>
+            <ProjectsPage />
+          </ProtectedRoute>
+          <ProtectedRoute path='/settings' exact={true}>
+            <Settings />
+          </ProtectedRoute>
+          <ProtectedRoute path='/recipes' exact={true}>
+            <RecipesPage />
+          </ProtectedRoute>
+          <ProtectedRoute path='/recipes/new' exact={true}>
+            <RecipeForm />
+          </ProtectedRoute>
+          <ProtectedRoute path='/recipes/:recipeId' exact={true}>
+            <SingleRecipePage/>
+          </ProtectedRoute>
+          <ProtectedRoute path='/recipes/:recipeId/edit/' exact={true}>
+            <RecipeEditForm />
+          </ProtectedRoute>
+          <Route path='/login' exact={true}>
+            <LoginForm />
+          </Route>
+          <Route path='/signup' exact={true}>
+            <SignUpForm />
+          </Route>
+          {user 
+            ? 
+              <ProtectedRoute path='/' exact={true} >
+                <Dashboard />
+              </ProtectedRoute>
+            :
+              <Route path='/' exact={true} >
+                <Splash />
+              </Route>
+          }
+        </Switch>
+      </div>
     </BrowserRouter>
   );
 }

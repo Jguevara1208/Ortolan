@@ -1,6 +1,99 @@
 .recipe-tree-photo {
-    width: 100px;
-    height: 70px;
+    width: 100%;
+    max-width: 220px;
+    height: 140px;
     background-size: cover;
     background-position: center;
+    border-radius: 15px;
+}
+
+.pt-container {
+    width: 100%;
+    margin-top: 11px;
+    margin-left: 80px;
+    display: flex;
+    flex-direction: column;
+}
+
+.pt-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    width: 90%;
+    padding: 10px 30px 0px 0px;
+    border-radius: 15px;
+}
+
+.pt-type {
+    display: flex;
+    width: fit-content;
+    padding-bottom: 10px;
+    gap: 30px;
+    color: var(--green);
+    font-weight: 400;
+    background-color: white;
+    border-bottom: var(--border);
+    padding-left: 30px;
+    padding-right: 30px;
+    border-radius: 15px;
+}
+
+.type {
+    cursor: pointer;
+    padding-bottom: 5px;
+    padding-top: 15px;
+}
+
+.pt-active {
+    font-weight: 600;
+    padding-bottom: 5px;
+    border-bottom: 2px solid var(--green);
+}
+
+.ptr-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 40px;    
+    width: 90%;
+    gap: 20px;
+}
+
+.pt-recipe-link {
+    width: 20%;
+    max-width: 220px;
+    min-width: 220px;
+    padding:15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: var(--shadow);
+}
+
+.pt-recipe-link > p {
+    height: 40px;
+    max-width: 220px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.header-container {
+    display: flex;
+    align-items: center;
+    align-self: flex-start;
+    height: fit-content;
+}
+
+.empty-filter {
+    width: 90%;
+    height: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.filter-me {
+    color: var(--brown)
 }

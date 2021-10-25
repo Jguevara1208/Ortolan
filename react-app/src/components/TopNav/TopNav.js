@@ -4,6 +4,7 @@ import { NavLink, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import LogoutButton from '../auth/LogoutButton';
 import navLogo from './NavbarLogo';
+import './TopNav.css'
 
 const TopNav = () => {
 
@@ -18,19 +19,21 @@ const TopNav = () => {
         return null
     } else { 
         return (
-            <nav>
+            <nav className='top-nav'>
                 {session.user 
                 ? 
-                <div>
-                    <div>
+                <div className='signed-in'>
+                    <div className='third-empty'/>
+                    <div className='third-logo'>
                         {navLogo}
                     </div>
-                    <div>
+                    <div className='third-logout'>
                         <LogoutButton />
                     </div>
                 </div>
                 :
                 <div>
+                    {navLogo}
                     <NavLink to='/login' exact={true} activeClassName='active'>
                         Login
                     </NavLink>

@@ -34,34 +34,32 @@ function RecipePhotoTree(){
         setSeason(sn)
     }
 
-    const formatDate = (date) => {
-        const dateArr = date.split(' ')
-        return `${dateArr[2]} ${dateArr[1]}, ${dateArr[3]}`
-    }
-
     return (
-        <div>
+        <div className='pt-container'>
+            <div className='header-container'>
+                <h3 className='pt-header'>Filter Recipes</h3>
+            </div>
             {recipesTree && (
-                <>
-                    <div>
-                        <p onClick={() => handleSetType('years')}>Year</p>
-                        <p onClick={() => handleSetType('tags')}>Tag</p>
+                <div className='pt-wrapper'>
+                    <div className='pt-type'>
+                        <p className={type === 'years' ? 'type pt-active' : 'type'} onClick={() => handleSetType('years')}>Year</p>
+                        <p className={type === 'tags' ? 'type pt-active' : 'type'} onClick={() => handleSetType('tags')}>Tag</p>
                     </div>
                     {type && (
                         <div>
                             {type === 'years' 
                             ?
-                                <div>
+                                <div className='pt-type'>
                                     {recipesTree.tree && Object.keys(recipesTree.tree).map(yr => (
-                                        <p onClick={() => handleYear(yr)} >{yr}</p>
+                                        <p className={year === yr ? 'type pt-active' : 'type'} onClick={() => handleYear(yr)} >{yr}</p>
                                     ))}
                                 </div> 
                             :
-                                <div>
+                                <div className='pt-type'>
                                     {recipesTree.tags && Object.keys(recipesTree.tags).map(tg => (
                                         <>
                                             {recipesTree.tags[tg].length > 0 && (
-                                                <p onClick={() => handleTag(tg)}>{tg}</p>
+                                                <p className={tag === tg ? 'type pt-active' : 'type'} onClick={() => handleTag(tg)}>{tg}</p>
                                             )}
                                         </>
                                     ))}
@@ -70,39 +68,39 @@ function RecipePhotoTree(){
                         </div>
                     )}
                     {year && (
-                        <>
+                        <div className='pt-type'>
                             {recipesTree.tree[year] && Object.keys(recipesTree.tree[year]).map(sn => (
-                                <p onClick={() => handleSeason(sn)}>{sn}</p>
+                                <p className={season === sn ? 'type pt-active' : 'type'} onClick={() => handleSeason(sn)}>{sn}</p>
                             ))}
-                        </>
+                        </div>
                     )}
-                    {season && (
-                        <>
-                            {recipesTree.tree[year][season] && recipesTree.tree[year][season].map(recipe => (
-                                <div>
-                                    <Link to={`/recipes/${recipe.id}`}>
-                                        <p>{recipe.title}</p>
-                                        <div className='recipe-tree-photo' style={{backgroundImage: `url('${recipe.photo}')`}}></div>
-                                        <p>{formatDate(recipe.created_at)}</p>
-                                    </Link>
-                                </div>
-                            ))}
-                        </>
-                    )}
-                    {tag && (
-                        <>
-                            {recipesTree.tags[tag] && recipesTree.tags[tag].map(recipe => (
-                                <div>
-                                    <Link to={`/recipes/${recipe.id}`}>
-                                        <p>{recipe.title}</p>
-                                        <div className='recipe-tree-photo' style={{ backgroundImage: `url('${recipe.photo}')` }}></div>
-                                        <p>{formatDate(recipe.created_at)}</p>
-                                    </Link>
-                                </div>
-                            ))}
-                        </>
-                    )}
-                </>
+                </div>
+            )}
+            {season && (
+                <div className='ptr-container'>
+                    {recipesTree.tree[year][season] && recipesTree.tree[year][season].map(recipe => (
+                        <Link className='pt-recipe-link' to={`/recipes/${recipe.id}`}>
+                            <p>{recipe.title}</p>
+                            <div className='recipe-tree-photo' style={{backgroundImage: `url('${recipe.photo}')`}}></div>
+                        </Link>
+                    ))}
+                </div>
+            )}
+            {tag && (
+                <div className='ptr-container'>
+                    {recipesTree.tags[tag] && recipesTree.tags[tag].map(recipe => (
+                        <Link className='pt-recipe-link' to={`/recipes/${recipe.id}`}>
+                            <p>{recipe.title}</p>
+                            <div className='recipe-tree-photo' style={{ backgroundImage: `url('${recipe.photo}')` }}> 
+                            </div>
+                        </Link>
+                    ))}
+                </div>
+            )}
+            {(type === '') && (
+                <div className='empty-filter'>
+                    <p className='filter-me'>Filter to find your recipe</p>
+                </div>
             )}
         </div>
     );

@@ -1,14 +1,18 @@
 import { useState } from 'react';
 import Season from './Season';
+import { AiOutlineFolderOpen, AiOutlineFolder } from 'react-icons/ai'
 
 function Year({year, seasons}){
     const [show, setShow] = useState(false)
 
     return (
-        <div>
-            <p onClick={() => setShow(!show)}>{year}</p>
+        <div className='year-container'>
+            <div className='year'>
+                {show ? <AiOutlineFolderOpen className='tree-icon' /> : <AiOutlineFolder className='tree-icon'/>}
+                <p className='folder-text' onClick={() => setShow(!show)}>{year}</p>
+            </div>
             {show && (
-                <div>
+                <div className='season-border'>
                     {seasons && Object.keys(seasons).map(season => (
                         <Season season={season} dishes={seasons[season]}/>
                     ))}

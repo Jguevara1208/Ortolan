@@ -18,7 +18,7 @@ export function ModalProvider({ children }) {
     }, []);
 
     return (
-        <div className={theme}>
+        <div className='app'>
             <ModalContext.Provider value={value}>
                 {children}
             </ModalContext.Provider>

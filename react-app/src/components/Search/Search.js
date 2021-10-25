@@ -65,7 +65,6 @@ function Search(){
     return (
       <div className={showFilter ? 'search-bar-outer-container no-border' : 'search-bar-outer-container'}>
         <div className="search-bar">
-            <label htmlFor="search" className='search-label'>Search</label>
             <input
                 className="search-input"
                 type="text"
