@@ -119,7 +119,6 @@ function RecipeForm(){
         let newFile = new File([compressedFile], compressedFile.name)
         const formData = new FormData()
         formData.append('image', newFile)
-        // formData.append("image", e.target.files[0])
 
         const res = await fetch('/api/images/', {
             method: "POST",
@@ -335,7 +334,7 @@ function RecipeForm(){
                                         <input 
                                             className='qty-input'
                                             type="text" 
-                                            placeholder='120g ...'
+                                            placeholder=' '
                                             name='qty'
                                             value={ingredient.qty}
                                             onChange={(e) => handleInputChangeSubRecipeIngredient(e, i, idx)}
@@ -345,7 +344,7 @@ function RecipeForm(){
                                     <div className='ol-input'>
                                         <input 
                                             type="text" 
-                                            placeholder={idx === 0 ? 'Carrot ...' : ' '}
+                                            placeholder=' '
                                             name='ingredientId'
                                             value={ingredient.ingredientId} 
                                             onChange={(e) => handleInputChangeSubRecipeIngredient(e, i, idx)}
@@ -355,7 +354,7 @@ function RecipeForm(){
                                     <div className='ol-input'>
                                         <input 
                                             type="text" 
-                                            placeholder='sliced thin ...'
+                                            placeholder=' '
                                             name='description'
                                             value={ingredient.description}
                                             onChange={(e) => handleInputChangeSubRecipeIngredient(e, i, idx)}
@@ -366,7 +365,7 @@ function RecipeForm(){
                                         <input 
                                             id={`category-${i}-${idx}`}
                                             type="text" 
-                                            placeholder='Produce ...'
+                                            placeholder=' '
                                             name='category'
                                             value={ingredient.category}
                                             onChange={(e) => handleInputChangeSubRecipeIngredient(e, i, idx)}

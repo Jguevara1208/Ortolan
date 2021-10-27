@@ -26,4 +26,14 @@
     align-items: center;
 }
 
+.logout {
+    align-self: center;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+.logout:hover {
+    color: var(--green);
+}
+
 

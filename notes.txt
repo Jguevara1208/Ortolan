@@ -1,4 +1,3 @@
-change it so that the inputs placeholder is just on the top
 on hover change to current green, and lighter from the beginning
 side nav different color,
 darker green

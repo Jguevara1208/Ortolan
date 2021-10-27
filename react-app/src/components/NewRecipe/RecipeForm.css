@@ -123,10 +123,8 @@
 
 .ol-input label {
     position: absolute;
-    /* top: 50%;
-    left: 5%; */
-    top: 0px;
-    left: 10px;
+    top: 50%;
+    left: 5%;
     transform: translateY(-50%);
     background-color: white;
     color: var(--green);

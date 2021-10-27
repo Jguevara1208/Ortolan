@@ -24,7 +24,7 @@
   flex-direction: column;
   height: 19.3rem;
   width: 95%;
-  top: 110px;
+  top: 115px;
   padding: 20px;
   background-color: white;
   color: black;
@@ -75,7 +75,7 @@
   margin-left: 12px;
   font-size: 13px;
   line-height: 20px;
-  height: 34px;
+  height: 30px;
   z-index: 400;
   background-color: white;
 }
