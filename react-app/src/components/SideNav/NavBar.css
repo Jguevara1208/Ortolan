@@ -1,7 +1,6 @@
 .side-nav {
     display: flex;
     flex-direction: column;
-    width: 20%;
     position: -webkit-sticky;
     position: sticky;
     top: 80px;
@@ -42,12 +41,12 @@
 }
 
 .active > .side-nav-links > p {
-    color: #61514A;
+    color: var(--brown);
     font-weight: 400;
 }
 
 .active > .side-nav-links > .nav-icon-container{
-    background-color: #61514A;
+    background-color: var(--brown);
 }
 
 .nav-icon-container {

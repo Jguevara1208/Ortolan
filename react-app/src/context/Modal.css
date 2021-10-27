@@ -8,6 +8,7 @@
     justify-content: center;
     align-items: center;
     z-index: 300;
+
 }
 
 #modal-background {
@@ -21,9 +22,26 @@
 
 #modal-content {
     position: absolute;
-    width: 50vw;
+    width: fit-content;
     background-color: white;
     z-index: 400;
-    height: 50vh;
+    max-height: 90vh;
+    overflow: scroll;
+    scrollbar-width: none;
     padding: 3em;
+    border-radius: 15px;
+}
+
+#modal-content::-webkit-scrollbar {
+    display: none;
+}
+
+.app {
+--border: 1px solid rgba(0, 0, 0, .2);
+  --bg: #F9F9F9;
+  --brown: #7C6C66;
+  --green: #67906C;
+  --gold: #d7b96a;
+  --border-gold: 1px solid #f3ead2;
+  --shadow: 0px 3.5px 5.5px rgba(0, 0, 0, 0.02);
 }

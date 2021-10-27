@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 import { setTagsOne , addTag } from '../../store/tags';
@@ -6,10 +6,13 @@ import { setUnits, createUnit } from '../../store/units';
 import { setIngredients, addIngredient } from '../../store/ingredients';
 import { setOrderCategories, addOrderCategory } from '../../store/orderCategories';
 import { createCurrentRecipe } from '../../store/currentRecipe'
+import { CgRemoveR, CgAddR} from 'react-icons/cg'
+import './RecipeForm.css'
 
 function RecipeForm(){
     const dispatch = useDispatch()
     const history = useHistory()
+    const fileUpload = useRef(null);
 
     const userId = useSelector(state => state.session.user.id)
     const units = useSelector(state => state.units)
@@ -62,12 +65,20 @@ function RecipeForm(){
         const list = [...subRecipes]
         const targetSubRecipe = list[subRecipeIndex].ingredients
         targetSubRecipe.push({ qty: '', ingredientId: '', unitId: '', description: '', category: '' })
+        console.log(list, 'LIST ADDITION ON ADD')
         setSubRecipes(list)
     }
+    console.log(subRecipes, 'SUB RECIPES OUTSIDE OF ADDHANDLER')
 
     const handleRemoveClickSubRecipeIngredient = (subRecipeIndex, ingredientIndex) => {
         const list = [...subRecipes]
+        console.log(subRecipeIndex, 'subrecipe index')
+        console.log(ingredientIndex, 'ingredient index')
+        console.log(subRecipes, 'SUBRECIPES STATE INSIDE OF REMOVE')
+        console.log(list, 'COPY OF SUBRECIPES TO CHANGE')
+        console.log(list[subRecipeIndex].ingredients, 'TARGET BEFORE DECLARING THE TARGET')
         const targetSubRecipe = list[subRecipeIndex].ingredients
+        console.log(targetSubRecipe, 'targetSubRecipe INSIDE OF REMOVE')
         targetSubRecipe.splice(ingredientIndex, 1)
         setSubRecipes(list)
     }
@@ -97,6 +108,10 @@ function RecipeForm(){
 
         list[subRecipeIndex].ingredients[ingredientIndex][name] = value
         setSubRecipes(list)
+    }
+
+    const handleUpload = () => {
+        fileUpload.current.click()
     }
 
     const handlePhoto = async (e) => {
@@ -234,116 +249,162 @@ function RecipeForm(){
         history.push(`/recipes/${newRecipeId}`)
     }
 
+    const autoExpand = (field) => {
+        field.style.height = 'inherit'
+        const computed = window.getComputedStyle(field)
+        const height = parseInt(computed.getPropertyValue('border-top-width'), 10)
+                    + parseInt(computed.getPropertyValue('padding-top'), 10)
+                    + field.scrollHeight
+                    + parseInt(computed.getPropertyValue('padding-bottom'), 10)
+                    + parseInt(computed.getPropertyValue('border-bottom-width'), 10)
+        field.style.height = height + 'px'
+    }
+
+    const handleTextArea = (e) => {
+        autoExpand(e.target);
+    }
+
 
     return (
-        <div>
-            <form onSubmit={handleSubmit} autoComplete="off">
-                <div>
-                    <input 
-                        type="text" 
-                        placeholder='Dish Title'
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                    />
-                    <select name="season" id="" onChange={(e) => setSeason(e.target.value)}>
-                        <option value="Winter">Winter</option>
-                        <option value="Spring">Spring</option>
-                        <option value="Summer">Summer</option>
-                        <option value="Autumn">Autumn</option>
-                    </select>
-                </div>
-                <div>
-                    {photo
-                        ?
-                            <img src={photo} alt="" style={{width: '300px', height: '300px'}}/>
-                        :
-                            <div>
-                                <input
-                                    type="file"
-                                    accept='image/*'
-                                    onChange={handlePhoto}
-                                />
-                            </div>
-                    }
-                </div>
-                <div>
-                    <p>Components</p>
-                    <textarea 
-                        name="components"
-                        cols="30"
-                        rows="10"
-                        value={component}
-                        onChange={(e) => setComponent(e.target.value)}
-                    ></textarea>
-                </div>
-                {subRecipes.map((subRecipe, i) => (
-                    <div>
-                        <div>
-                            <input
-                                name='title'
-                                placeholder='Sub recipe Title'
-                                value={subRecipe.title}
-                                onChange={(e) => handleInputChangeSubRecipe(e, i)}
-                            />
-                        </div>
-                        {subRecipe.ingredients.map((ingredient, idx) => (
-                            <div>
-                                <input 
-                                    type="text" 
-                                    placeholder='qty'
-                                    name='qty'
-                                    value={ingredient.qty}
-                                    onChange={(e) => handleInputChangeSubRecipeIngredient(e, i, idx)}
-                                />
-                                <input 
-                                    type="text" 
-                                    placeholder='ingredient'
-                                    name='ingredientId'
-                                    value={ingredient.ingredient} 
-                                    onChange={(e) => handleInputChangeSubRecipeIngredient(e, i, idx)}
-                                />
-                                <input 
-                                    type="text" 
-                                    placeholder='ingredient description'
-                                    name='description'
-                                    value={ingredient.description}
-                                    onChange={(e) => handleInputChangeSubRecipeIngredient(e, i, idx)}
-                                />
-                                <input 
-                                    id={`category-${i}-${idx}`}
-                                    type="text" 
-                                    placeholder='Catergory for ordering'
-                                    name='category'
-                                    value={ingredient.category}
-                                    onChange={(e) => handleInputChangeSubRecipeIngredient(e, i, idx)}
-                                />
-                                {subRecipe.ingredients.length !== 1 && <button onClick={() => handleRemoveClickSubRecipeIngredient(i, idx)}>Remove ingredient</button>}
-                                {subRecipe.ingredients.length - 1 === idx && <button onClick={() => handleAddClickSubRecipeIngredient(i)}>Add ingredient</button>}
-                            </div>
-                        ))}
-                        <div>
-                            <input
-                                name='description'
-                                placeholder='Recipe Description'
-                                value={subRecipe.description}
-                                onChange={(e) => handleInputChangeSubRecipe(e, i)}
-                            />
-                        </div>
-                        <div>
-                            {subRecipes.length !== 1 && <button onClick={() => handleRemoveClickSubRecipe(i)} >Remove Sub Recipe</button> }
-                            {subRecipes.length -1 === i && <button onClick={handleAddClickSubRecipe}>Add Sub Recipe</button> }
-                        </div>
+        <div className='form-container'>
+            <form className='nr-form' onSubmit={handleSubmit} autoComplete="off">
+                <h3>New Recipe</h3>
+                <div className='title-season'>
+                    <div className='ol-input'>
+                        <input 
+                            name='title'
+                            type="text" 
+                            placeholder=' '
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
+                        />
+                        <label htmlFor="title">Title</label>
                     </div>
-                ))}
-                <div>
-                    <p>Tags</p>
-                    <input 
-                        type="text"
-                        value={tags}
-                        onChange={(e) => setTags(e.target.value)}
-                    />
+                    <div className='season-select'>
+                        <select name="season" onChange={(e) => setSeason(e.target.value)}>
+                            <option value="Winter">Winter</option>
+                            <option value="Spring">Spring</option>
+                            <option value="Summer">Summer</option>
+                            <option value="Autumn">Autumn</option>
+                        </select>
+                    </div>
                 </div>
-                <button>Submit</button>
+                <div className='photo-components-container'>
+                    <div className='ol-input'>
+                        <textarea
+                            name="components"
+                            className='components'
+                            placeholder={`Example...\n  1ea Lobster\n  20g sauce\n  3ea sorrel leaves`}
+                            onInput={handleTextArea}
+                            value={component}
+                            onChange={(e) => setComponent(e.target.value)}
+                            ></textarea>
+                        <label htmlFor="components">Components</label>
+                    </div>
+                    <div className='photo-container'>
+                        {photo
+                            ?
+                                <div className='rf-photo' style={{backgroundImage: `url('${photo}')`}}/>
+                            :
+                            <>
+                                <input type='file' className='inputfile' ref={fileUpload} onChange={handlePhoto} />
+                                <div className='fileChooser' onClick={() => handleUpload()} >Choose Photo</div>
+                            </>
+                        }
+                    </div>
+                </div>
+                <div className='sub-recipe'>
+                    {subRecipes.map((subRecipe, i) => (
+                        <div className='sr-wrapper'>
+                            <div className='ol-input'>
+                                <input
+                                    name='title'
+                                    placeholder=' '
+                                    value={subRecipe.title}
+                                    onChange={(e) => handleInputChangeSubRecipe(e, i)}
+                                />
+                                <label htmlFor="title">Recipe Title</label>
+                            </div>
+                            {subRecipe.ingredients.map((ingredient, idx) => (
+                                <div className='sr-ingredient-wrapper'>  
+                                    <div className='ol-input qty'>
+                                        <input 
+                                            className='qty-input'
+                                            type="text" 
+                                            placeholder='120g ...'
+                                            name='qty'
+                                            value={ingredient.qty}
+                                            onChange={(e) => handleInputChangeSubRecipeIngredient(e, i, idx)}
+                                        />
+                                        <label htmlFor="qty">Qty</label>
+                                    </div>
+                                    <div className='ol-input'>
+                                        <input 
+                                            type="text" 
+                                            placeholder='Carrot ...'
+                                            name='ingredientId'
+                                            value={ingredient.ingredient} 
+                                            onChange={(e) => handleInputChangeSubRecipeIngredient(e, i, idx)}
+                                        />
+                                        <label htmlFor="ingredientId">Ingredient</label>
+                                    </div>
+                                    <div className='ol-input'>
+                                        <input 
+                                            type="text" 
+                                            placeholder='sliced thin ...'
+                                            name='description'
+                                            value={ingredient.description}
+                                            onChange={(e) => handleInputChangeSubRecipeIngredient(e, i, idx)}
+                                        />
+                                        <label htmlFor="description">Description</label>
+                                    </div>
+                                    <div className='ol-input'>
+                                        <input 
+                                            id={`category-${i}-${idx}`}
+                                            type="text" 
+                                            placeholder='Produce ...'
+                                            name='category'
+                                            value={ingredient.category}
+                                            onChange={(e) => handleInputChangeSubRecipeIngredient(e, i, idx)}
+                                        />
+                                        <label htmlFor="category">Category</label>
+                                    </div>
+                                    {subRecipe.ingredients.length - 1 === idx && <CgAddR className='sri-button' onClick={() => handleAddClickSubRecipeIngredient(i)} />}
+                                    {subRecipe.ingredients.length !== 1 && <CgRemoveR className='sri-button' onClick={() => handleRemoveClickSubRecipeIngredient(i, idx)} />}
+                                </div>
+                            ))}
+                            <div className='ol-input'>
+                                <textarea 
+                                    name="description"
+                                    className='description'
+                                    onInput={handleTextArea}
+                                    value={subRecipe.description}
+                                    onChange={(e) => handleInputChangeSubRecipe(e, i)}
+                                ></textarea>
+                                <label htmlFor="description">Description</label>
+                            </div>
+                            <div className='sub-recipe-buttons'>
+                                {subRecipes.length -1 === i && <button className='add-sr' onClick={handleAddClickSubRecipe}>Add Recipe</button>}
+                                {subRecipes.length !== 1 && <button className='remove-sr' onClick={() => handleRemoveClickSubRecipe(i)}>Remove Recipe</button>}
+                            </div>
+                        </div>
+                    ))}
+                </div>
+                <div className='tags-container'>
+                    <div className='ol-input'>
+                        <input 
+                            type="text"
+                            name='tags'
+                            placeholder=' '
+                            value={tags}
+                            onChange={(e) => setTags(e.target.value)}
+                        />
+                        <label htmlFor="tags">Tags</label>
+                    </div>
+                </div>
+                <div className='nr-submit'>
+                    <button className='nr-submit-button'>Submit</button>
+                </div>
             </form>
         </div>
     );

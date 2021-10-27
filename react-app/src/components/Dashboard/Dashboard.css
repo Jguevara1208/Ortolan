@@ -128,7 +128,7 @@
 .percent-outer {
     margin-top: 10px;
     margin-bottom: 20px;
-    background-color: #F9F9F9;
+    background-color: var(--bg);
     width: 90%;
     border-radius: 15px;
     display: flex;
@@ -136,7 +136,7 @@
 }
 
 .percent-inner {
-    background-color: #d7b96a;
+    background-color: var(--gold);
     border-radius: 15px;
     display: flex;
     align-items: center;
