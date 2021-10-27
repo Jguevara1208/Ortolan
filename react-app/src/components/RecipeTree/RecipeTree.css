@@ -46,7 +46,7 @@
 .season-border {
     margin-left: 8px;
     padding-left: 15px;
-    border-left: 1px solid #D7B969;
+    border-left: 1px solid var(--gold);
     height: fit-content;
 }
 
@@ -60,7 +60,7 @@
 .recipe-border {
     margin-left: 8px;
     padding-left: 10px;
-    border-left: 1px solid #D7B969;
+    border-left: 1px solid var(--gold);
     height: fit-content;
 }
 
@@ -70,16 +70,16 @@
     overflow: hidden;
     white-space: nowrap;
     font-size: .9rem;
-    color: #7C6C66;
+    color: var(--brown);
     font-weight: 300;
 }
 
 .tree-icon {
-    color: #D7B969;
+    color: var(--gold);
 }
 
 .folder-text {
-    color: #7C6C66;
+    color: var(--brown);
     font-size: .9rem;
 }
 
@@ -89,4 +89,8 @@
     background-color: var(--gold);
     border-radius: 15px;
     color: white;
+}
+
+.error {
+    color: rgb(136, 55, 55);
 }

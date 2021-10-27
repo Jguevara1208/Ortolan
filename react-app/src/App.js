@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import LoginForm from './components/auth/LoginForm';
+import Signup from './components/SignupPage/Signup';
+import Login from './components/LoginPage/Login';
 import SignUpForm from './components/auth/SignUpForm';
 import SideNav from './components/SideNav/NavBar'
 import TopNav from './components/TopNav/TopNav'
@@ -58,10 +59,10 @@ function App() {
             <RecipeEditForm />
           </ProtectedRoute>
           <Route path='/login' exact={true}>
-            <LoginForm />
+            <Login />
           </Route>
           <Route path='/signup' exact={true}>
-            <SignUpForm />
+            <Signup />
           </Route>
           {user 
             ? 

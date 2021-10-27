@@ -17,18 +17,22 @@ function ProjectsPage(){
     }, [dispatch])
 
     return (
-        <div>
-            {projects && Object.values(projects).map(project => (
-                <div>
-                    <Project project={project}/>
-                </div>
-            ))}
-            <button onClick={() => setShowModal(!showModal)}>Add New Project</button>
-            {showModal && (
-                <Modal onClose={() => setShowModal(false)} >
-                    <NewProject userId={userId} showModal={setShowModal}/>
-                </Modal>
-            )}
+        <div className='projects'>
+            <div className='projects-container'>
+            <button onClick={() => setShowModal(!showModal)}>New Project</button>
+            <div className='projects-wrapper'>
+                {projects && Object.values(projects).map(project => (
+                    <div className='project'>
+                        <Project project={project}/>
+                    </div>
+                ))}
+                {showModal && (
+                    <Modal onClose={() => setShowModal(false)} >
+                        <NewProject userId={userId} showModal={setShowModal}/>
+                    </Modal>
+                )}
+            </div>            
+            </div>
         </div>
     );
 };

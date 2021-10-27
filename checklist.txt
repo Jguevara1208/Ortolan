@@ -1,0 +1,19 @@
+Baseline Project Requirements
+- Readme Complete?
+- About links present?
+- Fully styled?
+- Intuitive (or clearly documented) usage
+- The application is free of bugs / defects
+- The application has no dead-links or non-functioning UI elements. 
+
+Baseline Auth Requirements
+- Error handling completed
+
+Baseline Feature Requirements
+- All implemented features are Console Error / Debug Free.
+- All implemented features are Bug Free
+- All implemented features are Fully Styled
+- All implemented features are Have Proper Error Handling
+- All implemented features are Dead Link Free
+
+This must be true for EVERY feature you decide to implement. You may change your mind on which features to implement, but they must be FULLY implemented.

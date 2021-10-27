@@ -1,0 +1,135 @@
+.settings-avatar {
+    width: 400px;
+    height: 400px;
+    background-position: center;
+    background-size: cover;
+    border-radius: 15px;
+}
+
+.s-name, .s-pos {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.s-pos {
+    font-weight: 400;
+}
+
+.s-pos > p {
+    color: var(--green);
+    font-size: 1.5rem;
+}
+
+.setting-input {
+    display: flex;
+    gap: 20px;
+}
+
+.s-edit {
+    cursor: pointer;
+}
+
+.s-submit {
+    cursor: pointer;
+    padding: 5px 10px;
+    border: 2px solid var(--green);
+    color: var(--green);
+    font-size: 1.1rem;
+    font-weight: 500;
+    border-radius: 5px;
+}
+
+.settings-user-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 100px;
+}
+
+.s-edit {
+    font-size: 1.2rem;
+}
+
+.settings-container {
+    width: 63%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    box-shadow: var(--shadow);
+    border-radius: 15px;
+    margin-left: 1%;
+}
+
+.user-data-container {
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.user-data-wrapper { 
+    display: flex;
+    justify-content: space-evenly;
+    width: 70%;
+}
+
+.data-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 20px;
+}
+
+.data-val {
+    text-align: left;
+}
+
+.data-val-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.s-add-button {
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 3px solid var(--green);
+    color: var(--green);
+    font-weight: 500;
+    width: fit-content;
+}
+
+.data-header {
+    text-align: center;
+    padding-bottom: 10px;
+    border-bottom: var(--border);
+}
+
+.selected {
+    border-bottom: 3px solid var(--green)
+}
+
+.s-input-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.s-button-container {
+    display: flex;
+    gap: 20px;
+}
+
+.s-select {
+    border: 1px solid var(--green);
+    border-radius: 5px;
+    padding: 3px 6px;
+    color: var(--green);
+}

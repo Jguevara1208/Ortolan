@@ -1,6 +1,145 @@
 .recipe-photo {
-    width: 600px;
+    width: 100%;
     height: 600px;
     background-size: cover;
     background-position: center;
+    border-radius: 15px;
+    margin-bottom: 30px;
+}
+
+.srp-container {
+    display: flex;
+    justify-content: center;
+    width: 70%;
+    align-self: center;
+}
+
+.srp-wrapper {
+    width: 80%;
+    max-width: 1110px;
+    display: flex;
+    flex-direction: column;
+    padding: 80px 160px;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: var(--shadow);
+}
+
+.srp-title-season {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.srp-title-season > p {
+    border-bottom: 1px solid rgb(147, 147, 147);
+    color: rgb(147, 147, 147);
+    width: fit-content;
+    padding-bottom: 5px;
+}
+
+.srp-components {
+    margin-bottom: 40px;
+}
+
+.srp-header {
+    width: fit-content;
+    padding-bottom: 3px;
+    border-bottom: 1px solid black;
+    margin-bottom: 10px;
+}
+
+.srp-component {
+    margin-bottom: 5px;
+    font-size: 1.1rem;
+}
+
+.recipe-diff {
+    margin-bottom: 50px;
+}
+
+.srp-recipe {
+    margin-bottom: 100px;
+}
+
+.srp-recipe-title {
+    width: fit-content;
+    padding-bottom: 3px;
+    border-bottom: 1px solid rgb(147, 147, 147);
+    font-weight: 500;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.srp-ing-line {
+    font-size: 1.05rem;
+    line-height: 150%;
+}
+
+.srp-ing-wrapper {
+    margin-bottom: 20px;
+}
+
+.tab {
+    margin-left: 10px;
+}
+
+.paragraph {
+    line-height: 150%;
+    font-size: 1.1rem;
+    text-indent: 30px;
+}
+
+.srp-buttons {
+    display: flex;
+    flex-direction: column;
+}
+
+.srp-button1 {
+    font-size: 40px;
+    color: var(--green);
+    margin-left: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.srp-button2 {
+    font-size: 50px;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+.srp-delete {
+    position: absolute;
+    top: 210px;
+    right: 160px;
+    background-color: white;
+    box-shadow: var(--shadow);
+    padding: 30px 0px 30px 0px;
+    border: var(--border);
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.srp-confirmation {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    text-align: center;
+    width: 70%;
+}
+
+.srp-delete-contianer {
+    display: flex;
+    gap: 20px;
+}
+
+.srp-confirm {
+    padding: 10px 15px;
+    border-radius: 15px;
+    background-color: var(--green);
+    font-weight: 500;
+    color: white;
 }

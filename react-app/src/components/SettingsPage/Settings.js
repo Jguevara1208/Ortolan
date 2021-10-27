@@ -5,6 +5,8 @@ import { setOrderCategories, addOrderCategory } from '../../store/orderCategorie
 import { setIngredients, addIngredient } from '../../store/ingredients';
 import { setTagsOne } from '../../store/tags';
 import { editPosition, editName } from '../../store/session';
+import { VscEdit } from 'react-icons/vsc'
+import './Settings.css'
 
 function Settings(){
     const dispatch = useDispatch()
@@ -87,126 +89,172 @@ function Settings(){
     }
 
     return (
-        <div>
-            <div>
+        <div className='settings-container'>
+            <div className='settings-user-container'>
                 {showEditTitle 
                     ? 
-                    <div>
+                    <div className='ol-input setting-input'>
                         <input 
+                            name='title'
                             type="text" 
+                            placeholder=' '
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
                         />
-                        <button onClick={handleTitleSubmit} >Submit</button>
-                        <button onClick={cancelTitleEdit}>Cancel</button>
+                        <label htmlFor="title">Name</label>
+                        <button className='s-submit' onClick={handleTitleSubmit} >Submit</button>
+                        <button className='s-cancel' onClick={cancelTitleEdit}>Cancel</button>
                     </div>
                     :
-                    <div>
+                    <div className='s-name'>
                         <p>{user.name}</p>
-                        <button onClick={() => setShowEditTitle(true)}>Edit Name</button>
+                        <VscEdit className='s-edit'  onClick={() => setShowEditTitle(true)}/>
                     </div>
                 }
                 {showEditPosition
                 ?
-                    <div>
+                    <div className='ol-input setting-input'>
                         <input
+                            placeholder=' '
+                            name='pos'
                             type="text"
                             value={position}
                             onChange={(e) => setPosition(e.target.value)}
                         />
-                        <button onClick={handlePositionSubmit} >Submit</button>
-                        <button onClick={cancelPositionEdit}>Cancel</button>
+                        <label htmlFor="pos">Position</label>
+                        <button className='s-submit' onClick={handlePositionSubmit} >Submit</button>
+                        <button className='s-cancel' onClick={cancelPositionEdit}>Cancel</button>
                     </div>
                 :
-                    <div>
+                    <div className='s-pos'>
                         <p>{user.position}</p>
-                        <button onClick={() => setShowEditPosition(true)}>Edit Position</button>
+                        <VscEdit  className='s-edit' onClick={() => setShowEditPosition(true)} />
                     </div>
                 }
-                <div className='settings-avatar' style={{backgroundImage: `url('${user.avatar}')`}}/>
+                <div>
+                    <div className='settings-avatar' style={{backgroundImage: `url('${user.avatar}')`}}/>
+                </div>
             </div>
-            <div>
-                <div>
-                    <p onClick={() => setShowUnits(!showUnits)}>Units</p>
-                    {showUnits && Object.keys(units).map(un => (
+            <div className='user-data-container'>
+                <div className='user-data-wrapper'>
+                    <div className='data-container'>
+                        <p className={showUnits ? 'selected data-header' : 'data-header'} onClick={() => setShowUnits(!showUnits)}>Units</p>
                         <div>
-                            {(un !== 'none' && un !== ' ' && un !== '' && un !== 'None') && (
-                                <p>{un}</p>
-                            )}
+                            {addUnit 
+                            ? 
+                            <div className='s-input-container'>
+                                <div className='ol-input'>
+                                    <input 
+                                        autoComplete='off'
+                                        name='unit'
+                                        type="text"
+                                        placeholder=' ' 
+                                        value={newUnit}
+                                        onChange={(e) => setNewUnit(e.target.value)}
+                                    />
+                                    <label htmlFor="unit">Unit</label>
+                                </div>
+                                <div className='s-button-container'>
+                                    <button className='s-submit' onClick={handleAddUnit} >Submit</button>
+                                    <button className='s-cancel' onClick={() => setAddUnit(false)} >Cancel</button>
+                                </div>
+                            </div>
+                            :
+                                <>
+                                    {showUnits && (    
+                                       <button className='s-add-button' onClick={() => setAddUnit(true)}>Add Unit</button>
+                                    )}
+                                </>
+                            }
                         </div>
-                    ))}
-                    <div>
-                        {addUnit 
-                        ? 
+                        {showUnits && Object.keys(units).map(un => (
+                            <div className='data-val-wrapper'>
+                                {(un !== 'none' && un !== ' ' && un !== '' && un !== 'None') && (
+                                    <p className='data-val'>- {un}</p>
+                                )}
+                            </div>
+                        ))}
+                    </div>
+                    <div className='data-container'>
+                        <p className={showIngredients ? 'selected data-header' : 'data-header'} onClick={() => setShowIngredients(!showIngredients)}>Ingredients</p>
+                        <div>
+                            {addIng
+                            ? 
+                            <div className='s-input-container'>
+                                <div className='ol-input'>
+                                    <input 
+                                        autoComplete='off'
+                                        name='newIng'
+                                        type="text" 
+                                        placeholder=' '
+                                        value={newIngredient}
+                                        onChange={(e) => setNewIngredient(e.target.value)}
+                                    />
+                                    <label htmlFor="newIng">Ingredient</label>
+                                </div>
+                                <div>
+                                    <select className='s-select' name="category"  value={ingCat} onChange={(e) => setIngCat(e.target.value)}>
+                                        {Object.keys(categories).map(cat => (
+                                            <option value={categories[cat]}>{cat}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                                <div className='s-button-container'>
+                                    <button className='s-submit' onClick={handleAddIngredient} >Submit</button>
+                                    <button className='s-cancel' onClick={() => setAddIng(false)} >Cancel</button>
+                                </div>
+                            </div>
+                            :
                             <>
-                                <input 
-                                    type="text" 
-                                    value={newUnit}
-                                    onChange={(e) => setNewUnit(e.target.value)}
-                                />
-                                <button onClick={handleAddUnit} >Submit</button>
-                                <button onClick={() => setAddUnit(false)} >Cancel</button>
+                                {showIngredients && (
+                                    <button className='s-add-button' onClick={() => setAddIng(true)}>Add Ingredient</button>
+                                )}
                             </>
-                        :
-                            <button onClick={() => setAddUnit(true)}>Add Unit</button>
-                        }
-                    </div>
-                </div>
-                <div>
-                    <p onClick={() => setShowIngredients(!showIngredients)}>Ingredients</p>
-                    {showIngredients && Object.keys(ingredients).map(ing => (
-                        <div>
-                            {ing !== 'None' && (
-                                <p>{ing}</p>
-                            )}
+                            }
                         </div>
-                    ))}
-                    <div>
-                        {addIng
-                        ? 
-                        <>
-                            <input 
-                                type="text" 
-                                value={newIngredient}
-                                onChange={(e) => setNewIngredient(e.target.value)}
-                            />
-                            <select name="category"  value={ingCat} onChange={(e) => setIngCat(e.target.value)}>
-                                {Object.keys(categories).map(cat => (
-                                    <option value={categories[cat]}>{cat}</option>
-                                ))}
-                            </select>
-                            <button onClick={handleAddIngredient} >Submit</button>
-                            <button onClick={() => setAddIng(false)} >Cancel</button>
-                        </>
-                        :
-                            <button onClick={() => setAddIng(true)}>Add Ingredient</button>
-                        }
+                        {showIngredients && Object.keys(ingredients).map(ing => (
+                            <div className='data-val-wrapper'>
+                                {ing !== 'None' && (
+                                    <p className='data-val'>- {ing}</p>
+                                )}
+                            </div>
+                        ))}
                     </div>
-                </div>
-                <div>
-                    <p onClick={() => setShowCategories(!showCategories)}>Ordering Categories</p>
-                    {showCategories && Object.keys(categories).map(cat => (
-                        <div>
-                            {cat !== 'None' && (
-                                <p>{cat}</p>
-                            )}
-                        </div>
-                    ))}
-                    <div>
+                    <div className='data-container'>
+                        <p className={showCategories ? 'selected data-header' : 'data-header'} onClick={() => setShowCategories(!showCategories)}>Ordering Categories</p>
                         {addCategory
                         ? 
-                        <>
-                            <input 
-                                type="text" 
-                                value={newCategory}
-                                onChange={(e) => setNewCategory(e.target.value)}
-                            />
-                            <button onClick={handleAddCategory} >Submit</button>
-                            <button onClick={() => setAddCategory(false)} >Cancel</button>
-                        </>
+                        <div className='s-input-container'>
+                            <div className='ol-input'>
+                                <input 
+                                    autoComplete='off'
+                                    name='category'
+                                    placeholder=' '
+                                    type="text" 
+                                    value={newCategory}
+                                    onChange={(e) => setNewCategory(e.target.value)}
+                                    />
+                                <label htmlFor="category">Category</label>
+                            </div>
+                            <div className='s-button-container'>
+                                <button className='s-submit' onClick={handleAddCategory} >Submit</button>
+                                <button className='s-cancel' onClick={() => setAddCategory(false)} >Cancel</button>
+                            </div>
+                        </div>
                         :
-                            <button onClick={() => setAddCategory(true)}>Add Category</button>
+                        <>
+                            {showCategories && (
+                                <button className='s-add-button' onClick={() => setAddCategory(true)}>Add Category</button>
+                            )}
+                        </>
                         }
+                        {showCategories && Object.keys(categories).map(cat => (
+                            <div className='data-val-wrapper'>
+                                {(cat !== 'None' && cat !== ' ' && cat !== '') && (
+                                    <p className='data-val'>- {cat}</p>
+                                )}
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>

@@ -1,6 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { updateProjectTask, deleteTaskThunk } from '../../store/projects';
 import { useState } from 'react';
+import {CgRemoveR} from 'react-icons/cg'
 
 function Task({task, calculateCompletion}){
     const dispatch = useDispatch();
@@ -22,13 +23,15 @@ function Task({task, calculateCompletion}){
     };
 
     return (
-        <div onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
-            <div onClick={toggleCompletion} >
-                <p>{task.description}<span>{completed ? ' completed' : ''}</span></p>
+        <div className='task-container' onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+            <div className='task-wrapper'>
+                <div className={completed ? 'task-completed' : 'task-uncomplete'} onClick={toggleCompletion} >
+                    <p><span>{completed ? '✓ ' : ''}</span>{task.description}</p>
+                </div>
+                    {!completed && (
+                        <CgRemoveR className={isHovered ? 'task-delete task-delete-hovered' : 'task-delete'} onClick={deleteTask}/>
+                    )}
             </div>
-                {(isHovered && !completed) && (
-                    <button onClick={deleteTask}>Delete Task</button>
-                )}
         </div>
     );
 };

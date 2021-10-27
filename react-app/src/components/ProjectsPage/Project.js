@@ -58,6 +58,12 @@ function Project({project}){
         }
     }
 
+    const freeCook = (cookId) => {
+        let assigned = project.assigned.find(cook => cook.id === cookId)
+        console.log(cookId)
+        return assigned === undefined ? true : false
+    }
+
     const handleAddTask = async () => {
         const req = {
             projectId: project.id,
@@ -68,72 +74,83 @@ function Project({project}){
     }
     
     return (
-        <div style={{padding: '100px'}}>
-            <div onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
-                <div>
+        <div>
+            <div className='pc-wrapper' onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+                <div className='pc-top'>
                     <p>{project.title}</p>
-                    <button onClick={removeProject} >Remove Project</button>
+                    <button className={isHovered ? 'button-visible pc-button' : 'pc-button'} onClick={removeProject} >Remove</button>
                 </div>
-                <p>{project.description}</p>
-                <div>
-                    <p>Assigned to Project</p>
-                    {project.assigned.map(cook => (
-                        <AssignedToProject cook={cook} projectId={project.id}/>
-                    ))}
-                    <div>
-                        <button onClick={() => setShowMembers(!showMembers)}>Assign Member</button>
-                        {showMembers && (
-                            <div>
-                                {team && team.map(cook => (
-                                    <div onClick={() => assignCook(cook.id)}>
-                                        <div className='cook-avatar' style={{backgroundImage: `url('${cook.avatar}')`}}/>
-                                        <p>{cook.name}</p>
-                                        <p>{cook.position}</p>
-                                    </div>
-                                ))}
-                            </div>
-                        )}
-                    </div>
-
-                </div>
-                <div>
-                    <p>Tasks</p>
-                    {project.tasks.map(task => (
-                        <div>
-                            <Task task={task} calculateCompletion={calculateCompletion}/>
+                <p className='pc-desc'>{project.description ? project.description : 'No description'}</p>
+                <div className='atp-section'>
+                    <div className='pp-assign-container'>
+                        <p className='atp-header'>Assigned to Project</p>
+                        <div className='pp-assign'>
+                            <button onClick={() => setShowMembers(!showMembers)}>Assign</button>
+                            {showMembers && (
+                                <div className='assign-list'>
+                                    {team && team.map(cook => (
+                                        <>
+                                            {freeCook(cook.id) && (
+                                                <div className='cook' onClick={() => assignCook(cook.id)}>
+                                                    <div className='cook-avatar2' style={{backgroundImage: `url('${cook.avatar}')`}}/>
+                                                    <p>{cook.name.split(' ')[0]}</p>
+                                                </div>
+                                            )}
+                                        </>
+                                    ))}
+                                </div>
+                            )}
                         </div>
-                    ))}
-                    <div className={isHovered ? 'add-task-hovered' : 'add-task'}>
-                        {!addTask 
-                            ? 
-                            <button onClick={() => setAddTask(true)}>
-                                add task
-                            </button>
-                            :
-                            <>
-                                <input type="text" placeholder='New Task' value={newTask} onChange={(e) => setNewTask(e.target.value)}/>
-                                <button onClick={handleAddTask}>Add</button>
-                                <button onClick={() => setAddTask(false)}>Cancel</button>
-                            </>
-                        }
+                    </div>
+                    <div className='all-assigned'>
+                        {project.assigned.map(cook => (
+                            <AssignedToProject cook={cook} projectId={project.id}/>
+                        ))}
                     </div>
                 </div>
-                <div style={{ width: 100, height: 100 }}>
-                    <ProgressProvider valueStart={0} valueEnd={valueEnd}>
-                        {value => <CircularProgressbar
-                            value={value}
-                            text={`${value}%`}
-                            strokeWidth={15}
-                            styles={buildStyles({
-                                textSize: '25px',
-                                rotation: 0.25,
-                                pathTransitionDuration: 1,
-                                pathColor: `#65916c`,
-                                textColor: `#65916c`,
-                                trailColor: '#d6d6d6',
-                            })}
-                        />}
-                    </ProgressProvider>
+                <div className='tasks-container'>
+                    <div className='pp-tasks'>
+                        <p className='task-header'>Tasks</p>
+                        {project.tasks.map(task => (
+                            <div>
+                                <Task task={task} calculateCompletion={calculateCompletion}/>
+                            </div>
+                        ))}
+                        <div className={isHovered ? 'add-task-hovered' : 'add-task'}>
+                            {!addTask 
+                                ? 
+                                <button className='add-task-button' onClick={() => setAddTask(true)}>
+                                    add task
+                                </button>
+                                :
+                                <>
+                                    <div className='ol-input task-input'>
+                                        <input name='task' type="text" placeholder=' ' value={newTask} onChange={(e) => setNewTask(e.target.value)}/>
+                                        <label htmlFor="task">Task</label>
+                                    </div>
+                                    <button className='task-add' onClick={handleAddTask}>Add</button>
+                                    <button className='task-cancel' onClick={() => setAddTask(false)}>Cancel</button>
+                                </>
+                            }
+                        </div>
+                    </div>
+                    <div className='progress' style={{ width: 100, height: 100 }}>
+                        <ProgressProvider valueStart={0} valueEnd={valueEnd}>
+                            {value => <CircularProgressbar
+                                value={value}
+                                text={`${value}%`}
+                                strokeWidth={8}
+                                styles={buildStyles({
+                                    textSize: '20px',
+                                    rotation: 0.25,
+                                    pathTransitionDuration: 1,
+                                    pathColor: `#65916c`,
+                                    textColor: `#65916c`,
+                                    trailColor: '#d6d6d6',
+                                })}
+                            />}
+                        </ProgressProvider>
+                    </div>
                 </div>
             </div>
         </div>
