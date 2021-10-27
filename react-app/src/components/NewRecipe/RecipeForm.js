@@ -65,22 +65,15 @@ function RecipeForm(){
         const list = [...subRecipes]
         const targetSubRecipe = list[subRecipeIndex].ingredients
         targetSubRecipe.push({ qty: '', ingredientId: '', unitId: '', description: '', category: '' })
-        console.log(list, 'LIST ADDITION ON ADD')
         setSubRecipes(list)
     }
-    console.log(subRecipes, 'SUB RECIPES OUTSIDE OF ADDHANDLER')
 
-    const handleRemoveClickSubRecipeIngredient = (subRecipeIndex, ingredientIndex) => {
+
+    const handleRemoveClickSubRecipeIngredient = async (subRecipeIndex, ingredientIndex) => {
         const list = [...subRecipes]
-        console.log(subRecipeIndex, 'subrecipe index')
-        console.log(ingredientIndex, 'ingredient index')
-        console.log(subRecipes, 'SUBRECIPES STATE INSIDE OF REMOVE')
-        console.log(list, 'COPY OF SUBRECIPES TO CHANGE')
-        console.log(list[subRecipeIndex].ingredients, 'TARGET BEFORE DECLARING THE TARGET')
         const targetSubRecipe = list[subRecipeIndex].ingredients
-        console.log(targetSubRecipe, 'targetSubRecipe INSIDE OF REMOVE')
         targetSubRecipe.splice(ingredientIndex, 1)
-        setSubRecipes(list)
+        await setSubRecipes(list)
     }
 
     const handleInputChangeSubRecipeIngredient = (e, subRecipeIndex, ingredientIndex) => {
@@ -341,9 +334,9 @@ function RecipeForm(){
                                     <div className='ol-input'>
                                         <input 
                                             type="text" 
-                                            placeholder='Carrot ...'
+                                            placeholder={idx === 0 ? 'Carrot ...' : ' '}
                                             name='ingredientId'
-                                            value={ingredient.ingredient} 
+                                            value={ingredient.ingredientId} 
                                             onChange={(e) => handleInputChangeSubRecipeIngredient(e, i, idx)}
                                         />
                                         <label htmlFor="ingredientId">Ingredient</label>
