@@ -60,8 +60,15 @@ function Project({project}){
 
     const freeCook = (cookId) => {
         let assigned = project.assigned.find(cook => cook.id === cookId)
-        console.log(cookId)
         return assigned === undefined ? true : false
+    }
+
+    const anyFreeCooks = () => {
+        let assigned = project.assigned.map(cook => cook.id)
+        let allCooks = team.map(cook => cook.id)
+        let freeCooks = allCooks.filter(cook => !assigned.includes(cook))
+        console.log(freeCooks)
+        return freeCooks.length !== 0
     }
 
     const handleAddTask = async () => {
@@ -88,16 +95,25 @@ function Project({project}){
                             <button onClick={() => setShowMembers(!showMembers)}>Assign</button>
                             {showMembers && (
                                 <div className='assign-list'>
-                                    {team && team.map(cook => (
-                                        <>
-                                            {freeCook(cook.id) && (
-                                                <div className='cook' onClick={() => assignCook(cook.id)}>
-                                                    <div className='cook-avatar2' style={{backgroundImage: `url('${cook.avatar}')`}}/>
-                                                    <p>{cook.name.split(' ')[0]}</p>
-                                                </div>
-                                            )}
-                                        </>
-                                    ))}
+                                    {anyFreeCooks() 
+                                    ? 
+                                    <>
+                                        {team && team.map(cook => (
+                                            <>
+                                                {freeCook(cook.id) && (
+                                                    <div className='cook' onClick={() => assignCook(cook.id)}>
+                                                        <div className='cook-avatar2' style={{backgroundImage: `url('${cook.avatar}')`}}/>
+                                                        <p>{cook.name.split(' ')[0]}</p>
+                                                    </div>
+                                                )}
+                                            </>
+                                        ))}
+                                    </>
+                                    :
+                                        <div>
+                                            <p>None</p>
+                                        </div>
+                                    }
                                 </div>
                             )}
                         </div>

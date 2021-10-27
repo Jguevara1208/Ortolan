@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentRecipe } from '../../store/currentRecipe';
 import { deleteCurrentRecipe } from '../../store/currentRecipe';
-import { GrEdit } from 'react-icons/gr'
+import { FiEdit2 } from 'react-icons/fi'
 import { TiDocumentDelete } from 'react-icons/ti'
 import './SingleRecipePage.css'
 
@@ -71,8 +71,8 @@ function SingleRecipePage(){
                 </div>
             )}
             <div className='srp-buttons'>
-                <Link className='srp-button1' to={`/recipes/${recipeId}/edit`}>
-                    <GrEdit />
+                <Link className='' to={`/recipes/${recipeId}/edit`}>
+                    <FiEdit2 className='srp-button1' />
                 </Link>
                 <TiDocumentDelete className='srp-button2' onClick={() => setShowDelete(!showDelete)}/>
                 {showDelete && (

@@ -7,6 +7,7 @@ import { setIngredients, addIngredient } from '../../store/ingredients';
 import { setOrderCategories, addOrderCategory } from '../../store/orderCategories';
 import { createCurrentRecipe } from '../../store/currentRecipe'
 import { CgRemoveR, CgAddR} from 'react-icons/cg'
+import imageCompression from 'browser-image-compression'
 import './RecipeForm.css'
 
 function RecipeForm(){
@@ -108,8 +109,17 @@ function RecipeForm(){
     }
 
     const handlePhoto = async (e) => {
+        const imageFile = e.target.files[0]
+        const options = {
+            maxSizeMB: 1,
+            maxWidthOrHeight:1920,
+            useWebWorker: true
+        }
+        const compressedFile = await imageCompression(imageFile, options)
+        let newFile = new File([compressedFile], compressedFile.name)
         const formData = new FormData()
-        formData.append("image", e.target.files[0])
+        formData.append('image', newFile)
+        // formData.append("image", e.target.files[0])
 
         const res = await fetch('/api/images/', {
             method: "POST",
@@ -275,6 +285,7 @@ function RecipeForm(){
                     </div>
                     <div className='season-select'>
                         <select name="season" onChange={(e) => setSeason(e.target.value)}>
+                            <option value="" disabled selected>Season ▼</option>
                             <option value="Winter">Winter</option>
                             <option value="Spring">Spring</option>
                             <option value="Summer">Summer</option>
@@ -283,7 +294,7 @@ function RecipeForm(){
                     </div>
                 </div>
                 <div className='photo-components-container'>
-                    <div className='ol-input'>
+                    <div className='ol-input component-container'>
                         <textarea
                             name="components"
                             className='components'
@@ -366,7 +377,7 @@ function RecipeForm(){
                                     {subRecipe.ingredients.length !== 1 && <CgRemoveR className='sri-button' onClick={() => handleRemoveClickSubRecipeIngredient(i, idx)} />}
                                 </div>
                             ))}
-                            <div className='ol-input'>
+                            <div className='ol-input ol-input-description'>
                                 <textarea 
                                     name="description"
                                     className='description'
