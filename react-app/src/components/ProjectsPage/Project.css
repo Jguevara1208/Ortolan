@@ -383,6 +383,11 @@
     font-weight: 500;
 }
 
+.task-add:hover {
+    color: white;
+    background-color: var(--green);
+}
+
 .task-cancel {
     color: var(--green);
     font-weight: 500;
