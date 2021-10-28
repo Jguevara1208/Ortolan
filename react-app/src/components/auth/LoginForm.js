@@ -40,6 +40,13 @@ const LoginForm = () => {
   return (
     <form className='auth-form'onSubmit={onLogin}>
       <h3>Welcome Back</h3>
+      {errors.length > 0 && errors.map((err, i) => (
+        <>
+          {err.startsWith('email') && (
+            <p key={`email-${i}`} className='error'>• {err.split(':')[1].trim()}</p>
+          )}
+        </>
+      ))}
       <div className='ol-input'>
         <input
           name='email'
@@ -50,10 +57,10 @@ const LoginForm = () => {
         />
         <label htmlFor="email">Email</label>
       </div>
-      {errors.length > 0 && errors.map(err => (
+      {errors.length > 0 && errors.map((err, i) => (
         <>
-          {err.startsWith('email') && (
-            <p className='error'>• {err.split(':')[1].trim()}</p>
+          {err.startsWith('password') && (
+            <p key={`password-${i}`} className='error'>• {err.split(':')[1].trim()}</p>
           )}
         </>
       ))}
@@ -67,13 +74,6 @@ const LoginForm = () => {
         />
         <label htmlFor='password'>Password</label>
       </div>
-      {errors.length > 0 && errors.map(err => (
-        <>
-          {err.startsWith('password') && (
-            <p className='error'>• {err.split(':')[1].trim()}</p>
-          )}
-        </>
-      ))}
         <button className='form-button' type='submit'>Login</button>
         <button className='form-demo' onClick={demoUser}>Demo</button>
         <p>No account? <Link className='log-in-link' to='/signup'>Sign Up</Link></p>

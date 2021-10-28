@@ -63,7 +63,7 @@ export const addTag = (tag) => async (dispatch) => {
 };
 
 export const updateTag = (oldTagName, tag) => async (dispatch) => {
-    const res = await fetch(`/api/tags/${tag.id}/`, {
+    await fetch(`/api/tags/${tag.id}/`, {
         method: "PATCH",
         headers: {
             "Content-Type" : "application/json"

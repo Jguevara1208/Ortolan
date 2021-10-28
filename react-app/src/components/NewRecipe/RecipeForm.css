@@ -121,6 +121,12 @@
     transition: .1s cubic-bezier(.65,.05,.36,1);
 }
 
+.recipe-title input {
+    min-width: 518px;
+    width: 50%;
+    max-width: 555px;
+}
+
 .ol-input label {
     position: absolute;
     top: 50%;
@@ -208,6 +214,7 @@ input::placeholder {
     max-height: 50vh;
     color: var(--green);
     width: 100%;
+    min-width: 400px;
     outline: 1px solid var(--green);
     border-radius: 5px;
     border: none;
@@ -223,6 +230,11 @@ input::placeholder {
     align-items: center;
     width: 48%;
     max-height: 405px;
+}
+
+.recipe-form-photo {
+    border: 1px dashed var(--green);
+    cursor: pointer;
 }
 
 .inputfile {

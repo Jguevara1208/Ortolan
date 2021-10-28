@@ -298,7 +298,7 @@ function RecipeEditForm() {
         <div className='form-container'>
             <form className='nr-form' onSubmit={handleSubmit} autoComplete="off">
                 <div className='title-season'>
-                    <div className='ol-input'>
+                    <div className='ol-input recipe-title'>
                         <input
                             type="text"
                             placeholder=' '
@@ -331,7 +331,10 @@ function RecipeEditForm() {
                     <div className='photo-container'>
                         {photo
                             ?
-                            <div className='rf-photo' style={{ backgroundImage: `url('${photo}')` }} />
+                            <>
+                                <input type='file' className='inputfile' ref={fileUpload} onChange={handlePhoto} />
+                                <div className='rf-photo' onClick={() => handleUpload()} style={{ backgroundImage: `url('${photo}')` }} />
+                            </>
                             :
                             <>
                                 <input type='file' className='inputfile' ref={fileUpload} onChange={handlePhoto} />
@@ -342,8 +345,8 @@ function RecipeEditForm() {
                 </div>
                 <div className='sub-recipe'>
                     {subRecipes.map((subRecipe, i) => (
-                        <div className='sr-wrapper'>
-                            <div className='ol-input'>
+                        <div key={`sr-${i}`} className='sr-wrapper'>
+                            <div className='ol-input recipe-title'>
                                 <input
                                     name='title'
                                     placeholder='Sub recipe Title'
@@ -353,7 +356,7 @@ function RecipeEditForm() {
                                 <label htmlFor="title">Recipe Title</label>
                             </div>
                             {subRecipe.ingredients.map((ingredient, idx) => (
-                                <div className='sr-ingredient-wrapper'>
+                                <div key={`ing-${i}-${idx}`} className='sr-ingredient-wrapper'>
                                     <div className='ol-input qty'>
                                         <input
                                             className='qty-input'

@@ -73,6 +73,7 @@ function NewProject({userId, showModal}){
         <div>
             <form className='project-form' onSubmit={handleSubmit} autoComplete='off'>
                 <h3>New Project</h3>
+                {errors['title'] && <p className='error'>{errors['title']}</p> }
                 <div className='ol-input'>
                     <input 
                         name='title'
@@ -83,7 +84,6 @@ function NewProject({userId, showModal}){
                     />
                     <label htmlFor="title">Title</label>
                 </div>
-                {errors['title'] && <p className='error'>{errors['title']}</p> }
                 <div className='ol-input'>
                     <textarea
                         name="projectDescription"
@@ -97,7 +97,7 @@ function NewProject({userId, showModal}){
                 </div>
                 <p className='np-header'>Tasks</p>
                 {tasks.map( (task, i) => (
-                    <div className='ol-input nt-task'>
+                    <div key={`task-${i}`} className='ol-input nt-task'>
                         <input 
                             type="text" 
                             name='description'

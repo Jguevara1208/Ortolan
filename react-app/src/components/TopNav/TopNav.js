@@ -27,7 +27,9 @@ const TopNav = () => {
                 <div className='signed-in'>
                     <div className='third-empty'/>
                     <div className='third-logo'>
-                        {navLogo}
+                        <NavLink to='/' exact={true}>
+                            {navLogo}
+                        </NavLink>
                     </div>
                     <div className='third-logout'>
                         <LogoutButton />

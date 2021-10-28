@@ -1,12 +1,2 @@
 Baseline Project Requirements
 - Readme Complete?
-- About links present?
-- Intuitive (or clearly documented) usage
-- The application is free of bugs / defects
-
-Baseline Feature Requirements
-- All implemented features are Console Error / Debug Free.
-- All implemented features are Bug Free
-- All implemented features are Have Proper Error Handling
-
-This must be true for EVERY feature you decide to implement. You may change your mind on which features to implement, but they must be FULLY implemented.

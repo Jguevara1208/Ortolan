@@ -41,7 +41,7 @@ export const createCurrentRecipe = (recipe) => async (dispatch) => {
 }
 
 export const deleteCurrentRecipe = (recipeId) => async () => {
-    const res = await fetch(`/api/recipes/${recipeId}/`, {
+    await fetch(`/api/recipes/${recipeId}/`, {
         method: "DELETE"
     });
 };

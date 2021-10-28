@@ -14,7 +14,7 @@ function Year({year, seasons}){
             {show && (
                 <div className='season-border'>
                     {seasons && Object.keys(seasons).map(season => (
-                        <Season season={season} dishes={seasons[season]}/>
+                        <Season key={`yr-${season}`} season={season} dishes={seasons[season]}/>
                     ))}
                 </div>
             )}

@@ -67,7 +67,6 @@ function Project({project}){
         let assigned = project.assigned.map(cook => cook.id)
         let allCooks = team.map(cook => cook.id)
         let freeCooks = allCooks.filter(cook => !assigned.includes(cook))
-        console.log(freeCooks)
         return freeCooks.length !== 0
     }
 
@@ -98,10 +97,10 @@ function Project({project}){
                                     {anyFreeCooks() 
                                     ? 
                                     <>
-                                        {team && team.map(cook => (
+                                        {team && team.map((cook) => (
                                             <>
                                                 {freeCook(cook.id) && (
-                                                    <div className='cook' onClick={() => assignCook(cook.id)}>
+                                                    <div key={`team-${cook.id}`} className='cook' onClick={() => assignCook(cook.id)}>
                                                         <div className='cook-avatar2' style={{backgroundImage: `url('${cook.avatar}')`}}/>
                                                         <p>{cook.name.split(' ')[0]}</p>
                                                     </div>
@@ -120,7 +119,7 @@ function Project({project}){
                     </div>
                     <div className='all-assigned'>
                         {project.assigned.map(cook => (
-                            <AssignedToProject cook={cook} projectId={project.id}/>
+                            <AssignedToProject key={`assigned-${cook.id}`} cook={cook} projectId={project.id}/>
                         ))}
                     </div>
                 </div>
@@ -128,7 +127,7 @@ function Project({project}){
                     <div className='pp-tasks'>
                         <p className='task-header'>Tasks</p>
                         {project.tasks.map(task => (
-                            <div>
+                            <div key={`task-${task.id}`}>
                                 <Task task={task} calculateCompletion={calculateCompletion}/>
                             </div>
                         ))}

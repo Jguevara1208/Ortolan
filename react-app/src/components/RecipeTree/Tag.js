@@ -16,7 +16,7 @@ function Tag({tag, dishes}){
                     {show && (
                         <div className='recipe-border'>
                             {dishes && dishes.map(dish => (
-                                <RecipeLink recipe={dish}/>
+                                <RecipeLink key={`tag-dish-${dish.id}`} recipe={dish}/>
                             ))}
                         </div>
                     )}

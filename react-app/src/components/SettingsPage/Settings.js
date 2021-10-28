@@ -168,7 +168,7 @@ function Settings(){
                             }
                         </div>
                         {showUnits && Object.keys(units).map(un => (
-                            <div className='data-val-wrapper'>
+                            <div key={un} className='data-val-wrapper'>
                                 {(un !== 'none' && un !== ' ' && un !== '' && un !== 'None') && (
                                     <p className='data-val'>- {un}</p>
                                 )}
@@ -195,7 +195,7 @@ function Settings(){
                                 <div>
                                     <select className='s-select' name="category"  value={ingCat} onChange={(e) => setIngCat(e.target.value)}>
                                         {Object.keys(categories).map(cat => (
-                                            <option value={categories[cat]}>{cat}</option>
+                                            <option key={`cat-${cat}`} value={categories[cat]}>{cat}</option>
                                         ))}
                                     </select>
                                 </div>
@@ -213,7 +213,7 @@ function Settings(){
                             }
                         </div>
                         {showIngredients && Object.keys(ingredients).map(ing => (
-                            <div className='data-val-wrapper'>
+                            <div key={`ing-${ing}`} className='data-val-wrapper'>
                                 {ing !== 'None' && (
                                     <p className='data-val'>- {ing}</p>
                                 )}
@@ -249,7 +249,7 @@ function Settings(){
                         </>
                         }
                         {showCategories && Object.keys(categories).map(cat => (
-                            <div className='data-val-wrapper'>
+                            <div key={`cat-cat-${cat}`} className='data-val-wrapper'>
                                 {(cat !== 'None' && cat !== ' ' && cat !== '') && (
                                     <p className='data-val'>- {cat}</p>
                                 )}

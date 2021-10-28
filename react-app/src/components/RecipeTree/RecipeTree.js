@@ -26,14 +26,14 @@ function RecipeTree(){
             <div>
                 <p>Recipes by Season</p>
                 {recipeTree.tree && Object.keys(recipeTree.tree).map(year => (
-                    <Year year={year} seasons={recipeTree.tree[year]}/>
+                    <Year key={`tree-year-${year}`} year={year} seasons={recipeTree.tree[year]}/>
                 ))}
 
             </div>
             <div>
                 <p>Recipes by Tag</p>
                 {recipeTree.tags && Object.keys(recipeTree.tags).map(tag => (
-                    <Tag tag={tag} dishes={recipeTree.tags[tag]}/>
+                    <Tag key={`tree-tag-${tag}`} tag={tag} dishes={recipeTree.tags[tag]}/>
                 ))}
             </div>
         </div>

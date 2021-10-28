@@ -1,14 +1,11 @@
 
 import React, { useContext, useRef, useState, useEffect } from "react";
-import { useSelector } from "react-redux";
 import ReactDOM from 'react-dom';
 import './Modal.css';
 
 const ModalContext = React.createContext();
 
 export function ModalProvider({ children }) {
-
-    const theme = useSelector(state => state.theme)
 
     const modalRef = useRef();
     const [value, setValue] = useState();
@@ -27,7 +24,7 @@ export function ModalProvider({ children }) {
     );
 };
 
-export function Modal({ onClose, children, isWatchList }) {
+export function Modal({ onClose, children }) {
     const modalNode = useContext(ModalContext);
     if (!modalNode) return null;
 

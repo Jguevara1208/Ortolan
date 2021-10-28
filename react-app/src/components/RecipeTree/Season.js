@@ -14,7 +14,7 @@ function Season({season ,dishes}){
             {show && (
                 <div className='recipe-border'>
                     {dishes && dishes.map(dish => (
-                        <RecipeLink recipe={dish} />
+                        <RecipeLink key={`dish-${dish.id}`} recipe={dish} />
                     ))}
                 </div>
             )}

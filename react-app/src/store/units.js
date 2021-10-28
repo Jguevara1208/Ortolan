@@ -56,7 +56,7 @@ export const createUnit = (unit) => async (dispatch) => {
 }
 
 export const deleteUnit = (unit) => async (dispatch) => {
-    const res = await fetch(`/api/units/${unit.id}/`, {
+    await fetch(`/api/units/${unit.id}/`, {
         method: "DELETE"
     });
     return dispatch(deleteUnitActions(unit));

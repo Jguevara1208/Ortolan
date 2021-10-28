@@ -22,7 +22,7 @@ function ProjectsPage(){
             <button onClick={() => setShowModal(!showModal)}>New Project</button>
             <div className='projects-wrapper'>
                 {projects && Object.values(projects).map(project => (
-                    <div className='project'>
+                    <div key={`project-${project.id}`} className='project'>
                         <Project project={project}/>
                     </div>
                 ))}
