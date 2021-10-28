@@ -282,6 +282,7 @@ function RecipeForm(){
                 <div className='title-season'>
                     <div className='ol-input recipe-title'>
                         <input 
+                            maxLength='255'
                             name='title'
                             type="text" 
                             placeholder=' '
@@ -332,6 +333,7 @@ function RecipeForm(){
                             <div className='subrecipe-title-trash'>
                                 <div className='ol-input recipe-title'>
                                     <input
+                                        maxLength='250'
                                         name='title'
                                         placeholder=' '
                                         value={subRecipe.title}
@@ -346,6 +348,7 @@ function RecipeForm(){
                                     <div className='ol-input qty'>
                                         <input 
                                             className='qty-input'
+                                            maxLength='25'
                                             type="text" 
                                             placeholder=' '
                                             name='qty'
@@ -358,6 +361,7 @@ function RecipeForm(){
                                         <input 
                                             type="text" 
                                             placeholder=' '
+                                            maxLength='50'
                                             name='ingredientId'
                                             value={ingredient.ingredientId} 
                                             onChange={(e) => handleInputChangeSubRecipeIngredient(e, i, idx)}
@@ -366,6 +370,7 @@ function RecipeForm(){
                                     </div>
                                     <div className='ol-input'>
                                         <input 
+                                            maxLength='300'
                                             type="text" 
                                             placeholder=' '
                                             name='description'
@@ -377,6 +382,7 @@ function RecipeForm(){
                                     <div className='ol-input'>
                                         <input 
                                             id={`category-${i}-${idx}`}
+                                            maxLength='50'
                                             type="text" 
                                             placeholder=' '
                                             name='category'
@@ -410,6 +416,7 @@ function RecipeForm(){
                         <input 
                             type="text"
                             name='tags'
+                            maxLength='50'
                             placeholder=' '
                             value={tags}
                             onChange={(e) => setTags(e.target.value)}

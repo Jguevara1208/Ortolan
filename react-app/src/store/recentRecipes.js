@@ -29,16 +29,11 @@ const updateRecentRecipesAction = (recipe) => {
 /* ----------------------------------------------------------------------- */
 
 export const setRecentRecipes = (userId) => async (dispatch) => {
-    console.log(userId, 'userId in the thunk')
-    let res = await fetch(`/api/users/${userId}/recentRecipes`);
+    let res = await fetch(`/api/users/${userId}/recentRecipes/`);
     res = await res.json();
-
-    console.log(res, 'res from the thunk')
     const recipes = res.recentRecipes;
 
-    console.log(recipes, 'recipes from the thunk')
     dispatch(setRecentRecipesAction(recipes));
-    console.log('after dispatch')
 };
 
 export const updateRecentRecipes = (recipe) => (dispatch) => {
@@ -55,7 +50,6 @@ function recentRecipesReducer(state = initialState, action) {
     let newState;
     switch (action.type) {
         case SET_RECENT_RECIPES:
-            console.log(action.recipes, 'recipes inside of the reducer')
             newState = action.recipes;
             return newState;
         case UPDATE_RECENT_RECIPES:

@@ -13,7 +13,7 @@ function NewProject({userId, showModal}){
 
     const handleErrors = () => {
         const err = {}
-        if (title === '' || title === ' ') err['title'] = '• Project needs a title.'
+        if (title === '' || title === ' ') err['title'] = '• Project needs a title'
         return err
     }
 
@@ -78,6 +78,7 @@ function NewProject({userId, showModal}){
                     <input 
                         name='title'
                         type="text"
+                        maxLength='100'
                         placeholder=' '
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
@@ -87,6 +88,7 @@ function NewProject({userId, showModal}){
                 <div className='ol-input'>
                     <textarea
                         name="projectDescription"
+                        maxLength='500'
                         className='p-desc'
                         placeholder={`Description here...`}
                         onInput={handleTextArea}
@@ -99,6 +101,7 @@ function NewProject({userId, showModal}){
                 {tasks.map( (task, i) => (
                     <div key={`task-${i}`} className='ol-input nt-task'>
                         <input 
+                            maxLength='200'
                             type="text" 
                             name='description'
                             placeholder=' '

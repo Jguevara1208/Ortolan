@@ -20,6 +20,7 @@ function Project({project}){
     const [addTask, setAddTask] = useState(false)
     const [newTask, setNewTask] = useState('')
     const [showMembers, setShowMembers] = useState(false)
+    const [error, setError] = useState('')
     
     const calculateCompletion = () => {
         const tasks = project.tasks
@@ -71,14 +72,24 @@ function Project({project}){
     }
 
     const handleAddTask = async () => {
+        if (newTask === ''){
+            setError('Task description is required')
+            return
+        }
         const req = {
             projectId: project.id,
             description: newTask
         }
         await dispatch(addTaskThunk(req))
         setAddTask(false)
+        setError('')
     }
     
+    const handleCancel = () => {
+        setError('')
+        setAddTask(false)
+    }
+
     return (
         <div>
             <div className='pc-wrapper' onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
@@ -134,17 +145,23 @@ function Project({project}){
                         <div className={isHovered ? 'add-task-hovered' : 'add-task'}>
                             {!addTask 
                                 ? 
-                                <button className='add-task-button' onClick={() => setAddTask(true)}>
-                                    Add Task
-                                </button>
+                                <>
+
+                                    <button className='add-task-button' onClick={() => setAddTask(true)}>
+                                        Add Task
+                                    </button>
+                                </>
                                 :
                                 <>
+                                    <div clasSName='error-container'>
+                                        {error && <p className='error'>{error}</p>}
+                                    </div>
                                     <div className='ol-input task-input'>
-                                        <input name='task' type="text" placeholder=' ' value={newTask} onChange={(e) => setNewTask(e.target.value)}/>
+                                        <input maxLength='200' name='task' type="text" placeholder=' ' value={newTask} onChange={(e) => setNewTask(e.target.value)}/>
                                         <label htmlFor="task">Task</label>
                                     </div>
                                     <button className='task-add' onClick={handleAddTask}>Add</button>
-                                    <button className='task-cancel' onClick={() => setAddTask(false)}>Cancel</button>
+                                    <button className='task-cancel' onClick={handleCancel}>Cancel</button>
                                 </>
                             }
                         </div>

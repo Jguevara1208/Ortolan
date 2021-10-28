@@ -23,11 +23,16 @@ const SignUpForm = () => {
   const checkErrors = () => {
     let err = []
     if (firstName === '') err.push('firstName:First Name is required')
+    if (firstName.length > 50) err.push('firstName:First Name must be less than 50 characters')
     if (lastName === '') err.push('lastName:Last Name is required')
+    if (lastName.length > 50) err.push('lastName:Last Name must be less than 50 characters')
     if (restaurant === '') err.push('restaurant:Restaurant is required')
+    if (restaurant.length > 50) err.push('restaurant:Restaurant must be less than 50 characters')
     if (position === '') err.push('position:Position is required')
+    if (position.length > 50) err.push('position:Position must be less than 50 characters')
     if (password !== repeatPassword) err.push('repeatPassword:Passwords do not match')
     if (email === '') err.push('email:Email is required')
+    if (email.length > 255) err.push('email:Email must be less than 255 characters')
     if (email) {
       if (email.split('@').length !== 2 && email.split('.').length !== 2){ 
         err.push('email:Must be valid email address')
