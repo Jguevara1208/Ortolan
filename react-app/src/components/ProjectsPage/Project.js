@@ -90,8 +90,8 @@ function Project({project}){
                 <div className='atp-section'>
                     <div className='pp-assign-container'>
                         <p className='atp-header'>Assigned to Project</p>
-                        <div className='pp-assign'>
-                            <button onClick={() => setShowMembers(!showMembers)}>Assign</button>
+                        <div onClick={() => setShowMembers(!showMembers)} className='pp-assign'>
+                            <button>Assign</button>
                             {showMembers && (
                                 <div className='assign-list'>
                                     {anyFreeCooks() 
@@ -135,7 +135,7 @@ function Project({project}){
                             {!addTask 
                                 ? 
                                 <button className='add-task-button' onClick={() => setAddTask(true)}>
-                                    add task
+                                    Add Task
                                 </button>
                                 :
                                 <>

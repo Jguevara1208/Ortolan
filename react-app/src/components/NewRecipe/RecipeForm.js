@@ -7,6 +7,7 @@ import { setIngredients, addIngredient } from '../../store/ingredients';
 import { setOrderCategories, addOrderCategory } from '../../store/orderCategories';
 import { createCurrentRecipe } from '../../store/currentRecipe'
 import { CgRemoveR, CgAddR} from 'react-icons/cg'
+import { FaTrashAlt } from 'react-icons/fa'
 import imageCompression from 'browser-image-compression'
 import './RecipeForm.css'
 
@@ -320,7 +321,7 @@ function RecipeForm(){
                             :
                             <>
                                 <input type='file' className='inputfile' ref={fileUpload} onChange={handlePhoto} />
-                                <div className='fileChooser' onClick={() => handleUpload()} >Choose Photo</div>
+                                <div className='fileChooser' onClick={() => handleUpload()} >Upload Photo</div>
                             </>
                         }
                     </div>
@@ -328,14 +329,17 @@ function RecipeForm(){
                 <div className='sub-recipe'>
                     {subRecipes.map((subRecipe, i) => (
                         <div key={`subrecipe-${i}`} className='sr-wrapper'>
-                            <div className='ol-input recipe-title'>
-                                <input
-                                    name='title'
-                                    placeholder=' '
-                                    value={subRecipe.title}
-                                    onChange={(e) => handleInputChangeSubRecipe(e, i)}
-                                />
-                                <label htmlFor="title">Recipe Title</label>
+                            <div className='subrecipe-title-trash'>
+                                <div className='ol-input recipe-title'>
+                                    <input
+                                        name='title'
+                                        placeholder=' '
+                                        value={subRecipe.title}
+                                        onChange={(e) => handleInputChangeSubRecipe(e, i)}
+                                    />
+                                    <label htmlFor="title">Recipe Title</label>
+                                </div>
+                                {subRecipes.length !== 1 && <FaTrashAlt className='remove-sr-trash' onClick={() => handleRemoveClickSubRecipe(i)}/>}
                             </div>
                             {subRecipe.ingredients.map((ingredient, idx) => (
                                 <div key={`ing-${i}-${idx}`} className='sr-ingredient-wrapper'>  
@@ -397,7 +401,6 @@ function RecipeForm(){
                             </div>
                             <div className='sub-recipe-buttons'>
                                 {subRecipes.length -1 === i && <button className='add-sr' onClick={handleAddClickSubRecipe}>Add Recipe</button>}
-                                {subRecipes.length !== 1 && <button className='remove-sr' onClick={() => handleRemoveClickSubRecipe(i)}>Remove Recipe</button>}
                             </div>
                         </div>
                     ))}

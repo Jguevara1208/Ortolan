@@ -27,7 +27,7 @@ const TopNav = () => {
                 <div className='signed-in'>
                     <div className='third-empty'/>
                     <div className='third-logo'>
-                        <NavLink to='/' exact={true}>
+                        <NavLink className='orto-logo' to='/' exact={true}>
                             {navLogo}
                         </NavLink>
                     </div>

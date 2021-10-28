@@ -45,12 +45,19 @@
     gap: 20px;
 }
 
-.add-sr, .remove-sr {
+.add-sr {
     padding: 10px 20px;
-    background-color: var(--green);
-    border-radius: 15px;
-    color: white;
+    border: 1px solid var(--green);
+    border-radius: 5px;
+    color: var(--green);
     font-weight: 500;
+    transition: .5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.add-sr:hover {
+    background-color: var(--green);
+    color: white;
+    transition: .5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .qty {
@@ -149,11 +156,11 @@
 }
 
 .ol-input input:focus {
-    outline: 1px solid var(--green) !important;
+    /* outline: 1px solid var(--green) !important; */
 }
 
 .ol-input input:hover {
-    outline: 1px solid var(--gold);
+    outline: 1px solid black;
 }
 
 .ol-input input:focus ~ label {
@@ -183,14 +190,6 @@ textarea::placeholder {
     color: rgb(187, 187, 187);
 }
 
-input:focus::placeholder {
-    color: transparent;
-    transition: .2s cubic-bezier(.65,.05,.36,1);
-}
-
-input::placeholder {
-    color: rgb(187, 187, 187);
-}
 
 .ol-input > .components ~ label {
     position: absolute;
@@ -209,7 +208,6 @@ input::placeholder {
     padding: 25px;
     height: 5em;
     min-height: 20em;
-    border: 1px solid var(--green);
     resize: none;
     max-height: 50vh;
     color: var(--green);
@@ -223,6 +221,10 @@ input::placeholder {
     font-size: 1.1rem;
     transition: .1s cubic-bezier(.65,.05,.36,1);
 }
+
+/* .ol-input .components:not(:placeholder-shown) {
+    border: 3px solid red;
+} */
 
 .photo-container {
     display: flex;
@@ -252,6 +254,13 @@ input::placeholder {
     border-radius: 5px;
     color: var(--green);
     cursor: pointer;
+    transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.fileChooser:hover {
+    color: white;
+    background-color: var(--green);
+    transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .rf-photo {
@@ -305,6 +314,7 @@ input::placeholder {
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .season-select select {
@@ -313,11 +323,18 @@ input::placeholder {
     max-width: 100%;
     padding: 10px 15px 10px 15px;
     border: none;
-    background-color: transparent;
+    cursor: pointer;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
     text-align: center;
+    
+}
+
+.season-select:hover{
+    background-color: var(--green);
+    color: white;
+    transition: .5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .season-select select:active, .season-select select:focus {
@@ -325,18 +342,23 @@ input::placeholder {
   box-shadow: none;
 }
 
-.season-select:after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  right: 8px;
-  width: 0;
-  height: 0;
-  margin-top: -2px;
-  border-right: 5px solid transparent;
-  border-left: 5px solid transparent;
-}
-
 .component-container {
     width: 48%;
+}
+
+.subrecipe-title-trash {
+    display: flex;
+    justify-content: space-between;
+}
+
+.remove-sr-trash {
+    color: rgb(208, 208, 208);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: .5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.remove-sr-trash:hover {
+    color: var(--green);
+    transition: .5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }

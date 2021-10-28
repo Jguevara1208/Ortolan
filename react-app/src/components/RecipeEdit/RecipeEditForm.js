@@ -7,6 +7,7 @@ import { setIngredients, addIngredient } from '../../store/ingredients';
 import { setOrderCategories, addOrderCategory } from '../../store/orderCategories';
 import { createCurrentRecipe, deleteCurrentRecipe, setCurrentRecipe } from '../../store/currentRecipe'
 import { CgRemoveR, CgAddR } from 'react-icons/cg'
+import { FaTrashAlt } from 'react-icons/fa'
 import '../NewRecipe/RecipeForm.css'
 
 function RecipeEditForm() {
@@ -346,14 +347,17 @@ function RecipeEditForm() {
                 <div className='sub-recipe'>
                     {subRecipes.map((subRecipe, i) => (
                         <div key={`sr-${i}`} className='sr-wrapper'>
-                            <div className='ol-input recipe-title'>
-                                <input
-                                    name='title'
-                                    placeholder='Sub recipe Title'
-                                    value={subRecipe.title}
-                                    onChange={(e) => handleInputChangeSubRecipe(e, i)}
-                                />
-                                <label htmlFor="title">Recipe Title</label>
+                            <div className='subrecipe-title-trash'>
+                                <div className='ol-input recipe-title'>
+                                    <input
+                                        name='title'
+                                        placeholder='Sub recipe Title'
+                                        value={subRecipe.title}
+                                        onChange={(e) => handleInputChangeSubRecipe(e, i)}
+                                    />
+                                    <label htmlFor="title">Recipe Title</label>
+                                </div>
+                                {subRecipes.length !== 1 && <FaTrashAlt className='remove-sr-trash' onClick={() => handleRemoveClickSubRecipe(i)} />}
                             </div>
                             {subRecipe.ingredients.map((ingredient, idx) => (
                                 <div key={`ing-${i}-${idx}`} className='sr-ingredient-wrapper'>
@@ -415,7 +419,6 @@ function RecipeEditForm() {
                             </div>
                             <div className='sub-recipe-buttons'>
                                 {subRecipes.length - 1 === i && <button className='add-sr' onClick={handleAddClickSubRecipe}>Add Recipe</button>}
-                                {subRecipes.length !== 1 && <button className='remove-sr' onClick={() => handleRemoveClickSubRecipe(i)}>Remove Recipe</button>}
                             </div>
                         </div>
                     ))}

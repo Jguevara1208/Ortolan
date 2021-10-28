@@ -24,6 +24,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: var(--bg);
 }
 
 .logout {
@@ -34,6 +35,11 @@
 
 .logout:hover {
     color: var(--green);
+}
+
+.orto-logo {
+    background-color: var(--bg);
+    box-shadow: none;
 }
 
 
