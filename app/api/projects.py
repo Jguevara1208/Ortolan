@@ -41,6 +41,7 @@ def delete_add_assignment(project_id, user_id):
         return user.to_project_dict()
     else:
         project.cooks.remove(user)
+        db.session.commit()
         return 'ok'
 
 

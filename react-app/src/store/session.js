@@ -33,7 +33,6 @@ export const editName = (user) => async (dispatch) => {
     },
     body: JSON.stringify(user)
   })
-  console.log('im here?')
   dispatch(editNameAction(user))
 };
 
@@ -136,8 +135,6 @@ export default function reducer(state = initialState, action) {
     case REMOVE_USER:
       return { user: null }
     case EDIT_NAME:
-      console.log(newState.user.name)
-      console.log(action.user.name)
       newState.user.name = action.user.name
       return newState
     case EDIT_POSITION:

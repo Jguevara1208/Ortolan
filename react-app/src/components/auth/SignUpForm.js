@@ -9,7 +9,7 @@ const SignUpForm = () => {
   const [errors, setErrors] = useState([]);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('')
-  const [admin, setAdmin] = useState(true)
+  const [admin] = useState(true)
   const [restaurant, setRestaurant] = useState('')
   const [position, setPosition] = useState('')
   const [email, setEmail] = useState('');
@@ -23,11 +23,16 @@ const SignUpForm = () => {
   const checkErrors = () => {
     let err = []
     if (firstName === '') err.push('firstName:First Name is required')
+    if (firstName.length > 50) err.push('firstName:First Name must be less than 50 characters')
     if (lastName === '') err.push('lastName:Last Name is required')
+    if (lastName.length > 50) err.push('lastName:Last Name must be less than 50 characters')
     if (restaurant === '') err.push('restaurant:Restaurant is required')
+    if (restaurant.length > 50) err.push('restaurant:Restaurant must be less than 50 characters')
     if (position === '') err.push('position:Position is required')
+    if (position.length > 50) err.push('position:Position must be less than 50 characters')
     if (password !== repeatPassword) err.push('repeatPassword:Passwords do not match')
     if (email === '') err.push('email:Email is required')
+    if (email.length > 255) err.push('email:Email must be less than 255 characters')
     if (email) {
       if (email.split('@').length !== 2 && email.split('.').length !== 2){ 
         err.push('email:Must be valid email address')
@@ -43,7 +48,7 @@ const SignUpForm = () => {
       setErrors(res)
       return
     } else {
-      const data = await dispatch(signUp(
+      await dispatch(signUp(
         {
           firstName, 
           lastName, 
@@ -85,6 +90,13 @@ const SignUpForm = () => {
   return (
     <form className='auth-form' onSubmit={onSignUp} autoComplete='off'>
       <h3>Welcome</h3>
+      {errors.length > 0 && errors.map((err, i) => (
+        <>
+          {err.startsWith('firstName') && (
+            <p key={`firstName-${i}`} className='error'>• {err.split(':')[1]}</p>
+          )}
+        </>
+      ))}
       <div className='ol-input'>
         <input
           placeholder=' '
@@ -95,10 +107,10 @@ const SignUpForm = () => {
         ></input>
         <label htmlFor="firstName">First Name</label>
       </div>
-      {errors.length > 0 && errors.map(err => (
+      {errors.length > 0 && errors.map((err, i) => (
         <>
-          {err.startsWith('firstName') && (
-            <p className='error'>• {err.split(':')[1]}</p>
+          {err.startsWith('lastName') && (
+            <p key={`lastName-${i}`} className='error'>• {err.split(':')[1]}</p>
           )}
         </>
       ))}
@@ -112,10 +124,10 @@ const SignUpForm = () => {
         ></input>
         <label htmlFor="lastName">Last Name</label>
       </div>
-      {errors.length > 0 && errors.map(err => (
+      {errors.length > 0 && errors.map((err, i) => (
         <>
-          {err.startsWith('lastName') && (
-            <p className='error'>• {err.split(':')[1]}</p>
+          {err.startsWith('email') && (
+            <p key={`email-${i}`} className='error'>• {err.split(':')[1]}</p>
           )}
         </>
       ))}
@@ -129,17 +141,13 @@ const SignUpForm = () => {
         ></input>
         <label htmlFor="email">Email</label>
       </div>
-      {errors.length > 0 && errors.map(err => (
-        <>
-          {err.startsWith('email') && (
-            <p className='error'>• {err.split(':')[1]}</p>
-          )}
-        </>
-      ))}
       <div className='photo-container su-photo-container'>
         {image
           ?
-          <div className='su-photo' style={{ backgroundImage: `url('${image}')` }} />
+          <>
+            <input type='file' className='inputfile' ref={fileUpload} onChange={handlePhoto} />
+            <div className='su-photo' onClick={() => handleUpload()} style={{ backgroundImage: `url('${image}')`, cursor: 'pointer'}} />
+          </>
           :
           <>
             <input type='file' className='inputfile' ref={fileUpload} onChange={handlePhoto} />
@@ -147,6 +155,13 @@ const SignUpForm = () => {
           </>
         }
       </div>
+      {errors.length > 0 && errors.map((err, i) => (
+        <>
+          {err.startsWith('restaurant') && (
+            <p key={`restaurant-${i}`} className='error'>• {err.split(':')[1]}</p>
+          )}
+        </>
+      ))}
       <div className='ol-input'>
         <input
           placeholder=' '
@@ -157,10 +172,10 @@ const SignUpForm = () => {
         ></input>
         <label htmlFor="restaurant">Restaurant</label>
       </div>
-      {errors.length > 0 && errors.map(err => (
+      {errors.length > 0 && errors.map((err, i) => (
         <>
-          {err.startsWith('restaurant') && (
-            <p className='error'>• {err.split(':')[1]}</p>
+          {err.startsWith('position') && (
+            <p key={`position-${i}`} className='error'>• {err.split(':')[1]}</p>
           )}
         </>
       ))}
@@ -174,10 +189,10 @@ const SignUpForm = () => {
         ></input>
         <label htmlFor="position">Position</label>
       </div>
-      {errors.length > 0 && errors.map(err => (
+      {errors.length > 0 && errors.map((err, i) => (
         <>
-          {err.startsWith('position') && (
-            <p className='error'>• {err.split(':')[1]}</p>
+          {err.startsWith('password') && (
+            <p key={`password-${i}`} className='error'>• {err.split(':')[1]}</p>
           )}
         </>
       ))}
@@ -191,10 +206,10 @@ const SignUpForm = () => {
         ></input>
         <label htmlFor="password">Password</label>
       </div>
-      {errors.length > 0 && errors.map(err => (
+      {errors.length > 0 && errors.map((err, i) => (
         <>
-          {err.startsWith('password') && (
-            <p className='error'>• {err.split(':')[1]}</p>
+          {err.startsWith('repeatPassword') && (
+            <p key={`repeatPassword-${i}`} className='error'>• {err.split(':')[1]}</p>
           )}
         </>
       ))}
@@ -209,15 +224,8 @@ const SignUpForm = () => {
         ></input>
         <label htmlFor="repeat_password">Repeat Password</label>
       </div>
-      {errors.length > 0 && errors.map(err => (
-        <>
-          {err.startsWith('repeatPassword') && (
-            <p className='error'>• {err.split(':')[1]}</p>
-          )}
-        </>
-      ))}
       <button className='form-button' type='submit'>Sign Up</button>
-      <p>Already have an account? <Link className='log-in-link' to='/login'>Log In</Link></p>
+      <p>Already have an account? <Link className='log-in-link link' to='/login'>Log In</Link></p>
     </form>
   );
 };

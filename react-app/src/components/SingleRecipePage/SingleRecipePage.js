@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentRecipe } from '../../store/currentRecipe';
 import { deleteCurrentRecipe } from '../../store/currentRecipe';
-import { GrEdit } from 'react-icons/gr'
+import { FiEdit2 } from 'react-icons/fi'
 import { TiDocumentDelete } from 'react-icons/ti'
 import './SingleRecipePage.css'
 
@@ -41,19 +41,18 @@ function SingleRecipePage(){
                     <div className='srp-components'>
                         <h2 className='srp-header'>Components</h2>
                         {currentRecipe?.components?.split('\n')?.map(ele => (
-                            <p className='srp-component'>• {ele}</p>
+                            <p key={`ele-${ele}`} className='srp-component'>• {ele}</p>
                         ))}
                     </div>
                     <div>
                         <h2 className='srp-header recipe-diff'>Recipes</h2>
                         <div className='srp-recipes-container'>
                             {currentRecipe.subRecipes && Object.values(currentRecipe.subRecipes).map(recipe => (
-                                <div className='srp-recipe'>
-                                    {console.log(recipe.description)}
+                                <div key={`recipe-${recipe.id}`} className='srp-recipe'>
                                     <p className='srp-recipe-title'>{recipe.title}</p>
                                     <div className='srp-ing-wrapper'>
-                                        {recipe.ingredients && Object.values(recipe.ingredients).map(ing => (
-                                            <p className='srp-ing-line'>{ing.qty !== 0 ? ing.qty : ''}{ing.unit} {ing.ingredient !== 'None' ? ing.ingredient : ''}{ing.description ? `, ${ing.description}` : ''}</p>
+                                        {recipe.ingredients && Object.values(recipe.ingredients).map((ing, i) => (
+                                            <p key={`ing-${i}`} className='srp-ing-line'>{ing.qty !== 0 ? ing.qty : ''}{ing.unit} {ing.ingredient !== 'None' ? ing.ingredient : ''}{ing.description ? `, ${ing.description}` : ''}</p>
                                         ))}
                                     </div>
                                     <div>
@@ -71,8 +70,8 @@ function SingleRecipePage(){
                 </div>
             )}
             <div className='srp-buttons'>
-                <Link className='srp-button1' to={`/recipes/${recipeId}/edit`}>
-                    <GrEdit />
+                <Link className='' to={`/recipes/${recipeId}/edit`}>
+                    <FiEdit2 className='srp-button1' />
                 </Link>
                 <TiDocumentDelete className='srp-button2' onClick={() => setShowDelete(!showDelete)}/>
                 {showDelete && (

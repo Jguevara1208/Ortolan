@@ -7,7 +7,14 @@ import { setIngredients, addIngredient } from '../../store/ingredients';
 import { setOrderCategories, addOrderCategory } from '../../store/orderCategories';
 import { createCurrentRecipe } from '../../store/currentRecipe'
 import { CgRemoveR, CgAddR} from 'react-icons/cg'
+import { FaTrashAlt } from 'react-icons/fa'
+import imageCompression from 'browser-image-compression'
 import './RecipeForm.css'
+
+function findSeason() {
+    const seasonNum = Math.floor((new Date().getMonth() / 12 * 4)) % 4
+    return ['Winter', 'Spring', 'Summer', 'Autumn'][seasonNum]
+}
 
 function RecipeForm(){
     const dispatch = useDispatch()
@@ -21,16 +28,16 @@ function RecipeForm(){
     const categories = useSelector(state => state.orderCategories)
     
     const [title, setTitle] = useState('')
-    const [season, setSeason] = useState('Winter')
+    const [season, setSeason] = useState(findSeason())
     const [photo, setPhoto] = useState(false)
-    const [year, setYear] = useState((new Date()).getFullYear())
+    const [year] = useState((new Date()).getFullYear())
     const [component, setComponent] = useState('')
     const [subRecipes, setSubRecipes] = useState([{ title: '', description: '', ingredients: [{ qty: '', ingredientId: '', unitId: '', description: '', category: ''}]}])
     const [tags, setTags] = useState('')
 
     const resetState = () => {
         setTitle('')
-        setSeason('Winter')
+        setSeason(findSeason())
         setPhoto(false)
         setComponent('')
         setSubRecipes([{ title: '', description: '', ingredients: [{ qty: '', ingredientId: '', unitId: '', description: '', category: '' }] }])
@@ -42,6 +49,7 @@ function RecipeForm(){
         dispatch(setTagsOne(userId))
         dispatch(setIngredients(userId))
         dispatch(setOrderCategories(userId))
+        setSeason(findSeason())
     }, [dispatch])
 
     const handleInputChangeSubRecipe = (e, index) => {
@@ -65,22 +73,15 @@ function RecipeForm(){
         const list = [...subRecipes]
         const targetSubRecipe = list[subRecipeIndex].ingredients
         targetSubRecipe.push({ qty: '', ingredientId: '', unitId: '', description: '', category: '' })
-        console.log(list, 'LIST ADDITION ON ADD')
         setSubRecipes(list)
     }
-    console.log(subRecipes, 'SUB RECIPES OUTSIDE OF ADDHANDLER')
 
-    const handleRemoveClickSubRecipeIngredient = (subRecipeIndex, ingredientIndex) => {
+
+    const handleRemoveClickSubRecipeIngredient = async (subRecipeIndex, ingredientIndex) => {
         const list = [...subRecipes]
-        console.log(subRecipeIndex, 'subrecipe index')
-        console.log(ingredientIndex, 'ingredient index')
-        console.log(subRecipes, 'SUBRECIPES STATE INSIDE OF REMOVE')
-        console.log(list, 'COPY OF SUBRECIPES TO CHANGE')
-        console.log(list[subRecipeIndex].ingredients, 'TARGET BEFORE DECLARING THE TARGET')
         const targetSubRecipe = list[subRecipeIndex].ingredients
-        console.log(targetSubRecipe, 'targetSubRecipe INSIDE OF REMOVE')
         targetSubRecipe.splice(ingredientIndex, 1)
-        setSubRecipes(list)
+        await setSubRecipes(list)
     }
 
     const handleInputChangeSubRecipeIngredient = (e, subRecipeIndex, ingredientIndex) => {
@@ -115,17 +116,27 @@ function RecipeForm(){
     }
 
     const handlePhoto = async (e) => {
-        const formData = new FormData()
-        formData.append("image", e.target.files[0])
-
-        const res = await fetch('/api/images/', {
-            method: "POST",
-            body: formData
-        });
-        if (res.ok) {
-            const imgUrl = await res.json()
-            setPhoto(imgUrl.url)
-        } 
+        const imageFile = e.target.files[0]
+        if (e.target.files[0]) {
+            const options = {
+                maxSizeMB: 1,
+                maxWidthOrHeight:1920,
+                useWebWorker: true
+            }
+            const compressedFile = await imageCompression(imageFile, options)
+            let newFile = new File([compressedFile], compressedFile.name)
+            const formData = new FormData()
+            formData.append('image', newFile)
+    
+            const res = await fetch('/api/images/', {
+                method: "POST",
+                body: formData
+            });
+            if (res.ok) {
+                const imgUrl = await res.json()
+                setPhoto(imgUrl.url)
+            } 
+        }
     }
 
     const formatSubRecipes = async () => {
@@ -264,14 +275,14 @@ function RecipeForm(){
         autoExpand(e.target);
     }
 
-
     return (
         <div className='form-container'>
             <form className='nr-form' onSubmit={handleSubmit} autoComplete="off">
                 <h3>New Recipe</h3>
                 <div className='title-season'>
-                    <div className='ol-input'>
+                    <div className='ol-input recipe-title'>
                         <input 
+                            maxLength='255'
                             name='title'
                             type="text" 
                             placeholder=' '
@@ -281,7 +292,7 @@ function RecipeForm(){
                         <label htmlFor="title">Title</label>
                     </div>
                     <div className='season-select'>
-                        <select name="season" onChange={(e) => setSeason(e.target.value)}>
+                        <select name="season" onChange={(e) => setSeason(e.target.value)} defaultValue={findSeason()}>
                             <option value="Winter">Winter</option>
                             <option value="Spring">Spring</option>
                             <option value="Summer">Summer</option>
@@ -290,7 +301,7 @@ function RecipeForm(){
                     </div>
                 </div>
                 <div className='photo-components-container'>
-                    <div className='ol-input'>
+                    <div className='ol-input component-container'>
                         <textarea
                             name="components"
                             className='components'
@@ -301,37 +312,45 @@ function RecipeForm(){
                             ></textarea>
                         <label htmlFor="components">Components</label>
                     </div>
-                    <div className='photo-container'>
+                    <div className='photo-container recipe-form-photo'>
                         {photo
                             ?
-                                <div className='rf-photo' style={{backgroundImage: `url('${photo}')`}}/>
+                            <>
+                                <input type='file' className='inputfile' ref={fileUpload} onChange={handlePhoto} />
+                                <div onClick={() => handleUpload()} className='rf-photo' style={{backgroundImage: `url('${photo}')`}}/>       
+                            </>
                             :
                             <>
                                 <input type='file' className='inputfile' ref={fileUpload} onChange={handlePhoto} />
-                                <div className='fileChooser' onClick={() => handleUpload()} >Choose Photo</div>
+                                <div className='fileChooser' onClick={() => handleUpload()} >Upload Photo</div>
                             </>
                         }
                     </div>
                 </div>
                 <div className='sub-recipe'>
                     {subRecipes.map((subRecipe, i) => (
-                        <div className='sr-wrapper'>
-                            <div className='ol-input'>
-                                <input
-                                    name='title'
-                                    placeholder=' '
-                                    value={subRecipe.title}
-                                    onChange={(e) => handleInputChangeSubRecipe(e, i)}
-                                />
-                                <label htmlFor="title">Recipe Title</label>
+                        <div key={`subrecipe-${i}`} className='sr-wrapper'>
+                            <div className='subrecipe-title-trash'>
+                                <div className='ol-input recipe-title'>
+                                    <input
+                                        maxLength='250'
+                                        name='title'
+                                        placeholder=' '
+                                        value={subRecipe.title}
+                                        onChange={(e) => handleInputChangeSubRecipe(e, i)}
+                                    />
+                                    <label htmlFor="title">Recipe Title</label>
+                                </div>
+                                {subRecipes.length !== 1 && <FaTrashAlt className='remove-sr-trash' onClick={() => handleRemoveClickSubRecipe(i)}/>}
                             </div>
                             {subRecipe.ingredients.map((ingredient, idx) => (
-                                <div className='sr-ingredient-wrapper'>  
+                                <div key={`ing-${i}-${idx}`} className='sr-ingredient-wrapper'>  
                                     <div className='ol-input qty'>
                                         <input 
                                             className='qty-input'
+                                            maxLength='25'
                                             type="text" 
-                                            placeholder='120g ...'
+                                            placeholder=' '
                                             name='qty'
                                             value={ingredient.qty}
                                             onChange={(e) => handleInputChangeSubRecipeIngredient(e, i, idx)}
@@ -341,17 +360,19 @@ function RecipeForm(){
                                     <div className='ol-input'>
                                         <input 
                                             type="text" 
-                                            placeholder='Carrot ...'
+                                            placeholder=' '
+                                            maxLength='50'
                                             name='ingredientId'
-                                            value={ingredient.ingredient} 
+                                            value={ingredient.ingredientId} 
                                             onChange={(e) => handleInputChangeSubRecipeIngredient(e, i, idx)}
                                         />
                                         <label htmlFor="ingredientId">Ingredient</label>
                                     </div>
                                     <div className='ol-input'>
                                         <input 
+                                            maxLength='300'
                                             type="text" 
-                                            placeholder='sliced thin ...'
+                                            placeholder=' '
                                             name='description'
                                             value={ingredient.description}
                                             onChange={(e) => handleInputChangeSubRecipeIngredient(e, i, idx)}
@@ -361,8 +382,9 @@ function RecipeForm(){
                                     <div className='ol-input'>
                                         <input 
                                             id={`category-${i}-${idx}`}
+                                            maxLength='50'
                                             type="text" 
-                                            placeholder='Produce ...'
+                                            placeholder=' '
                                             name='category'
                                             value={ingredient.category}
                                             onChange={(e) => handleInputChangeSubRecipeIngredient(e, i, idx)}
@@ -373,7 +395,7 @@ function RecipeForm(){
                                     {subRecipe.ingredients.length !== 1 && <CgRemoveR className='sri-button' onClick={() => handleRemoveClickSubRecipeIngredient(i, idx)} />}
                                 </div>
                             ))}
-                            <div className='ol-input'>
+                            <div className='ol-input ol-input-description'>
                                 <textarea 
                                     name="description"
                                     className='description'
@@ -385,7 +407,6 @@ function RecipeForm(){
                             </div>
                             <div className='sub-recipe-buttons'>
                                 {subRecipes.length -1 === i && <button className='add-sr' onClick={handleAddClickSubRecipe}>Add Recipe</button>}
-                                {subRecipes.length !== 1 && <button className='remove-sr' onClick={() => handleRemoveClickSubRecipe(i)}>Remove Recipe</button>}
                             </div>
                         </div>
                     ))}
@@ -395,6 +416,7 @@ function RecipeForm(){
                         <input 
                             type="text"
                             name='tags'
+                            maxLength='50'
                             placeholder=' '
                             value={tags}
                             onChange={(e) => setTags(e.target.value)}

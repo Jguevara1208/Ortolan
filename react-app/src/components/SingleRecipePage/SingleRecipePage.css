@@ -96,18 +96,28 @@
     flex-direction: column;
 }
 
-.srp-button1 {
-    font-size: 40px;
+.srp-button1{
+    font-size: 25px;
     color: var(--green);
     margin-left: 10px;
     margin-top: 10px;
     margin-bottom: 10px;
+    color: rgb(145, 144, 144);
+    transition: .4s cubic-bezier(0.175, 0.885, 0.32, 1.275)
+}
+
+.srp-button1:hover,
+.srp-button2:hover {
+    color: var(--green);
+    transition: .4s cubic-bezier(0.175, 0.885, 0.32, 1.275)
 }
 
 .srp-button2 {
-    font-size: 50px;
+    font-size: 30px;
     cursor: pointer;
     margin-left: 5px;
+    color: rgb(145, 144, 144);
+    transition: .4s cubic-bezier(0.175, 0.885, 0.32, 1.275)
 }
 
 .srp-delete {

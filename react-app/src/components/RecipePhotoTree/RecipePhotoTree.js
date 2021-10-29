@@ -42,8 +42,8 @@ function RecipePhotoTree(){
             {recipesTree && (
                 <div className='pt-wrapper'>
                     <div className='pt-type'>
-                        <p className={type === 'years' ? 'type pt-active' : 'type'} onClick={() => handleSetType('years')}>Year</p>
-                        <p className={type === 'tags' ? 'type pt-active' : 'type'} onClick={() => handleSetType('tags')}>Tag</p>
+                        <p className={type === 'years' ? 'type pt-active' : 'type link'} onClick={() => handleSetType('years')}>Year</p>
+                        <p className={type === 'tags' ? 'type pt-active' : 'type link'} onClick={() => handleSetType('tags')}>Tag</p>
                     </div>
                     {type && (
                         <div>
@@ -51,7 +51,7 @@ function RecipePhotoTree(){
                             ?
                                 <div className='pt-type'>
                                     {recipesTree.tree && Object.keys(recipesTree.tree).map(yr => (
-                                        <p className={year === yr ? 'type pt-active' : 'type'} onClick={() => handleYear(yr)} >{yr}</p>
+                                        <p key={yr} className={year === yr ? 'type pt-active' : 'type link'} onClick={() => handleYear(yr)} >{yr}</p>
                                     ))}
                                 </div> 
                             :
@@ -59,7 +59,7 @@ function RecipePhotoTree(){
                                     {recipesTree.tags && Object.keys(recipesTree.tags).map(tg => (
                                         <>
                                             {recipesTree.tags[tg].length > 0 && (
-                                                <p className={tag === tg ? 'type pt-active' : 'type'} onClick={() => handleTag(tg)}>{tg}</p>
+                                                <p key={tg} className={tag === tg ? 'type pt-active' : 'type link'} onClick={() => handleTag(tg)}>{tg}</p>
                                             )}
                                         </>
                                     ))}
@@ -70,7 +70,7 @@ function RecipePhotoTree(){
                     {year && (
                         <div className='pt-type'>
                             {recipesTree.tree[year] && Object.keys(recipesTree.tree[year]).map(sn => (
-                                <p className={season === sn ? 'type pt-active' : 'type'} onClick={() => handleSeason(sn)}>{sn}</p>
+                                <p key={sn} className={season === sn ? 'type pt-active' : 'type link'} onClick={() => handleSeason(sn)}>{sn}</p>
                             ))}
                         </div>
                     )}
@@ -79,7 +79,7 @@ function RecipePhotoTree(){
             {season && (
                 <div className='ptr-container'>
                     {recipesTree.tree[year][season] && recipesTree.tree[year][season].map(recipe => (
-                        <Link className='pt-recipe-link' to={`/recipes/${recipe.id}`}>
+                        <Link key={`ssn-${recipe.id}`} className='pt-recipe-link' to={`/recipes/${recipe.id}`}>
                             <p>{recipe.title}</p>
                             <div className='recipe-tree-photo' style={{backgroundImage: `url('${recipe.photo}')`}}></div>
                         </Link>
@@ -89,7 +89,7 @@ function RecipePhotoTree(){
             {tag && (
                 <div className='ptr-container'>
                     {recipesTree.tags[tag] && recipesTree.tags[tag].map(recipe => (
-                        <Link className='pt-recipe-link' to={`/recipes/${recipe.id}`}>
+                        <Link key={`tag-${recipe.id}`} className='pt-recipe-link' to={`/recipes/${recipe.id}`}>
                             <p>{recipe.title}</p>
                             <div className='recipe-tree-photo' style={{ backgroundImage: `url('${recipe.photo}')` }}> 
                             </div>

@@ -24,6 +24,22 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: var(--bg);
+}
+
+.logout {
+    align-self: center;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+.logout:hover {
+    color: var(--green);
+}
+
+.orto-logo {
+    background-color: var(--bg);
+    box-shadow: none;
 }
 
 

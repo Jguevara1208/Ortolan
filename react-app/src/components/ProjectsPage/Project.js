@@ -20,6 +20,7 @@ function Project({project}){
     const [addTask, setAddTask] = useState(false)
     const [newTask, setNewTask] = useState('')
     const [showMembers, setShowMembers] = useState(false)
+    const [error, setError] = useState('')
     
     const calculateCompletion = () => {
         const tasks = project.tasks
@@ -60,19 +61,35 @@ function Project({project}){
 
     const freeCook = (cookId) => {
         let assigned = project.assigned.find(cook => cook.id === cookId)
-        console.log(cookId)
         return assigned === undefined ? true : false
     }
 
+    const anyFreeCooks = () => {
+        let assigned = project.assigned.map(cook => cook.id)
+        let allCooks = team.map(cook => cook.id)
+        let freeCooks = allCooks.filter(cook => !assigned.includes(cook))
+        return freeCooks.length !== 0
+    }
+
     const handleAddTask = async () => {
+        if (newTask === ''){
+            setError('Task description is required')
+            return
+        }
         const req = {
             projectId: project.id,
             description: newTask
         }
         await dispatch(addTaskThunk(req))
         setAddTask(false)
+        setError('')
     }
     
+    const handleCancel = () => {
+        setError('')
+        setAddTask(false)
+    }
+
     return (
         <div>
             <div className='pc-wrapper' onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
@@ -84,27 +101,36 @@ function Project({project}){
                 <div className='atp-section'>
                     <div className='pp-assign-container'>
                         <p className='atp-header'>Assigned to Project</p>
-                        <div className='pp-assign'>
-                            <button onClick={() => setShowMembers(!showMembers)}>Assign</button>
+                        <div onClick={() => setShowMembers(!showMembers)} className='pp-assign'>
+                            <button>Assign</button>
                             {showMembers && (
                                 <div className='assign-list'>
-                                    {team && team.map(cook => (
-                                        <>
-                                            {freeCook(cook.id) && (
-                                                <div className='cook' onClick={() => assignCook(cook.id)}>
-                                                    <div className='cook-avatar2' style={{backgroundImage: `url('${cook.avatar}')`}}/>
-                                                    <p>{cook.name.split(' ')[0]}</p>
-                                                </div>
-                                            )}
-                                        </>
-                                    ))}
+                                    {anyFreeCooks() 
+                                    ? 
+                                    <>
+                                        {team && team.map((cook) => (
+                                            <>
+                                                {freeCook(cook.id) && (
+                                                    <div key={`team-${cook.id}`} className='cook' onClick={() => assignCook(cook.id)}>
+                                                        <div className='cook-avatar2' style={{backgroundImage: `url('${cook.avatar}')`}}/>
+                                                        <p>{cook.name.split(' ')[0]}</p>
+                                                    </div>
+                                                )}
+                                            </>
+                                        ))}
+                                    </>
+                                    :
+                                        <div>
+                                            <p>None</p>
+                                        </div>
+                                    }
                                 </div>
                             )}
                         </div>
                     </div>
                     <div className='all-assigned'>
                         {project.assigned.map(cook => (
-                            <AssignedToProject cook={cook} projectId={project.id}/>
+                            <AssignedToProject key={`assigned-${cook.id}`} cook={cook} projectId={project.id}/>
                         ))}
                     </div>
                 </div>
@@ -112,24 +138,30 @@ function Project({project}){
                     <div className='pp-tasks'>
                         <p className='task-header'>Tasks</p>
                         {project.tasks.map(task => (
-                            <div>
+                            <div key={`task-${task.id}`}>
                                 <Task task={task} calculateCompletion={calculateCompletion}/>
                             </div>
                         ))}
                         <div className={isHovered ? 'add-task-hovered' : 'add-task'}>
                             {!addTask 
                                 ? 
-                                <button className='add-task-button' onClick={() => setAddTask(true)}>
-                                    add task
-                                </button>
+                                <>
+
+                                    <button className='add-task-button' onClick={() => setAddTask(true)}>
+                                        Add Task
+                                    </button>
+                                </>
                                 :
                                 <>
+                                    <div clasSName='error-container'>
+                                        {error && <p className='error'>{error}</p>}
+                                    </div>
                                     <div className='ol-input task-input'>
-                                        <input name='task' type="text" placeholder=' ' value={newTask} onChange={(e) => setNewTask(e.target.value)}/>
+                                        <input maxLength='200' name='task' type="text" placeholder=' ' value={newTask} onChange={(e) => setNewTask(e.target.value)}/>
                                         <label htmlFor="task">Task</label>
                                     </div>
                                     <button className='task-add' onClick={handleAddTask}>Add</button>
-                                    <button className='task-cancel' onClick={() => setAddTask(false)}>Cancel</button>
+                                    <button className='task-cancel link' onClick={handleCancel}>Cancel</button>
                                 </>
                             }
                         </div>

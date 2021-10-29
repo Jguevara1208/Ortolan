@@ -7,11 +7,16 @@ image_routes = Blueprint("images", __name__)
 
 @image_routes.route("/", methods=["POST"])
 def upload_image():
+    print('IM HEEEEEEEEEEEEEERRRRREEEEEEE-----------------------------------------')
+    print(request.files, 'request.files')
+
     if "image" not in request.files:
         return {"errors": "image required"}, 400
 
     image = request.files["image"]
-
+    print(image, 'image')
+    print(image.filename)
+    print(allowed_file(image.filename))
     if not allowed_file(image.filename):
         return {"errors": "file type not permitted"}, 400
 

@@ -79,8 +79,8 @@ function Search(){
         {showFilter && (
           <div className={showFilter ? `filteredRecipes filter-shadow` : 'filteredRecipes'} >
             <p className='filter-label'>Recipes</p>
-            {filteredRecipes.map((recipe) => (
-              <Link className="search-results" to={`/recipes/${recipe.id}`} onClick={clearSearch}>
+            {filteredRecipes.map((recipe, i) => (
+              <Link key={`search-${i}`} className="search-results" to={`/recipes/${recipe.id}`} onClick={clearSearch}>
                 <div className='sr-container2'>
                   <p ><span className='span-colored'>{letterColoring(recipe)['nameMatch']}</span><span>{letterColoring(recipe)['nameRest']}</span></p>
                 </div>

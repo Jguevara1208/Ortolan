@@ -48,10 +48,10 @@
 
 .form-button {
     width: 100%;
-    margin-top: 50px;
+    margin-top: 30px;
     padding: 10px 20px;
     border-radius: 5px;
-    border: 2px solid var(--green);
+    border: 1px solid var(--green);
     color: var(--green);
     font-weight: 500;
     font-size: 1.2rem;
@@ -71,7 +71,7 @@
 
 .form-demo {
     font-size: 1.2rem;
-    font-weight: 600;
+    font-weight: 500;
     padding-bottom: 6px;
     border-bottom: 2px solid var(--green);
     width: fit-content;
@@ -100,4 +100,37 @@
 .log-in-link {
     color: var(--green);
     font-weight: 500;
+}
+
+.link {
+    border: none;
+    cursor: pointer;
+    transition: .2s cubic-bezier(1, 0, 0, 1);
+    position: relative;
+    padding: 0 0 0.3em 0;
+}
+
+.link:hover {
+    color: var(--d-green);
+}
+
+.link::before {
+  content: '';
+  display: inline;
+  width: 0%;
+  height: 0.2em;
+  position: absolute;
+  bottom: 0;
+  background-color: var(--d-green);
+  transition: width 0.2s ease-in;
+}
+
+.active {
+    color: var(--green);
+    font-weight: 500;
+}
+
+.link:hover::before,
+.link:focus::before {
+    width: 100%
 }

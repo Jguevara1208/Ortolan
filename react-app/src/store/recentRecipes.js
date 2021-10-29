@@ -29,9 +29,10 @@ const updateRecentRecipesAction = (recipe) => {
 /* ----------------------------------------------------------------------- */
 
 export const setRecentRecipes = (userId) => async (dispatch) => {
-    let res = await fetch(`/api/users/${userId}/recentRecipes`);
+    let res = await fetch(`/api/users/${userId}/recentRecipes/`);
     res = await res.json();
     const recipes = res.recentRecipes;
+
     dispatch(setRecentRecipesAction(recipes));
 };
 

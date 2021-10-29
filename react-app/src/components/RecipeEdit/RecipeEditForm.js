@@ -7,6 +7,7 @@ import { setIngredients, addIngredient } from '../../store/ingredients';
 import { setOrderCategories, addOrderCategory } from '../../store/orderCategories';
 import { createCurrentRecipe, deleteCurrentRecipe, setCurrentRecipe } from '../../store/currentRecipe'
 import { CgRemoveR, CgAddR } from 'react-icons/cg'
+import { FaTrashAlt } from 'react-icons/fa'
 import '../NewRecipe/RecipeForm.css'
 
 function RecipeEditForm() {
@@ -298,8 +299,9 @@ function RecipeEditForm() {
         <div className='form-container'>
             <form className='nr-form' onSubmit={handleSubmit} autoComplete="off">
                 <div className='title-season'>
-                    <div className='ol-input'>
+                    <div className='ol-input recipe-title'>
                         <input
+                            maxLength='255'
                             type="text"
                             placeholder=' '
                             value={title}
@@ -331,7 +333,10 @@ function RecipeEditForm() {
                     <div className='photo-container'>
                         {photo
                             ?
-                            <div className='rf-photo' style={{ backgroundImage: `url('${photo}')` }} />
+                            <>
+                                <input type='file' className='inputfile' ref={fileUpload} onChange={handlePhoto} />
+                                <div className='rf-photo' onClick={() => handleUpload()} style={{ backgroundImage: `url('${photo}')` }} />
+                            </>
                             :
                             <>
                                 <input type='file' className='inputfile' ref={fileUpload} onChange={handlePhoto} />
@@ -342,21 +347,26 @@ function RecipeEditForm() {
                 </div>
                 <div className='sub-recipe'>
                     {subRecipes.map((subRecipe, i) => (
-                        <div className='sr-wrapper'>
-                            <div className='ol-input'>
-                                <input
-                                    name='title'
-                                    placeholder='Sub recipe Title'
-                                    value={subRecipe.title}
-                                    onChange={(e) => handleInputChangeSubRecipe(e, i)}
-                                />
-                                <label htmlFor="title">Recipe Title</label>
+                        <div key={`sr-${i}`} className='sr-wrapper'>
+                            <div className='subrecipe-title-trash'>
+                                <div className='ol-input recipe-title'>
+                                    <input
+                                        maxLength='250'
+                                        name='title'
+                                        placeholder='Sub recipe Title'
+                                        value={subRecipe.title}
+                                        onChange={(e) => handleInputChangeSubRecipe(e, i)}
+                                    />
+                                    <label htmlFor="title">Recipe Title</label>
+                                </div>
+                                {subRecipes.length !== 1 && <FaTrashAlt className='remove-sr-trash' onClick={() => handleRemoveClickSubRecipe(i)} />}
                             </div>
                             {subRecipe.ingredients.map((ingredient, idx) => (
-                                <div className='sr-ingredient-wrapper'>
+                                <div key={`ing-${i}-${idx}`} className='sr-ingredient-wrapper'>
                                     <div className='ol-input qty'>
                                         <input
                                             className='qty-input'
+                                            maxLength='25'
                                             type="text"
                                             placeholder=' '
                                             name='qty'
@@ -369,6 +379,7 @@ function RecipeEditForm() {
                                         <input
                                             type="text"
                                             placeholder=' '
+                                            maxLength='50'
                                             name='ingredientId'
                                             value={ingredient.ingredientId}
                                             onChange={(e) => handleInputChangeSubRecipeIngredient(e, i, idx)}
@@ -377,6 +388,7 @@ function RecipeEditForm() {
                                     </div>
                                     <div className='ol-input'>
                                         <input
+                                            maxLength='300'
                                             type="text"
                                             placeholder=' '
                                             name='description'
@@ -387,6 +399,7 @@ function RecipeEditForm() {
                                     </div>
                                     <div className='ol-input'>
                                         <input
+                                            maxLength='50'
                                             id={`category-${i}-${idx}`}
                                             type="text"
                                             placeholder=' '
@@ -412,7 +425,6 @@ function RecipeEditForm() {
                             </div>
                             <div className='sub-recipe-buttons'>
                                 {subRecipes.length - 1 === i && <button className='add-sr' onClick={handleAddClickSubRecipe}>Add Recipe</button>}
-                                {subRecipes.length !== 1 && <button className='remove-sr' onClick={() => handleRemoveClickSubRecipe(i)}>Remove Recipe</button>}
                             </div>
                         </div>
                     ))}
@@ -423,6 +435,7 @@ function RecipeEditForm() {
                             type="text"
                             name='tags'
                             placeholder=' '
+                            maxLength='50'
                             value={tags}
                             onChange={(e) => setTags(e.target.value)}
                         />

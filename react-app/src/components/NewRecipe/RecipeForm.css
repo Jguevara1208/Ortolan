@@ -45,12 +45,19 @@
     gap: 20px;
 }
 
-.add-sr, .remove-sr {
+.add-sr {
     padding: 10px 20px;
-    background-color: var(--green);
-    border-radius: 15px;
-    color: white;
+    border: 1px solid var(--green);
+    border-radius: 5px;
+    color: var(--green);
     font-weight: 500;
+    transition: .5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.add-sr:hover {
+    background-color: var(--green);
+    color: white;
+    transition: .5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .qty {
@@ -68,7 +75,8 @@
     border: 1px solid var(--green);
     padding: 30px;
     border-radius: 15px;
-    width: 80%;
+    width: 90%;
+    max-width: 1227px;
 }
 
 .ol-input > .description ~ label {
@@ -95,10 +103,10 @@
     border: 1px solid var(--green);
     resize: none;
     max-height: 50vh;
-    max-width: 808px;
+    max-width: 782px;
     color: var(--green);
     height: 2.7rem;
-    width: 87%;
+    width: 83.7%;
     outline: 1px solid var(--green);
     border-radius: 5px;
     border: none;
@@ -120,12 +128,16 @@
     transition: .1s cubic-bezier(.65,.05,.36,1);
 }
 
+.recipe-title input {
+    min-width: 518px;
+    width: 50%;
+    max-width: 555px;
+}
+
 .ol-input label {
     position: absolute;
-    /* top: 50%;
-    left: 5%; */
-    top: 0px;
-    left: 10px;
+    top: 50%;
+    left: 5%;
     transform: translateY(-50%);
     background-color: white;
     color: var(--green);
@@ -136,24 +148,38 @@
     padding: 0 5px;
 }
 
+input:valid {
+    color: var(--d-green);
+}
+
 .ol-input input:not(:placeholder-shown) ~ label,
 .ol-input input:focus ~ label {
     top: 0px;
     left: 10px;
     font-size: 1rem;
+    color: var(--d-green);
 }
 
 .ol-input input:focus {
-    outline: 1px solid var(--green) !important;
+    outline: 1px solid var(--d-green) !important;
 }
 
 .ol-input input:hover {
-    outline: 1px solid var(--gold);
+    outline: 1px solid var(--d-green);
 }
 
 .ol-input input:focus ~ label {
+    color: var(--d-green) !important;
+}
+
+.ol-input input:not(:focus) ~ label {
     color: var(--green) !important;
 }
+
+.ol-input input:hover ~ label {
+    color: var(--d-green) !important;
+}
+
 
 .sri-button {
     color: var(--green);
@@ -178,14 +204,6 @@ textarea::placeholder {
     color: rgb(187, 187, 187);
 }
 
-input:focus::placeholder {
-    color: transparent;
-    transition: .2s cubic-bezier(.65,.05,.36,1);
-}
-
-input::placeholder {
-    color: rgb(187, 187, 187);
-}
 
 .ol-input > .components ~ label {
     position: absolute;
@@ -204,11 +222,11 @@ input::placeholder {
     padding: 25px;
     height: 5em;
     min-height: 20em;
-    border: 1px solid var(--green);
     resize: none;
     max-height: 50vh;
     color: var(--green);
-    width: 25em;
+    width: 100%;
+    min-width: 400px;
     outline: 1px solid var(--green);
     border-radius: 5px;
     border: none;
@@ -222,8 +240,13 @@ input::placeholder {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 50%;
+    width: 48%;
     max-height: 405px;
+}
+
+.recipe-form-photo {
+    border: 1px dashed var(--green);
+    cursor: pointer;
 }
 
 .inputfile {
@@ -241,6 +264,13 @@ input::placeholder {
     border-radius: 5px;
     color: var(--green);
     cursor: pointer;
+    transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.fileChooser:hover {
+    color: white;
+    background-color: var(--green);
+    transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .rf-photo {
@@ -248,6 +278,7 @@ input::placeholder {
     height: 100%;
     background-position: center;
     background-size: cover;
+    border-radius: 5px;
 }
 
 .tags-container {
@@ -290,18 +321,30 @@ input::placeholder {
     position: relative;
     background-color: white;
     border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .season-select select {
     font-size: 1rem;
     font-weight: normal;
     max-width: 100%;
-    padding: 8px 24px 8px 10px;
+    padding: 10px 15px 10px 15px;
     border: none;
-    background-color: transparent;
+    cursor: pointer;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
+    text-align: center;
+    
+}
+
+.season-select:hover{
+    background-color: var(--green);
+    color: white;
+    transition: .5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .season-select select:active, .season-select select:focus {
@@ -309,14 +352,23 @@ input::placeholder {
   box-shadow: none;
 }
 
-.season-select:after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  right: 8px;
-  width: 0;
-  height: 0;
-  margin-top: -2px;
-  border-right: 5px solid transparent;
-  border-left: 5px solid transparent;
+.component-container {
+    width: 48%;
+}
+
+.subrecipe-title-trash {
+    display: flex;
+    justify-content: space-between;
+}
+
+.remove-sr-trash {
+    color: rgb(208, 208, 208);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: .5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.remove-sr-trash:hover {
+    color: var(--green);
+    transition: .5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }

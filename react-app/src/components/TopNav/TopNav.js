@@ -9,13 +9,15 @@ import './TopNav.css'
 const TopNav = () => {
 
     const location = useLocation();
+    const user = useSelector(state => state.session.user)
 
+    const isSplashPage = (location.pathname === '/' && !user)
     const isLoginPage = location.pathname === '/login';
     const isSignUpPage = location.pathname === '/signup';
 
     const session = useSelector(state => state.session);
 
-    if (isLoginPage || isSignUpPage) {
+    if (isLoginPage || isSignUpPage || isSplashPage) {
         return null
     } else { 
         return (
@@ -25,7 +27,9 @@ const TopNav = () => {
                 <div className='signed-in'>
                     <div className='third-empty'/>
                     <div className='third-logo'>
-                        {navLogo}
+                        <NavLink className='orto-logo' to='/' exact={true}>
+                            {navLogo}
+                        </NavLink>
                     </div>
                     <div className='third-logout'>
                         <LogoutButton />

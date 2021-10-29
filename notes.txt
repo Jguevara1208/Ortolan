@@ -1,10 +1,5 @@
-change it so that the inputs placeholder is just on the top
 on hover change to current green, and lighter from the beginning
 side nav different color,
 darker green
-
-on form move label to top, and add in dummy text
-dash line around where photo will be placed
-upload photo instead of choose photo
 make season based on current season
 title longer
