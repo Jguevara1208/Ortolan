@@ -225,7 +225,7 @@ const SignUpForm = () => {
         <label htmlFor="repeat_password">Repeat Password</label>
       </div>
       <button className='form-button' type='submit'>Sign Up</button>
-      <p>Already have an account? <Link className='log-in-link' to='/login'>Log In</Link></p>
+      <p>Already have an account? <Link className='log-in-link link' to='/login'>Log In</Link></p>
     </form>
   );
 };

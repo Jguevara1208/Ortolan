@@ -47,7 +47,8 @@
 .pt-active {
     font-weight: 600;
     padding-bottom: 5px;
-    border-bottom: 2px solid var(--green);
+    color: var(--d-green);
+    border-bottom: 2px solid var(--d-green);
 }
 
 .ptr-container {
@@ -70,6 +71,12 @@
     background-color: white;
     border-radius: 15px;
     box-shadow: var(--shadow);
+    transition: .4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.pt-recipe-link:hover {
+    transition: .4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
 }
 
 .pt-recipe-link > p {

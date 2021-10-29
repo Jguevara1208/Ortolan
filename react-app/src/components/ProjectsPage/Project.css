@@ -64,13 +64,13 @@
     font-weight: 500;
     width: fit-content;
     align-self: flex-start;
-    transition: .3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: .3s cubic-bezier(1, 0, 0, 1);
 }
 
 .projects-container > button:hover {
     background-color: var(--green);
     color: white;
-    transition: .3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: .3s cubic-bezier(1, 0, 0, 1);
 }
 
 .pc-top {
@@ -198,18 +198,11 @@
     transition: 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.pp-assign > button:hover {
-    color: white;
-    background-color: var(--gold);
-    transition: 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
 .pp-assign:hover {
     background-color: var(--gold);
 }
 
 .pp-assign:hover > button {
-    background-color: var(--gold);
     color: white;
 }
 
@@ -444,12 +437,20 @@
 .np-submit {
     padding: 10px 20px;
     border-radius: 5px;
-    background-color: var(--green);
+    background-color: white;
+    border: 1px solid var(--green);
     width: fit-content;
-    color: white;
+    color: var(--green);
     font-weight: 500;
     font-size: 1.2rem;
     margin-top: 30px;
+    transition: .1s cubic-bezier(.65,.05,.36,1);
+}
+
+.np-submit:hover {
+    background-color: var(--green);
+    color: white;
+    transition: .1s cubic-bezier(.65,.05,.36,1);
 }
 
 

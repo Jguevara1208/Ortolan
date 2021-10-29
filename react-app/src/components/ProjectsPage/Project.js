@@ -161,7 +161,7 @@ function Project({project}){
                                         <label htmlFor="task">Task</label>
                                     </div>
                                     <button className='task-add' onClick={handleAddTask}>Add</button>
-                                    <button className='task-cancel' onClick={handleCancel}>Cancel</button>
+                                    <button className='task-cancel link' onClick={handleCancel}>Cancel</button>
                                 </>
                             }
                         </div>

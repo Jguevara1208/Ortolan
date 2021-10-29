@@ -76,8 +76,8 @@ const LoginForm = () => {
         <label htmlFor='password'>Password</label>
       </div>
         <button className='form-button' type='submit'>Login</button>
-        <button className='form-demo' onClick={demoUser}>Demo</button>
-        <p>No account? <Link className='log-in-link' to='/signup'>Sign Up</Link></p>
+        <button className='form-demo link' onClick={demoUser}>Demo</button>
+        <p>No account? <Link className='log-in-link link' to='/signup'>Sign Up</Link></p>
     </form>
   );
 };

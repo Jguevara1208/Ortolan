@@ -148,24 +148,38 @@
     padding: 0 5px;
 }
 
+input:valid {
+    color: var(--d-green);
+}
+
 .ol-input input:not(:placeholder-shown) ~ label,
 .ol-input input:focus ~ label {
     top: 0px;
     left: 10px;
     font-size: 1rem;
+    color: var(--d-green);
 }
 
 .ol-input input:focus {
-    /* outline: 1px solid var(--green) !important; */
+    outline: 1px solid var(--d-green) !important;
 }
 
 .ol-input input:hover {
-    outline: 1px solid black;
+    outline: 1px solid var(--d-green);
 }
 
 .ol-input input:focus ~ label {
+    color: var(--d-green) !important;
+}
+
+.ol-input input:not(:focus) ~ label {
     color: var(--green) !important;
 }
+
+.ol-input input:hover ~ label {
+    color: var(--d-green) !important;
+}
+
 
 .sri-button {
     color: var(--green);
@@ -221,10 +235,6 @@ textarea::placeholder {
     font-size: 1.1rem;
     transition: .1s cubic-bezier(.65,.05,.36,1);
 }
-
-/* .ol-input .components:not(:placeholder-shown) {
-    border: 3px solid red;
-} */
 
 .photo-container {
     display: flex;

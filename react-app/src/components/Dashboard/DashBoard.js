@@ -53,7 +53,7 @@ function Dashboard(){
             <div className='db-container'>
                 <div className='projects-header'>
                     <h3>Recent Recipes</h3>
-                    <Link to='/recipes'>See all recipes</Link>
+                    <Link className='link' to='/recipes'>See all recipes</Link>
                 </div>
                 <div className='rr-container'>
                     <div className='rr-wrapper'>
@@ -69,7 +69,7 @@ function Dashboard(){
                 
                 <div className='projects-header'>
                     <h3>Projects</h3>
-                    <Link to='/projects'>See all projects</Link>
+                    <Link className='link' to='/projects'>See all projects</Link>
                 </div>
                 <div className='project-container'>
                     <div className='project-wrapper'>
