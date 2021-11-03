@@ -353,7 +353,7 @@ function RecipeEditForm() {
                                     <input
                                         maxLength='250'
                                         name='title'
-                                        placeholder='Sub recipe Title'
+                                        placeholder=' '
                                         value={subRecipe.title}
                                         onChange={(e) => handleInputChangeSubRecipe(e, i)}
                                     />
@@ -373,7 +373,7 @@ function RecipeEditForm() {
                                             value={ingredient.qty}
                                             onChange={(e) => handleInputChangeSubRecipeIngredient(e, i, idx)}
                                         />
-                                        <label htmlFor="qty">Qty</label>
+                                        <label htmlFor="qty">Qty & Unit</label>
                                     </div>
                                     <div className='ol-input'>
                                         <input

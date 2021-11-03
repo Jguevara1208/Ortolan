@@ -41,12 +41,14 @@
     box-shadow: var(--shadow);
     padding: 5px 0px 15px 0px;
     border-radius: 15px;
-    transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: .5s ease-in-out;
+    /* transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); */
 }
 
 .recipe-card:hover {
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
-    transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    /* transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); */
+    transition: .5s ease-in-out;
 }
 
 .rc-title {

@@ -355,7 +355,7 @@ function RecipeForm(){
                                             value={ingredient.qty}
                                             onChange={(e) => handleInputChangeSubRecipeIngredient(e, i, idx)}
                                         />
-                                        <label htmlFor="qty">Qty</label>
+                                        <label htmlFor="qty">Qty & Unit</label>
                                     </div>
                                     <div className='ol-input'>
                                         <input 
