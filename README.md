@@ -1,7 +1,7 @@
 <br />
 <p align="center">
   <a href="https://ortolan.herokuapp.com/">
-    <img src="https://raw.githubusercontent.com/Jguevara1208/Ortloan-photos/c917f7f440f77cc45e71c4ae4843a6bb93ae2c3f/orto-logo.svg?token=AR27E63IHZOGHRLYQQJAKYTBPLKUW" alt="Logo" width="90" height="90">
+    <img src="https://cdn.discordapp.com/attachments/908759674076168263/909907787977461770/orto-logo.png" alt="Logo" width="140" height="140">
   </a>
 
   <h3 align="center">Ortolan</h3>
