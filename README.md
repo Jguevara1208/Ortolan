@@ -44,7 +44,7 @@
 
 <br>
 
-### [Ortolan](https://finstagram-project.herokuapp.com/)
+### [Ortolan](https://ortolan.herokuapp.com/)
 
 Ortolan is a web application built for professional chefs to automate and organize the non technical aspect of cooking. Ortolan eases the creation, exploration, and organization of the recipe archival process. With every new recipe entered by a user Ortolan will be able to predict the completion of ingredients and ordering categories to help expedite the completion of recipe additions. Ortolan also offers a project board where projects can be made, tasks created, and assignments to cooks given. Watch the progress of these tasks in real time.
 
