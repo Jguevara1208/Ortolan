@@ -1,11 +1,11 @@
 import SignUpForm from "../auth/SignUpForm";
-import test from "../LoginPage/new-logo";
+import loginSignup from "../LoginPage/login-signup";
 
 function Signup(){
     return (
         <>
             <div style={{ marginTop: '2%'}}>
-                {test}
+                {loginSignup}
             </div>
             <div className='signupform-container' style={{position: 'absolute'}}>
                 <SignUpForm />
