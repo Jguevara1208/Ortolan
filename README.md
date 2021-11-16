@@ -44,7 +44,7 @@
 
 <br>
 
-### [Ortolan](https://finstagram-project.herokuapp.com/)
+### [Ortolan](https://ortolan.herokuapp.com/)
 
 Ortolan is a web application built for professional chefs to automate and organize the non technical aspect of cooking. Ortolan eases the creation, exploration, and organization of the recipe archival process. With every new recipe entered by a user Ortolan will be able to predict the completion of ingredients and ordering categories to help expedite the completion of recipe additions. Ortolan also offers a project board where projects can be made, tasks created, and assignments to cooks given. Watch the progress of these tasks in real time.
 
@@ -57,78 +57,54 @@ Ortolan is a web application built for professional chefs to automate and organi
 * [React](https://reactjs.org/)
 * [Redux](https://redux.js.org/)
 
-<!-- USAGE EXAMPLES
 ## Usage
-[Back to top](#table-of-contents)
-
-Users can signup and login to use Finstagram, and can login as a demo user to experience the website quickly.
-
-[![Product Name Screen Shot][signup]](https://finstagram-project.herokuapp.com/signup)
-[![Product Name Screen Shot][product-screenshot]](https://finstagram-project.herokuapp.com/login)
-<br>
-<br>
-Once logged in, the user is directed to the Feed page, where logged-in users can view a feed of posts from users they follow, as well as their own posts.
-
-[![Product Name Screen Shot][feed]](https://finstagram-project.herokuapp.com/signup)
-
-Logged in users can add a new post, which appears at the top of the screen. Users can post images, gifs, or videos, as accepted file types. For posts a user owns, they can edit and delete the post. Users can also like and unlike a post.
-
-### Adding a post:
-[![Product Name Screen Shot][addPost]](https://finstagram-project.herokuapp.com/feed)
-
-### Editing a post:
-[![Product Name Screen Shot][editPost]](https://finstagram-project.herokuapp.com/feed)
-
-### Deleting a post:
-[![Product Name Screen Shot][deletePost]](https://finstagram-project.herokuapp.com/feed)
-
-### Liking and unliking a post:
-[![Product Name Screen Shot][likeUnlike]](https://finstagram-project.herokuapp.com/feed)
-
-Users can add, edit, and delete a comment.
-
-### Adding a comment:
-[![Product Name Screen Shot][addComment]](https://finstagram-project.herokuapp.com/feed)
-
-### Editing a comment:
-[![Product Name Screen Shot][editComment]](https://finstagram-project.herokuapp.com/feed)
-
-### Deleting a comment:
-[![Product Name Screen Shot][deleteComment]](https://finstagram-project.herokuapp.com/feed)
-
-Users can hover over the username or user image of a post's author to view that user's information. It also shows the following status of the logged in user in relation to the post author user.
-
-### View user hover card:
-[![Product Name Screen Shot][viewHover]](https://finstagram-project.herokuapp.com/feed)
-
-Users can also click on the likes count on any post to view which users liked that post. From here, users can see whether they're following anyone in this list, and follow/unfollow as they wish.
-
-### View post's liked users:
-[![Product Name Screen Shot][viewLikes]](https://finstagram-project.herokuapp.com/feed)
+Ortolan offers multiple search functionalities to find the recipe you are looking for. You can search via the tree, either by the tags of the recipe or the year/season. You can also use the search bar to find a specific recipe. Lastly, you can search by photo.
 
 <br>
-<br>
-Over on the Explore page, users can view posts from users they don't follow, and interact with these posts like on the Feed page.
-<br>
-<br>
 
-### View posts from unfollowed users:
-[![Product Name Screen Shot][exploreModal]](https://finstagram-project.herokuapp.com/explore)
+![search](./gifs/search.gif)
 
-
-Once you follow a user, their posts will appear on the feed page
-
-### Newly followed users posts:
-
-[![Product Name Screen Shot][newlyFollowedPosts]](https://finstagram-project.herokuapp.com/explore)
-<br>
 <br>
 
-From any page where there are user posts or comments, you can click on a user's username to go to their profile page, which displays that user's number of posts, followers, and users followed.
+Ortolan offers a dynamic recipe creation form. Enter as many sub recipes and ingredients as needed. Everything can be adjusted. The title, the photo, the components, the season, the ingredients, the sub recipes, and the tags. Go wild! The more recipes a user enters, the more Ortolan will be able to help fill it out quicker. The database grows and knows what purveyors you are ordering things from and fills it out for you.
 
-### User profile pages:
+<br>
 
-(add profile navigation gif) -->
+![new](./gifs/new.gif)
+
+<br>
+
+Ortolan offers the ability to go back into the recipes that you have previously published and change anything you need to.
+
+<br>
+
+![edit](./gifs/edit.gif)
+
+<br>
+
+Ortolan allows for organization of daily/weekly/monthly projects. Add the project, assign the cooks, watch the progress!
+
+<br>
+
+![project](./gifs/project.gif)
+
+<br>
+
+Create a new project by adding a title and description, and any optional smaller tasks for that project.
+
+<br>
+
+![new-project](./gifs/new-project.gif)
+
+<br>
+
+Upon completion, or if you decided to head another direction, delete any project!
+
+<br>
+
+![delete-project](./gifs/delete-project.gif)
+
+<br>
 
 ## Interesting Issues:
 ### Dynamic Form for Recipe 
