@@ -1,11 +1,11 @@
 import LoginForm from "../auth/LoginForm";
-import test from "./new-logo";
+import loginSignup from "./login-signup";
 import './Login.css'
 function Login(){
     return (
         <>
-            <div style={{ marginTop: '2%' }}>
-                {test}
+            <div style={{ marginTop: '1%' }}>
+                {loginSignup}
             </div>
             <div className='loginform-container' style={{position: 'absolute'}}>
                 <LoginForm/>
