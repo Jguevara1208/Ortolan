@@ -1,5 +1,6 @@
 from .db import db
 from datetime import datetime
+from .user import current_menu
 
 recipe_tags = db.Table(
     'recipe_tags',
@@ -23,6 +24,7 @@ class Recipe(db.Model):
     components = db.relationship('Component', back_populates='recipe', cascade='all, delete')
     sub_recipes = db.relationship('SubRecipe', back_populates='recipe', cascade='all, delete')
     tags = db.relationship('Tag', back_populates='recipe', secondary=recipe_tags)
+    chef = db.relationship('User', back_populates='current_menu', secondary=current_menu)
 
     def to_redux_dict(self):
         return {

@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required
-from app.models import User, Recipe, Project, Ingredient, Tag, OrderListCategory, Unit, db
+from app.models import User, Recipe, Project, Ingredient, Tag, OrderListCategory, Unit, db, current_menu
 
 user_routes = Blueprint('users', __name__)
 
@@ -85,6 +85,25 @@ def ingredients(id):
 def tags(id):
     tags = Tag.query.filter(Tag.user_id == id).all()
     return {tag.name: tag.id for tag in tags}
+
+@user_routes.route('/<int:id>/currentMenu/')
+def current_menu(id):
+    menu_items = User.query.get(id).current_menu
+    return {"currentMenu" : [menu_item.to_recent_dict() for menu_item in menu_items]}
+
+
+@user_routes.route('/<int:user_id>/currentMenu/<int:recipe_id>/', methods=['POST', 'DELETE'])
+def current_menu_edit(user_id, recipe_id):
+    user = User.query.get(user_id)
+    recipe = Recipe.query.get(recipe_id)
+    if request.method == 'POST':
+        user.current_menu.append(recipe)
+        db.session.commit()
+        return {"currentMenu": [recipe.to_recent_dict() for recipe in user.current_menu]}
+    else:
+        user.current_menu.remove(recipe)
+        db.session.commit()
+        return {"currentMenu": [recipe.to_recent_dict() for recipe in user.current_menu]}
 
 
 @user_routes.route('/<int:id>/categories/')
