@@ -2,7 +2,8 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setRecentRecipes } from '../../store/recentRecipes';
 import { setProjects } from '../../store/projects';
-import { Link } from 'react-router-dom' 
+import { getCurrentMenu } from '../../store/currentMenu';
+import { Link } from 'react-router-dom';
 import './Dashboard.css';
 
 function Dashboard(){
@@ -10,11 +11,13 @@ function Dashboard(){
 
     const recentRecipes = useSelector(state => state.recentRecipes)
     const projects = useSelector(state => state.projects)
+    const currentMenu = useSelector(state => state.currentMenu)
     const userId = useSelector(state => state.session.user.id)
     
     useEffect(() => {
         dispatch(setRecentRecipes(userId))
         dispatch(setProjects(userId))
+        dispatch(getCurrentMenu(userId))
     }, [dispatch])
 
     const formatDate = (date) => {
@@ -64,6 +67,38 @@ function Dashboard(){
                                     <p className='rc-date'>{formatDate(recipe.created_at)}</p>
                             </Link>
                         ))}
+                    </div>
+                </div>
+                <div className='db-double-container'>
+                    <div className='cm-container'>
+                        <div className='projects-header'>
+                            <h3>Current Menu</h3>
+                            <Link className='link' to='/menu'>See full menu</Link>
+                        </div>
+                        <div className='cm-wrapper'>
+                            {currentMenu && currentMenu.map((recipe, idx) => (
+                                <>
+                                    {
+                                    idx < 12 
+                                    ?
+                                        <Link key={`cm-${recipe.id}`} className='cm-recipe' to={`/recipes/${recipe.id}`}>
+                                                <div className='cm-photo' style={{ backgroundImage: `url('${recipe.img}')` }}/>
+                                        </Link>
+                                    : 
+                                        null
+                                    }
+                                </>
+                            ))}
+                        </div>
+                    </div>
+                    <div className='og-container'>
+                        <div className='projects-header'>
+                            <h3>Ordering Guide</h3>
+                            <Link className='link' to='/recipes'>See full guide</Link>
+                        </div>
+                        <div className='og-wrapper'>
+
+                        </div>
                     </div>
                 </div>
                 

@@ -5,6 +5,7 @@ import { FaHome} from 'react-icons/fa'
 import { BsFillFileEarmarkTextFill } from 'react-icons/bs'
 import {VscChecklist} from 'react-icons/vsc'
 import { RiSettings5Fill } from 'react-icons/ri'
+import { FaMap, FaClipboardCheck } from 'react-icons/fa'
 import './NavBar.css'
 
 const SideNav = () => {
@@ -32,12 +33,28 @@ const SideNav = () => {
           <p>Recipes</p>
         </div>
       </NavLink>
+      <NavLink to='/menu' exact={true} activeClassName='active'>
+        <div className='side-nav-links'>
+          <div className='nav-icon-container'>
+            <FaMap />
+          </div>
+          <p>Menu</p>
+        </div>
+      </NavLink>
       <NavLink to='/projects' exact={true} activeClassName='active'>
         <div className='side-nav-links'>
           <div className='nav-icon-container'>
             <VscChecklist/>
           </div>
           <p>Projects</p>
+        </div>
+      </NavLink>
+      <NavLink to='/ordering' exact={true} activeClassName='active'>
+        <div className='side-nav-links'>
+          <div className='nav-icon-container'>
+            <FaClipboardCheck />
+          </div>
+          <p>Ordering Guide</p>
         </div>
       </NavLink>
       <NavLink to='/settings' exact={true} activeClassName='active'>

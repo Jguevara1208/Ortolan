@@ -52,6 +52,7 @@ a {
 
 button {
   cursor: pointer;
+  font-family: 'barlow';
 }
 
 @media (max-width: 900px) {

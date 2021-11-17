@@ -11,7 +11,6 @@ def users():
     users = User.query.all()
     return {'users': [user.to_dict() for user in users]}
 
-
 @user_routes.route('/<int:id>/')
 @login_required
 def user(id):
@@ -23,7 +22,6 @@ def recent_recipes(id):
     recent_recipes_list = Recipe.query.filter(Recipe.user_id == id).order_by(Recipe.created_at.desc()).limit(6)
     print(recent_recipes_list, 'recent recipes list from route')
     return {"recentRecipes": [ recipe.to_recent_dict() for recipe in recent_recipes_list ]}
-
 
 @user_routes.route('/<int:id>/treeRecipes/')
 def tree_recipes(id):
@@ -49,7 +47,6 @@ def tree_recipes(id):
             else:
                 tree[year][season].append(recipe.to_redux_dict())
 
-
     tags_obj = {
         tag.name: [recipe.to_redux_dict() for recipe in all_recipes if tag in recipe.tags]
         for tag in tags 
@@ -62,24 +59,20 @@ def tree_recipes(id):
 
     return res
 
-
 @user_routes.route('/<int:id>/allRecipes/')
 def all_recipes(id):
     all_recipes = Recipe.query.filter(Recipe.user_id == id).all()
     return { "allRecipes" :  {recipe.id: recipe.to_redux_dict() for recipe in all_recipes} }
-
 
 @user_routes.route('/<int:id>/projects/')
 def projects(id):
     projects = Project.query.filter(Project.user_id == id).all()
     return {"projects": {project.id: project.to_redux_dict() for project in projects}}
 
-
 @user_routes.route('/<int:id>/ingredients/')
 def ingredients(id):
     ingredients = Ingredient.query.filter(Ingredient.user_id == id).all()
     return { ingredient.name: ingredient.to_redux_dict() for ingredient in ingredients}
-
 
 @user_routes.route('/<int:id>/tags/')
 def tags(id):
@@ -90,7 +83,6 @@ def tags(id):
 def current_menu(id):
     menu_items = User.query.get(id).current_menu
     return {"currentMenu" : [menu_item.to_recent_dict() for menu_item in menu_items]}
-
 
 @user_routes.route('/<int:user_id>/currentMenu/<int:recipe_id>/', methods=['POST', 'DELETE'])
 def current_menu_edit(user_id, recipe_id):
@@ -105,12 +97,10 @@ def current_menu_edit(user_id, recipe_id):
         db.session.commit()
         return {"currentMenu": [recipe.to_recent_dict() for recipe in user.current_menu]}
 
-
 @user_routes.route('/<int:id>/categories/')
 def categories(id):
     categories = OrderListCategory.query.filter(OrderListCategory.user_id == id).all()
     return {category.name: category.id for category in categories}
-
 
 @user_routes.route('/<int:id>/units/')
 def units(id):
