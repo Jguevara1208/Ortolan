@@ -51,6 +51,11 @@ function Dashboard(){
         }
     }
 
+    const firstWord = (title) => {
+        let firstStr = title.split(' ')[0]
+        return firstStr[firstStr.length - 1] === ',' ? firstStr = firstStr.slice(0, firstStr.length - 1) : firstStr
+    }
+
     return (
         <div className='db-content'>
             <div className='db-container'>
@@ -73,15 +78,18 @@ function Dashboard(){
                     <div className='cm-container'>
                         <div className='projects-header'>
                             <h3>Current Menu</h3>
-                            <Link className='link' to='/menu'>See full menu</Link>
+                            <Link className='link' to='/menu'>
+                                See full menu {currentMenu.length - 8 > 0 ? currentMenu.length - 8 === 1 ? ' (1 more dish)' : ` (${currentMenu.length - 8} more dishes)` : '' }
+                                </Link>
                         </div>
                         <div className='cm-wrapper'>
                             {currentMenu && currentMenu.map((recipe, idx) => (
                                 <>
                                     {
-                                    idx < 12 
+                                    idx < 8 
                                     ?
                                         <Link key={`cm-${recipe.id}`} className='cm-recipe' to={`/recipes/${recipe.id}`}>
+                                                <p>{firstWord(recipe.title)}</p>
                                                 <div className='cm-photo' style={{ backgroundImage: `url('${recipe.img}')` }}/>
                                         </Link>
                                     : 
