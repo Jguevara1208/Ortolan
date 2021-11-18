@@ -8,6 +8,7 @@ import { setOrderCategories, addOrderCategory } from '../../store/orderCategorie
 import { createCurrentRecipe, deleteCurrentRecipe, setCurrentRecipe } from '../../store/currentRecipe'
 import { CgRemoveR, CgAddR } from 'react-icons/cg'
 import { FaTrashAlt } from 'react-icons/fa'
+import { addCurrentMenu, getCurrentMenu } from '../../store/currentMenu';
 import '../NewRecipe/RecipeForm.css'
 
 function RecipeEditForm() {
@@ -23,6 +24,7 @@ function RecipeEditForm() {
     const ingredients = useSelector(state => state.ingredients)
     const categories = useSelector(state => state.orderCategories)
     const currentRecipe = useSelector(state=> state.currentRecipe)
+    const currentMenu = useSelector(state => state.currentMenu)
 
     const [title, setTitle] = useState('')
     const [season, setSeason] = useState('Winter')
@@ -46,6 +48,7 @@ function RecipeEditForm() {
         dispatch(setUnits(userId))
         dispatch(setTagsOne(userId))
         dispatch(setIngredients(userId))
+        dispatch(getCurrentMenu(userId))
         dispatch(setOrderCategories(userId))
         dispatch(setCurrentRecipe(recipeId))
     }, [dispatch])
@@ -268,10 +271,17 @@ function RecipeEditForm() {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+
+        const onMenu = currentMenu.find(dish => +recipeId === dish.id)
+        console.log(recipeId, 'recipeId')
+        console.log(currentMenu, 'currentMenu')
+        console.log(onMenu, 'onMenu')
+
         const res = await createRequestObject()
         await dispatch(deleteCurrentRecipe(currentRecipe.id))
         const newRecipeId = await dispatch(createCurrentRecipe(res))
         resetState()
+        if (onMenu) dispatch(addCurrentMenu(userId, newRecipeId))
         history.push(`/recipes/${newRecipeId}`)
     }
 
