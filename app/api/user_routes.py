@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required
-from app.models import User, Recipe, Project, Ingredient, Tag, OrderListCategory, Unit, db, current_menu
+from app.models import User, Recipe, Project, Ingredient, Tag, OrderListCategory, Unit, db, SubRecipe, SubRecipeIngredient
 
 user_routes = Blueprint('users', __name__)
 
@@ -131,3 +131,38 @@ def edit_position(id):
     user.position = body['position']
     db.session.commit()
     return 'ok'
+
+@user_routes.route('/<int:id>/ordering/')
+def ordering_guide(id):
+
+    menu_items = User.query.get(id).current_menu
+    current_menu_ids = [recipe.id for recipe in menu_items]
+
+    sub_recipes = []
+    for recipe_id in current_menu_ids:
+        sub_recipe_ids = SubRecipe.query.filter(SubRecipe.recipe_id == recipe_id).all()
+        sub_recipes = [*sub_recipes, *sub_recipe_ids]
+
+    sub_recipe_ids = [sub_recipe.id for sub_recipe in sub_recipes]
+
+    sub_ingredients = []
+    for sub_recipe_id in sub_recipe_ids:
+        sub_recipe_ingredients = SubRecipeIngredient.query.filter(SubRecipeIngredient.sub_recipe_id == sub_recipe_id).all()
+        sub_ingredients = [*sub_ingredients, *sub_recipe_ingredients]
+
+    ingredient_ids = {ingredient.ingredient_id for ingredient in sub_ingredients}
+    
+    order_guide = {}
+    for ing_id in ingredient_ids:
+        ing = Ingredient.query.get(ing_id)
+        cat = OrderListCategory.query.get(ing.category_id)
+        if cat.name in order_guide:
+            order_guide[cat.name].append(ing.name)
+        else:
+            order_guide[cat.name] = []
+            order_guide[cat.name].append(ing.name)
+            
+    for category in order_guide:
+        order_guide[category] = sorted(order_guide[category])
+
+    return order_guide
