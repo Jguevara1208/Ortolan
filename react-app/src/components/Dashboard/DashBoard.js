@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setRecentRecipes } from '../../store/recentRecipes';
 import { setProjects } from '../../store/projects';
 import { getCurrentMenu } from '../../store/currentMenu';
+import { setOrderGuide } from '../../store/orderingGuide';
 import { Link } from 'react-router-dom';
 import './Dashboard.css';
 
@@ -13,11 +14,13 @@ function Dashboard(){
     const projects = useSelector(state => state.projects)
     const currentMenu = useSelector(state => state.currentMenu)
     const userId = useSelector(state => state.session.user.id)
+    const orderGuide = useSelector(state => state.orderGuide)
     
     useEffect(() => {
         dispatch(setRecentRecipes(userId))
         dispatch(setProjects(userId))
         dispatch(getCurrentMenu(userId))
+        dispatch(setOrderGuide(userId))
     }, [dispatch])
 
     const formatDate = (date) => {
@@ -54,6 +57,17 @@ function Dashboard(){
     const firstWord = (title) => {
         let firstStr = title.split(' ')[0]
         return firstStr[firstStr.length - 1] === ',' ? firstStr = firstStr.slice(0, firstStr.length - 1) : firstStr
+    }
+
+    const findCatLength = () => {
+        return Object.keys(orderGuide).length
+    }
+
+    const findIngLength = () => {
+        return Object.values(orderGuide).reduce((count, ingArr) => {
+            count += ingArr.length
+            return count
+        }, 0)
     }
 
     return (
@@ -102,10 +116,29 @@ function Dashboard(){
                     <div className='og-container'>
                         <div className='projects-header'>
                             <h3>Ordering Guide</h3>
-                            <Link className='link' to='/recipes'>See full guide</Link>
+                            <Link className='link' to='/ordering'>See full guide</Link>
                         </div>
                         <div className='og-wrapper'>
-
+                            <div className='breakdown-container'>
+                                <p className='breakdown'>Breakdown for current menu: </p>
+                                <span className='breakdown-count'>{findCatLength()} categories - {findIngLength()} ingredients</span>
+                            </div>
+                            <div className='breakdown-wrapper'>
+                                {orderGuide && Object.entries(orderGuide).map(entry => {
+                                    const cat = entry[0]
+                                    const ings = entry[1]
+                                    return (
+                                        <>
+                                            {(cat !== 'None' && cat !== 'Prepared') &&(
+                                                <div className='cat-wrapper'>
+                                                    <p className='cat'>{cat}</p>
+                                                    <p className='cat-length'>{ings.length} {ings.length === 1 ? 'item' : 'items'}</p>
+                                                </div>
+                                            )}
+                                        </>
+                                    )
+                                })}
+                            </div>
                         </div>
                     </div>
                 </div>

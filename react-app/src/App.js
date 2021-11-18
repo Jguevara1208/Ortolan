@@ -15,6 +15,7 @@ import Dashboard from './components/Dashboard/DashBoard';
 import Splash from './components/Splash/Splash';
 import Settings from './components/SettingsPage/Settings';
 import Menu from './components/Menu/Menu';
+import OrderingGuide from './components/OrderingGuide/OrderingGuide';
 import { authenticate } from './store/session';
 
 function App() {
@@ -48,6 +49,9 @@ function App() {
           </ProtectedRoute>
           <ProtectedRoute path='/recipes' exact={true}>
             <RecipesPage />
+          </ProtectedRoute>
+          <ProtectedRoute path='/ordering' exact={true}>
+            <OrderingGuide />
           </ProtectedRoute>
           <ProtectedRoute path='/menu' exact={true}>
             <Menu />

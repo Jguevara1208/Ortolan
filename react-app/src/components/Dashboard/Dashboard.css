@@ -197,6 +197,15 @@
     height: 100%;
     background-color: white;
     box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    padding: 40px;
+    overflow: scroll;
+    scrollbar-width: none
+}
+
+.og-wrapper::-webkit-scrollbar {
+  display: none;
 }
 
 .cm-wrapper {
@@ -229,4 +238,46 @@
     background-size: cover;
     border-radius: 15px;
     margin-bottom: .85rem;
+}
+
+.breakdown {
+    font-size: 1.2rem;
+    padding-bottom: 10px;
+}
+
+.breakdown-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    margin-top: 50px;
+    justify-content: center;
+}
+
+.cat-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+.cat {
+    font-size: 1.3rem;
+    margin-bottom: 5px;
+}
+
+.cat-length {
+    font-size: .9rem;
+    color: var(--green);
+}
+
+.breakdown-count {
+    font-size: .9rem;
+    color: var(--green);
+}
+
+.breakdown-container {
+    display: flex;
+    border-bottom: 1px solid var(--green);
+    align-items: center;
+    justify-content: space-between;
 }
