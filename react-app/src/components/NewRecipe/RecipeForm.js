@@ -141,6 +141,7 @@ function RecipeForm(){
 
     const formatSubRecipes = async () => {
         let formatSubRecipe = [...subRecipes]
+        let tempIngredients = {...ingredients}
         for(let i = 0; i < formatSubRecipe.length; i++) {
             const subRecipe = formatSubRecipe[i]
             formatSubRecipe[i]['order'] = i
@@ -150,7 +151,6 @@ function RecipeForm(){
                 const ingredient = subRecipe.ingredients[j]
                 let {qty, unitId, ingredientId, category} = ingredient
                 let index = null;
-
                 if (qty) {
                     for(let i = 0; i < qty.length; i++) {
                         let current = qty[i]
@@ -163,8 +163,6 @@ function RecipeForm(){
                     qty = +qty.slice(0, index).trim()
                     formatSubRecipe[i].ingredients[j].qty = qty
                 }
-
-
                 
                 if (!qty) formatSubRecipe[i].ingredients[j].qty = 0
                 if (!unitId) formatSubRecipe[i].ingredients[j].unitId = 'None'
@@ -181,31 +179,33 @@ function RecipeForm(){
                 } else {
                     formatSubRecipe[i].ingredients[j].unitId = units[unitId]
                 }
+                
+                const formattedIngredient = ingredientId.split(' ').map(ing => ing[0].toUpperCase() + ing.slice(1).toLowerCase()).join(' ');
 
-                    if (!ingredients[ingredientId]){
-                        let formattedCategory
-                        if(category) {
-                            formattedCategory = category.split(' ').map(cat => cat[0].toUpperCase() + cat.slice(1).toLowerCase()).join(' ')
-                        } else {
-                            formattedCategory = 'Other'
-                        }
-                            
-                        if(!categories[formattedCategory]){
-                            let newCatObj = await dispatch(addOrderCategory({"userId": userId, "name": formattedCategory}))
-                            category = newCatObj.id
-                            formatSubRecipe[i].ingredients[j].category = category
-                        } else {
-                            category = categories[formattedCategory]
-                            formatSubRecipe[i].ingredients[j].category = category
-                        }
-                        const formattedIngredient = ingredientId.split(' ').map(ing => ing[0].toUpperCase() + ing.slice(1).toLowerCase()).join(' ');
-                        const newIngredientObj = await dispatch(addIngredient({"name": formattedIngredient, "categoryId": category, "userId": userId}))
-                        ingredientId = newIngredientObj.ingredient.id
-                        formatSubRecipe[i].ingredients[j].ingredientId = ingredientId
+                if (!tempIngredients[formattedIngredient]){
+                    let formattedCategory
+                    if(category) {
+                        formattedCategory = category.split(' ').map(cat => cat[0].toUpperCase() + cat.slice(1).toLowerCase()).join(' ')
                     } else {
-                        ingredientId = ingredients[ingredientId].id
-                        formatSubRecipe[i].ingredients[j].ingredientId = ingredientId
+                        formattedCategory = 'Other'
                     }
+                        
+                    if(!categories[formattedCategory]){
+                        let newCatObj = await dispatch(addOrderCategory({"userId": userId, "name": formattedCategory}))
+                        category = newCatObj.id
+                        formatSubRecipe[i].ingredients[j].category = category
+                    } else {
+                        category = categories[formattedCategory]
+                        formatSubRecipe[i].ingredients[j].category = category
+                    }
+                    const newIngredientObj = await dispatch(addIngredient({"name": formattedIngredient, "categoryId": category, "userId": userId}))
+                    ingredientId = newIngredientObj.ingredient.id
+                    tempIngredients[newIngredientObj.name] = newIngredientObj.ingredient
+                    formatSubRecipe[i].ingredients[j].ingredientId = ingredientId
+                } else {
+                    ingredientId = tempIngredients[formattedIngredient].id
+                    formatSubRecipe[i].ingredients[j].ingredientId = ingredientId
+                }
                     
                 formatSubRecipe[i].ingredients[j]['order'] = j
             }

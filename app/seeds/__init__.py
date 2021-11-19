@@ -21,7 +21,7 @@ def seed():
     seed_units()
     seed_restaurants()
     seed_ingredients()
-    seed_tags()
+    # seed_tags()
     seed_recipes()
     # Add other seed functions here
 

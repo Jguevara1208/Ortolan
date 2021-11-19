@@ -161,6 +161,8 @@ function RecipeEditForm() {
 
     const formatSubRecipes = async () => {
         let formatSubRecipe = [...subRecipes]
+        let tempIngredients = { ...ingredients }
+
         for (let i = 0; i < formatSubRecipe.length; i++) {
             const subRecipe = formatSubRecipe[i]
             formatSubRecipe[i]['order'] = i
@@ -199,7 +201,9 @@ function RecipeEditForm() {
                     formatSubRecipe[i].ingredients[j].unitId = units[unitId]
                 }
 
-                if (!ingredients[ingredientId]) {
+                const formattedIngredient = ingredientId.split(' ').map(ing => ing[0].toUpperCase() + ing.slice(1).toLowerCase()).join(' ');
+
+                if (!tempIngredients[formattedIngredient]) {
                     let formattedCategory
                     if (category) {
                         formattedCategory = category.split(' ').map(cat => cat[0].toUpperCase() + cat.slice(1).toLowerCase()).join(' ')
@@ -215,12 +219,12 @@ function RecipeEditForm() {
                         category = categories[formattedCategory]
                         formatSubRecipe[i].ingredients[j].category = category
                     }
-                    const formattedIngredient = ingredientId.split(' ').map(ing => ing[0].toUpperCase() + ing.slice(1).toLowerCase()).join(' ');
                     const newIngredientObj = await dispatch(addIngredient({ "name": formattedIngredient, "categoryId": category, "userId": userId }))
                     ingredientId = newIngredientObj.ingredient.id
+                    tempIngredients[newIngredientObj.name] = newIngredientObj.ingredient
                     formatSubRecipe[i].ingredients[j].ingredientId = ingredientId
                 } else {
-                    ingredientId = ingredients[ingredientId].id
+                    ingredientId = tempIngredients[formattedIngredient].id
                     formatSubRecipe[i].ingredients[j].ingredientId = ingredientId
                 }
                 formatSubRecipe[i].ingredients[j]['order'] = j
@@ -273,9 +277,6 @@ function RecipeEditForm() {
         e.preventDefault()
 
         const onMenu = currentMenu.find(dish => +recipeId === dish.id)
-        console.log(recipeId, 'recipeId')
-        console.log(currentMenu, 'currentMenu')
-        console.log(onMenu, 'onMenu')
 
         const res = await createRequestObject()
         await dispatch(deleteCurrentRecipe(currentRecipe.id))

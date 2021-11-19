@@ -8,7 +8,7 @@ def seed_users():
         first_name='Jordan',
         last_name='Guevara',
         email='jordansacct@gmail.com',
-        avatar='https://raw.githubusercontent.com/Jguevara1208/Ortloan-photos/main/Gap%20Year%20at%20Nico_Jordan%20Guevara-1524_lores.jpeg?token=AR27E6Y5AX2GLPF62VVPG7DBQKVPY',
+        avatar='https://cdn.discordapp.com/attachments/908759674076168263/908759887809495051/Gap_Year_at_Nico_Jordan_Guevara-1524_lores.jpeg',
         password='password',
         admin=True,
         restaurant='Nico',
@@ -31,7 +31,7 @@ def seed_users():
         last_name='Lee',
         email='jlee@nicosf.com',
         password='password',
-        avatar='https://raw.githubusercontent.com/Jguevara1208/Ortloan-photos/main/58693296544__31236765-63CD-4208-AFD8-07912DB4A64F.jpeg?token=AR27E67G62FCIW6NWTTFFSDBQKYBC',
+        avatar='https://cdn.discordapp.com/attachments/908759674076168263/908759900321120256/58693296544__31236765-63CD-4208-AFD8-07912DB4A64F.jpeg',
         admin=True,
         restaurant='Nico',
         position='Sous Chef'
@@ -42,7 +42,7 @@ def seed_users():
         last_name='Kim',
         email='akim@nicosf.com',
         password='password',
-        avatar='https://raw.githubusercontent.com/Jguevara1208/Ortloan-photos/main/DSC00011Merica.jpeg?token=AR27E6ZPSQ7OGCC2TYM65ILBQKYCQ',
+        avatar='https://cdn.discordapp.com/attachments/908759674076168263/908759890036682783/DSC00011Merica.jpeg',
         admin=True,
         restaurant='Nico',
         position='Pastry Chef'

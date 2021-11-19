@@ -27,7 +27,7 @@ const rootReducer = combineReducers({
   currentRecipe: currentRecipeReducer,
   teamMembers: teamMembersReducer,
   currentMenu: currentMenuReducer,
-  orderGuide: orderingGuideReducer
+  orderGuide: orderingGuideReducer,
 });
 
 
