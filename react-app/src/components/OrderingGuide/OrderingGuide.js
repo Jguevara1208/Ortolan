@@ -39,7 +39,7 @@ const OrderingGuide = () => {
         Object.keys(temp).forEach(key => {
             let currArray = temp[key]
             let currLength = currArray.length
-            if (key !== 'None' && key !== 'Prepared') {
+            if (key !== 'None' && key !== 'Prepared' && key !== 'Other') {
                 if ((currentCount + currLength) < (perCol + 6)) {
                     currentCount += currLength
                     cols[currentArray].push({key: [key], ings: currArray})
