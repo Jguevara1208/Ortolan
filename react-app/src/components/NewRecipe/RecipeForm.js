@@ -180,6 +180,7 @@ function RecipeForm(){
                     formatSubRecipe[i].ingredients[j].unitId = units[unitId]
                 }
                 
+
                 const formattedIngredient = ingredientId.split(' ').map(ing => ing[0].toUpperCase() + ing.slice(1).toLowerCase()).join(' ');
 
                 if (!tempIngredients[formattedIngredient]){
