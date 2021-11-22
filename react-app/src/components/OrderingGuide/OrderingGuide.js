@@ -115,20 +115,6 @@ const OrderingGuide = () => {
                         </div>
                     </>
                 )}
-                {/* {orderGuide && Object.keys(orderGuide).map(category => (
-                    <>
-                        {(category !== 'None' && category !== 'Prepared') && (
-                            <div className='og-category-container'>
-                                <p className='og-category'>{category}</p>
-                                <div className='og-ings-container'>
-                                    {orderGuide[category].map(ing => (
-                                        <p className='og-ing'>{ing}</p>
-                                    ))}
-                                </div>
-                            </div>
-                        )}
-                    </>
-                ))} */}
             </div>
         </div>
     );
