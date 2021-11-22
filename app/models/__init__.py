@@ -1,5 +1,5 @@
 from .db import db
-from .user import User, Project
+from .user import User, Project, current_menu
 from .components import Component
 from .ingredients import Ingredient
 from .order_list_categories import OrderListCategory

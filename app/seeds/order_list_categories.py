@@ -5,7 +5,7 @@ def seed_order_list_categories():
     dairy = OrderListCategory(user_id=1, name='Dairy')
     dry_goods = OrderListCategory(user_id=1, name='Dry Goods')
     fish = OrderListCategory(user_id=1, name='Fish')
-    meat = OrderListCategory(user_id=1, name='Protien')
+    meat = OrderListCategory(user_id=1, name='Protein')
     specialty = OrderListCategory(user_id=1, name='Specialty')
     produce = OrderListCategory(user_id=1, name='Produce')
     alcohol = OrderListCategory(user_id=1, name='Alcohol')

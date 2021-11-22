@@ -8,6 +8,12 @@ assigned_to_projects = db.Table(
     db.Column("project_id", db.Integer, db.ForeignKey("projects.id"), primary_key=True)
 )
 
+current_menu = db.Table(
+    "current_menu",
+    db.Column("user_id", db.Integer, db.ForeignKey("users.id"), primary_key=True),
+    db.Column("recipe_id", db.Integer, db.ForeignKey("recipes.id"), primary_key=True)
+)
+
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
 
@@ -30,6 +36,8 @@ class User(db.Model, UserMixin):
     project_assignments = db.relationship("Project", back_populates="cooks", secondary=assigned_to_projects)
 
     restaurants = db.relationship('Restaurant', back_populates='chef')
+
+    current_menu = db.relationship('Recipe', back_populates="chef", secondary=current_menu)
 
     @property
     def password(self):

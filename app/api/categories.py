@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, request
 from app.models import OrderListCategory, db
 categories_routes = Blueprint('categories', __name__)
 

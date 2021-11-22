@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Signup from './components/SignupPage/Signup';
 import Login from './components/LoginPage/Login';
-import SignUpForm from './components/auth/SignUpForm';
 import SideNav from './components/SideNav/NavBar'
 import TopNav from './components/TopNav/TopNav'
 import ProtectedRoute from './components/auth/ProtectedRoute';
@@ -15,6 +14,8 @@ import ProjectsPage from './components/ProjectsPage/ProjectsPage';
 import Dashboard from './components/Dashboard/DashBoard';
 import Splash from './components/Splash/Splash';
 import Settings from './components/SettingsPage/Settings';
+import Menu from './components/Menu/Menu';
+import OrderingGuide from './components/OrderingGuide/OrderingGuide';
 import { authenticate } from './store/session';
 
 function App() {
@@ -48,6 +49,12 @@ function App() {
           </ProtectedRoute>
           <ProtectedRoute path='/recipes' exact={true}>
             <RecipesPage />
+          </ProtectedRoute>
+          <ProtectedRoute path='/ordering' exact={true}>
+            <OrderingGuide />
+          </ProtectedRoute>
+          <ProtectedRoute path='/menu' exact={true}>
+            <Menu />
           </ProtectedRoute>
           <ProtectedRoute path='/recipes/new' exact={true}>
             <RecipeForm />

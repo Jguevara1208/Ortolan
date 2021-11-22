@@ -1,0 +1,130 @@
+.menu-container {
+    width: 68%;
+    margin-left: 9%;
+    margin-top: 20px;
+    margin-bottom: 100px;
+}
+
+.update-menu-container > h2 {
+    text-align: center;
+    margin-bottom: 40px;
+    font-family: 'Julius sans one';
+    font-size: 2rem;
+}
+
+.update-menu {
+    margin-left: 20px;
+    padding: 8px 16px;
+    border-radius: 5px;
+    color: var(--green);
+    border: 1px solid var(--green);
+    transition: .1s cubic-bezier(1, 0, 0, 1);
+}
+
+.update-menu:hover {
+    color: white;
+    background-color: var(--green);
+    transition: .1s cubic-bezier(1, 0, 0, 1);
+}
+
+.dish-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    row-gap: 50px;
+    column-gap: 50px;
+    margin: 40px 0px;
+}
+
+.selected-recipe {
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    display: inline-block;
+    width: 9em;
+    height: 9em;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+    transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    transform: scale(1.15, 1.15);
+    cursor: pointer;
+}
+
+.selected-recipe::after {
+    background-size: cover;
+    background-position: center;
+    content: '';
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    border-radius: 15px;
+    height: 100%;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+    transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    cursor: pointer;
+}
+
+.unselected-recipe {
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    display: inline-block;
+    width: 9em;
+    height: 9em;
+    border-radius: 15px;
+    opacity: .5;    
+    background-color: #fff;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+    transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    cursor: pointer;
+}
+
+.unselected-recipe::after {
+    background-size: cover;
+    background-position: center;
+    content: '';
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    border-radius: 15px;
+    height: 100%;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+    transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    cursor: pointer;
+}
+
+.menu-edit-apply {
+    padding: 8px 16px;
+    border-radius: 5px;
+    font-weight: 500;
+    font-size: 1.1rem;
+    color: var(--green);
+    border: 1px solid var(--green);
+    transition: .1s cubic-bezier(1,0,0,1);
+}
+
+.menu-edit-apply:hover {
+    color: white;
+    background-color: var(--green);
+}
+
+.mu-header {
+    border-bottom: 1px solid rgba(0,0,0,0.15);
+    width: fit-content; 
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+}
+
+.directions {
+    color: var(--green);
+}
+
+.menu-edit-cancel {
+    margin-left: 30px;
+    font-size: 1.2rem;
+    font-weight: 300;
+}
+
+.menu-edit-cancel:hover {
+    color: var(--green);
+}

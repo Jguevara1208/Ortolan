@@ -8,6 +8,7 @@ import { setOrderCategories, addOrderCategory } from '../../store/orderCategorie
 import { createCurrentRecipe, deleteCurrentRecipe, setCurrentRecipe } from '../../store/currentRecipe'
 import { CgRemoveR, CgAddR } from 'react-icons/cg'
 import { FaTrashAlt } from 'react-icons/fa'
+import { addCurrentMenu, getCurrentMenu } from '../../store/currentMenu';
 import '../NewRecipe/RecipeForm.css'
 
 function RecipeEditForm() {
@@ -23,6 +24,7 @@ function RecipeEditForm() {
     const ingredients = useSelector(state => state.ingredients)
     const categories = useSelector(state => state.orderCategories)
     const currentRecipe = useSelector(state=> state.currentRecipe)
+    const currentMenu = useSelector(state => state.currentMenu)
 
     const [title, setTitle] = useState('')
     const [season, setSeason] = useState('Winter')
@@ -46,6 +48,7 @@ function RecipeEditForm() {
         dispatch(setUnits(userId))
         dispatch(setTagsOne(userId))
         dispatch(setIngredients(userId))
+        dispatch(getCurrentMenu(userId))
         dispatch(setOrderCategories(userId))
         dispatch(setCurrentRecipe(recipeId))
     }, [dispatch])
@@ -158,6 +161,8 @@ function RecipeEditForm() {
 
     const formatSubRecipes = async () => {
         let formatSubRecipe = [...subRecipes]
+        let tempIngredients = { ...ingredients }
+
         for (let i = 0; i < formatSubRecipe.length; i++) {
             const subRecipe = formatSubRecipe[i]
             formatSubRecipe[i]['order'] = i
@@ -196,7 +201,9 @@ function RecipeEditForm() {
                     formatSubRecipe[i].ingredients[j].unitId = units[unitId]
                 }
 
-                if (!ingredients[ingredientId]) {
+                const formattedIngredient = ingredientId.split(' ').map(ing => ing[0].toUpperCase() + ing.slice(1).toLowerCase()).join(' ');
+
+                if (!tempIngredients[formattedIngredient]) {
                     let formattedCategory
                     if (category) {
                         formattedCategory = category.split(' ').map(cat => cat[0].toUpperCase() + cat.slice(1).toLowerCase()).join(' ')
@@ -212,12 +219,12 @@ function RecipeEditForm() {
                         category = categories[formattedCategory]
                         formatSubRecipe[i].ingredients[j].category = category
                     }
-                    const formattedIngredient = ingredientId.split(' ').map(ing => ing[0].toUpperCase() + ing.slice(1).toLowerCase()).join(' ');
                     const newIngredientObj = await dispatch(addIngredient({ "name": formattedIngredient, "categoryId": category, "userId": userId }))
                     ingredientId = newIngredientObj.ingredient.id
+                    tempIngredients[newIngredientObj.name] = newIngredientObj.ingredient
                     formatSubRecipe[i].ingredients[j].ingredientId = ingredientId
                 } else {
-                    ingredientId = ingredients[ingredientId].id
+                    ingredientId = tempIngredients[formattedIngredient].id
                     formatSubRecipe[i].ingredients[j].ingredientId = ingredientId
                 }
                 formatSubRecipe[i].ingredients[j]['order'] = j
@@ -268,10 +275,14 @@ function RecipeEditForm() {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+
+        const onMenu = currentMenu.find(dish => +recipeId === dish.id)
+
         const res = await createRequestObject()
         await dispatch(deleteCurrentRecipe(currentRecipe.id))
         const newRecipeId = await dispatch(createCurrentRecipe(res))
         resetState()
+        if (onMenu) dispatch(addCurrentMenu(userId, newRecipeId))
         history.push(`/recipes/${newRecipeId}`)
     }
 

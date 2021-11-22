@@ -2,7 +2,9 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setRecentRecipes } from '../../store/recentRecipes';
 import { setProjects } from '../../store/projects';
-import { Link } from 'react-router-dom' 
+import { getCurrentMenu } from '../../store/currentMenu';
+import { setOrderGuide } from '../../store/orderingGuide';
+import { Link } from 'react-router-dom';
 import './Dashboard.css';
 
 function Dashboard(){
@@ -10,11 +12,15 @@ function Dashboard(){
 
     const recentRecipes = useSelector(state => state.recentRecipes)
     const projects = useSelector(state => state.projects)
+    const currentMenu = useSelector(state => state.currentMenu)
     const userId = useSelector(state => state.session.user.id)
+    const orderGuide = useSelector(state => state.orderGuide)
     
     useEffect(() => {
         dispatch(setRecentRecipes(userId))
         dispatch(setProjects(userId))
+        dispatch(getCurrentMenu(userId))
+        dispatch(setOrderGuide(userId))
     }, [dispatch])
 
     const formatDate = (date) => {
@@ -48,6 +54,22 @@ function Dashboard(){
         }
     }
 
+    const firstWord = (title) => {
+        let firstStr = title.split(' ')[0]
+        return firstStr[firstStr.length - 1] === ',' ? firstStr = firstStr.slice(0, firstStr.length - 1) : firstStr
+    }
+
+    const findCatLength = () => {
+        return Object.keys(orderGuide).length
+    }
+
+    const findIngLength = () => {
+        return Object.values(orderGuide).reduce((count, ingArr) => {
+            count += ingArr.length
+            return count
+        }, 0)
+    }
+
     return (
         <div className='db-content'>
             <div className='db-container'>
@@ -64,6 +86,60 @@ function Dashboard(){
                                     <p className='rc-date'>{formatDate(recipe.created_at)}</p>
                             </Link>
                         ))}
+                    </div>
+                </div>
+                <div className='db-double-container'>
+                    <div className='cm-container'>
+                        <div className='projects-header'>
+                            <h3>Current Menu</h3>
+                            <Link className='link' to='/menu'>
+                                See full menu {currentMenu.length - 8 > 0 ? currentMenu.length - 8 === 1 ? ' (1 more dish)' : ` (${currentMenu.length - 8} more dishes)` : '' }
+                                </Link>
+                        </div>
+                        <div className='cm-wrapper'>
+                            {currentMenu && currentMenu.map((recipe, idx) => (
+                                <>
+                                    {
+                                    idx < 8 
+                                    ?
+                                        <Link key={`cm-${recipe.id}`} className='cm-recipe' to={`/recipes/${recipe.id}`}>
+                                                <p>{firstWord(recipe.title)}</p>
+                                                <div className='cm-photo' style={{ backgroundImage: `url('${recipe.img}')` }}/>
+                                        </Link>
+                                    : 
+                                        null
+                                    }
+                                </>
+                            ))}
+                        </div>
+                    </div>
+                    <div className='og-container'>
+                        <div className='projects-header'>
+                            <h3>Ordering Guide</h3>
+                            <Link className='link' to='/ordering'>See full guide</Link>
+                        </div>
+                        <div className='og-wrapper'>
+                            <div className='breakdown-container'>
+                                <p className='breakdown'>Breakdown for current menu: </p>
+                                <span className='breakdown-count'>{findCatLength()} categories - {findIngLength()} ingredients</span>
+                            </div>
+                            <div className='breakdown-wrapper'>
+                                {orderGuide && Object.entries(orderGuide).map(entry => {
+                                    const cat = entry[0]
+                                    const ings = entry[1]
+                                    return (
+                                        <>
+                                            {(cat !== 'None' && cat !== 'Prepared') &&(
+                                                <div className='cat-wrapper'>
+                                                    <p className='cat'>{cat}</p>
+                                                    <p className='cat-length'>{ings.length} {ings.length === 1 ? 'item' : 'items'}</p>
+                                                </div>
+                                            )}
+                                        </>
+                                    )
+                                })}
+                            </div>
+                        </div>
                     </div>
                 </div>
                 
@@ -94,6 +170,12 @@ function Dashboard(){
                         ))}
                     </div>
                 </div>
+                {/* <div className='projects-header'>
+                    <h3>Team Members</h3>
+                </div>
+                <div className='og-wrapper'>
+                    
+                </div> */}
             </div>
         </div>
     );
