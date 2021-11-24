@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { getCurrentMenu } from '../../store/currentMenu';
 import { setAllRecipes } from '../../store/allRecipes';
 import { Modal } from '../../context/Modal'
+import { MdOutlinePhotoSizeSelectActual } from 'react-icons/md'
 import UpdateMenu from './UpdateMenu';
 import './Menu.css'
 
@@ -26,6 +27,12 @@ const Menu = () => {
         const dateArr = date.split(' ')
         return `${dateArr[2]} ${dateArr[1]}, ${dateArr[3]}`
     }
+
+    const getRandomColor = () => {
+        const colors = ['#65916c', '#d7b968', '#7c6c66', '#cf8541']
+        const randomInt = Math.floor(Math.random() * (3 + 1));
+        return colors[randomInt]
+    }
     
     return (
         <div className='menu-container'>
@@ -41,7 +48,9 @@ const Menu = () => {
                                 {currentMenu && currentMenu.map(recipe => (
                                     <Link key={`recipe-${recipe.id}`} className='recipe-card' to={`/recipes/${recipe.id}`}>
                                         <p className='rc-title'>{recipe.title}</p>
-                                        <div className='rr-photo' style={{ backgroundImage: `url('${recipe.img}')` }} />
+                                        <div className='rr-photo' style={ recipe.img !== 'false' ? {backgroundImage: `url('${recipe.img}')`} : {backgroundColor: `${getRandomColor()}`} }>
+                                                {recipe.img === 'false' && <MdOutlinePhotoSizeSelectActual className='db-no-photo'/>}
+                                        </div>
                                         <p className='rc-date'>{formatDate(recipe.created_at)}</p>
                                     </Link>
                                 ))}

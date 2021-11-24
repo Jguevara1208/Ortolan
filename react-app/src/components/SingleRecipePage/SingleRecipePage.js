@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentRecipe } from '../../store/currentRecipe';
 import { deleteCurrentRecipe } from '../../store/currentRecipe';
+import { MdOutlinePhotoSizeSelectActual } from 'react-icons/md'
 import { FiEdit2 } from 'react-icons/fi'
 import { TiDocumentDelete } from 'react-icons/ti'
 import './SingleRecipePage.css'
@@ -27,6 +28,13 @@ function SingleRecipePage(){
         history.push('/recipes')
     }
 
+    const getRandomColor = () => {
+        const colors = ['#65916c', '#d7b968', '#7c6c66', '#cf8541']
+        const randomInt = Math.floor(Math.random() * (3 + 1));
+        return colors[randomInt]
+    }
+
+    console.log(currentRecipe.photo === 'false')
     return (
         <div className='srp-container'>
             {currentRecipe && (
@@ -35,13 +43,25 @@ function SingleRecipePage(){
                         <p>{currentRecipe.season} {currentRecipe.year}</p>
                         <h2>{currentRecipe.title}</h2>
                     </div>
-                    <div>
-                        <div className='recipe-photo' style={{backgroundImage: `url('${currentRecipe.photo}')`}}/>
+                    <div className='photo-holder'>
+                        {currentRecipe.photo === 'false' 
+                            ?
+                                <div className='rp-placeholder' style={{backgroundColor: `${getRandomColor()}`} }>
+                                    {currentRecipe.photo === 'false' && <MdOutlinePhotoSizeSelectActual className='db-no-photo'/>}
+                                </div>
+                            :
+                                <div className='recipe-photo' style={{backgroundImage: `url('${currentRecipe.photo}')`}}/>
+
+                        }
                     </div>
                     <div className='srp-components'>
                         <h2 className='srp-header'>Components</h2>
                         {currentRecipe?.components?.split('\n')?.map(ele => (
-                            <p key={`ele-${ele}`} className='srp-component'>• {ele}</p>
+                            <>
+                                {ele !== '' && (
+                                    <p key={`ele-${ele}`} className='srp-component'>• {ele}</p>
+                                )}
+                            </>
                         ))}
                     </div>
                     <div>

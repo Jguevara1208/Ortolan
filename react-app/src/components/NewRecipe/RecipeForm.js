@@ -279,8 +279,8 @@ function RecipeForm(){
     return (
         <div className='form-container'>
             <form className='nr-form' onSubmit={handleSubmit} autoComplete="off">
-                <h3>New Recipe</h3>
-                <div className='title-season'>
+                <h3>New Dish</h3>
+                <div className='title-season dish-title'>
                     <div className='ol-input recipe-title'>
                         <input 
                             maxLength='255'
@@ -290,7 +290,7 @@ function RecipeForm(){
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
                         />
-                        <label htmlFor="title">Title</label>
+                        <label htmlFor="title">Dish Title</label>
                     </div>
                     <div className='season-select'>
                         <select name="season" onChange={(e) => setSeason(e.target.value)} defaultValue={findSeason()}>
@@ -328,6 +328,7 @@ function RecipeForm(){
                         }
                     </div>
                 </div>
+                <h3>Recipes</h3>
                 <div className='sub-recipe'>
                     {subRecipes.map((subRecipe, i) => (
                         <div key={`subrecipe-${i}`} className='sr-wrapper'>
@@ -344,6 +345,7 @@ function RecipeForm(){
                                 </div>
                                 {subRecipes.length !== 1 && <FaTrashAlt className='remove-sr-trash' onClick={() => handleRemoveClickSubRecipe(i)}/>}
                             </div>
+                            <h3>Ingredients</h3>
                             {subRecipe.ingredients.map((ingredient, idx) => (
                                 <div key={`ing-${i}-${idx}`} className='sr-ingredient-wrapper'>  
                                     <div className='ol-input qty'>
@@ -396,6 +398,7 @@ function RecipeForm(){
                                     {subRecipe.ingredients.length !== 1 && <CgRemoveR className='sri-button' onClick={() => handleRemoveClickSubRecipeIngredient(i, idx)} />}
                                 </div>
                             ))}
+                            <h3>Preperation</h3>
                             <div className='ol-input ol-input-description'>
                                 <textarea 
                                     name="description"

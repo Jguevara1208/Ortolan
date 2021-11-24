@@ -13,6 +13,9 @@
     background-position: center;
     border-radius: 15px;
     align-self: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .db-container {
@@ -236,6 +239,9 @@
     height: 85%;
     background-position: center;
     background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border-radius: 15px;
     margin-bottom: .85rem;
 }
@@ -281,8 +287,14 @@
     align-items: center;
     justify-content: space-between;
 }
+
 .db-container > .projects-notice {
     text-align: left;
     align-self: flex-start;
     font-size: 1rem;
+}
+
+.db-no-photo {
+    color: white;
+    font-size: 2.5rem;
 }

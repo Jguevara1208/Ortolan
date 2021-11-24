@@ -17,7 +17,17 @@ function AssignedToProject({cook, projectId}){
 
     return (
         <div className='atp-user' onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
-            <div className='cook-avatar' style={{backgroundImage: `url('${cook.avatar}')`}} />
+            <div 
+                className='cook-avatar'
+                style={
+                    cook.avatar !== 'false' 
+                        ? 
+                            {backgroundImage: `url('${cook.avatar}')`}
+                        :
+                            {backgroundColor: `#d7b968`}
+                    } > 
+
+            </div>
             <div className='atp-np'>
                 <p className='atp-name'>{cook.name.split(' ').map(n => n[0]).join('')} </p>
                 <p className='atp-pos'>{cook.position.split(' ').map(n => n[0]).join('')}</p>
@@ -25,7 +35,7 @@ function AssignedToProject({cook, projectId}){
             <CgRemoveR 
                 className={isHover ? 'atp-hovered atp-remove' : 'atp-remove'}
                 onClick={unassignCook}
-                />
+            />
         </div>
     );
 };

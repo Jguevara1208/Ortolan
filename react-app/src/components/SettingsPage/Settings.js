@@ -80,7 +80,7 @@ function Settings(){
                     </div>
                 }
                 <div>
-                    <div className='settings-avatar' style={{backgroundImage: `url('${user.avatar}')`}}/>
+                    <div className='settings-avatar blank-setting-avatar' style={{backgroundImage: `url('${user.avatar}')`}}/>
                 </div>
             </div>
         </div>

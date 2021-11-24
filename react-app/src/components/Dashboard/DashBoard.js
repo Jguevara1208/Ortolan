@@ -5,6 +5,7 @@ import { setProjects } from '../../store/projects';
 import { getCurrentMenu } from '../../store/currentMenu';
 import { setOrderGuide } from '../../store/orderingGuide';
 import { Link } from 'react-router-dom';
+import { MdOutlinePhotoSizeSelectActual } from 'react-icons/md'
 import './Dashboard.css';
 
 function Dashboard(){
@@ -70,6 +71,12 @@ function Dashboard(){
         }, 0)
     }
 
+    const getRandomColor = () => {
+        const colors = ['#65916c', '#d7b968', '#7c6c66', '#cf8541']
+        const randomInt = Math.floor(Math.random() * (3 + 1));
+        return colors[randomInt]
+    }
+
     return (
         <div className='db-content'>
             <div className='db-container'>
@@ -89,7 +96,9 @@ function Dashboard(){
                                 {recentRecipes && recentRecipes.map(recipe => (
                                     <Link key={`recipe-${recipe.id}`} className='recipe-card' to={`/recipes/${recipe.id}`}>
                                             <p className='rc-title'>{recipe.title}</p>
-                                            <div className='rr-photo' style={{backgroundImage: `url('${recipe.img}')`}} />
+                                            <div className='rr-photo' style={ recipe.img !== 'false' ? {backgroundImage: `url('${recipe.img}')`} : {backgroundColor: `${getRandomColor()}`} }>
+                                                {recipe.img === 'false' && <MdOutlinePhotoSizeSelectActual className='db-no-photo'/>}
+                                            </div>
                                             <p className='rc-date'>{formatDate(recipe.created_at)}</p>
                                     </Link>
                                 ))}
@@ -115,7 +124,9 @@ function Dashboard(){
                                         ?
                                             <Link key={`cm-${recipe.id}`} className='cm-recipe' to={`/recipes/${recipe.id}`}>
                                                     <p>{firstWord(recipe.title)}</p>
-                                                    <div className='cm-photo' style={{ backgroundImage: `url('${recipe.img}')` }}/>
+                                                    <div className='cm-photo' style={ recipe.img !== 'false' ? {backgroundImage: `url('${recipe.img}')`} : {backgroundColor: `${getRandomColor()}`} }>
+                                                        {recipe.img === 'false' && <MdOutlinePhotoSizeSelectActual className='db-no-photo'/>}
+                                                    </div>
                                             </Link>
                                         : 
                                             null
@@ -140,7 +151,7 @@ function Dashboard(){
                                         const ings = entry[1]
                                         return (
                                             <>
-                                                {(cat !== 'None' && cat !== 'Prepared') &&(
+                                                {(cat !== 'None' && cat !== 'Prepared' && cat !== 'Other') &&(
                                                     <div className='cat-wrapper'>
                                                         <p className='cat'>{cat}</p>
                                                         <p className='cat-length'>{ings.length} {ings.length === 1 ? 'item' : 'items'}</p>

@@ -4,13 +4,20 @@
     border-radius: 15px;
     background-position: center;
     background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
 .cook-avatar2 {
     width: 40px;
     height: 40px;
     border-radius: 15px;
     background-position: center;
     background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .button-hovered {
@@ -468,4 +475,8 @@
     font-size: 1.3rem;
     font-weight: 300;
     color: rgba(0,0,0,.5);
+}
+
+.cook-initials {
+    color: white;
 }

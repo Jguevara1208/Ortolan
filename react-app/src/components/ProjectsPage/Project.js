@@ -21,6 +21,12 @@ function Project({project}){
     const [newTask, setNewTask] = useState('')
     const [showMembers, setShowMembers] = useState(false)
     const [error, setError] = useState('')
+
+    const getRandomColor = () => {
+        const colors = ['#65916c', '#d7b968', '#7c6c66', '#cf8541']
+        const randomInt = Math.floor(Math.random() * (3 + 1));
+        return colors[randomInt]
+    }
     
     const calculateCompletion = () => {
         const tasks = project.tasks
@@ -84,6 +90,13 @@ function Project({project}){
         setAddTask(false)
         setError('')
     }
+
+    const getInitials = (name) => {
+        let initials = ''
+        const nameSplit = name.split(' ')
+        nameSplit.forEach(el => initials += el[0].toUpperCase())
+        return initials
+    }
     
     const handleCancel = () => {
         setError('')
@@ -112,8 +125,17 @@ function Project({project}){
                                             <>
                                                 {freeCook(cook.id) && (
                                                     <div key={`team-${cook.id}`} className='cook' onClick={() => assignCook(cook.id)}>
-                                                        <div className='cook-avatar2' style={{backgroundImage: `url('${cook.avatar}')`}}/>
-                                                        <p>{cook.name.split(' ')[0]}</p>
+                                                        {cook.avatar !== 'false' 
+                                                            ?
+                                                                <>
+                                                                    <div className='cook-avatar2' style={{backgroundImage: `url('${cook.avatar}')`}}/>
+                                                                    <p>{cook.name.split(' ')[0]}</p>
+                                                                </>
+                                                            :
+                                                                <div className='cook-avatar2' style={{backgroundColor: `${getRandomColor()}`}}>
+                                                                    <p className='cook-initials'>{getInitials(cook.name)}</p>
+                                                                </div>
+                                                        }
                                                     </div>
                                                 )}
                                             </>

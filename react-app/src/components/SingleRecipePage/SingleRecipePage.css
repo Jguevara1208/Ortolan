@@ -3,6 +3,9 @@
     height: 600px;
     background-size: cover;
     background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border-radius: 15px;
     margin-bottom: 30px;
 }
@@ -147,4 +150,23 @@
     background-color: var(--green);
     font-weight: 500;
     color: white;
+}
+
+.rp-placeholder {
+    width: 300px;
+    height: 300px;
+    justify-self: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+    margin-bottom: 30px;
+}
+
+.photo-holder {
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    width: 100%;
+    height: 100%;
 }

@@ -5,6 +5,9 @@
     background-size: cover;
     background-position: center;
     border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .pt-container {

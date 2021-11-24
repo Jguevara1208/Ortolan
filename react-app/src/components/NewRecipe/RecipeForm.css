@@ -10,6 +10,7 @@
     padding: 30px;
     border-radius: 15px;
     width: 100%;
+    min-width: 1095px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -62,10 +63,12 @@
 
 .qty {
     width: 12%;
+    min-width: 105px;
 }
 
 .qty-input {
     width: 100%;
+    min-width: 105px;
 }
 
 .sr-wrapper {
@@ -264,6 +267,7 @@ textarea::placeholder {
     border-radius: 5px;
     color: var(--green);
     cursor: pointer;
+    margin: auto;
     transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
@@ -314,6 +318,8 @@ textarea::placeholder {
   padding: 0;
   position: relative;
   box-sizing: border-box;
+  transform: translate(1px, -1px);
+  width: 200px;
 }
 
 .season-select {
@@ -326,6 +332,7 @@ textarea::placeholder {
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-right: 15px;
     transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
@@ -333,12 +340,9 @@ textarea::placeholder {
     font-size: 1rem;
     font-weight: normal;
     max-width: 100%;
-    padding: 10px 15px 10px 15px;
+    padding: 10px 4px 10px 15px;
     border: none;
     cursor: pointer;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
     text-align: center;
     
 }
@@ -373,4 +377,169 @@ textarea::placeholder {
 .remove-sr-trash:hover {
     color: var(--green);
     transition: .5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@media screen and (max-width: 1750px) {
+    .nr-form {
+        min-width: 900px;
+        max-width: 900px;
+    }
+
+    .title-season {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .photo-components-container {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .ol-input .components {
+        min-width: 300px;
+    }
+
+    .season-select,
+    .season-select * {
+        transform: translate(2px, 0px);
+    }
+
+    .description {
+        width: 100%;
+        min-width: 100%;
+        max-width: 100%;
+    }
+
+    .ol-input-description {
+        width: 80%;
+    }
+
+    .qty-input {
+        width: 90%;
+    }
+
+    .qty {
+        width: 48%;
+    }
+
+    .sr-ingredient-wrapper .ol-input {
+        width: 48%;
+    }
+
+    .photo-container {
+        height: 22em;
+    }
+
+    .sr-wrapper {
+        align-items: center;
+        width: 80%;
+    }
+
+    .sr-ingredient-wrapper {
+        flex-wrap: wrap;
+        width: 80%;
+        border: 1px solid var(--green);
+        padding: 15px;
+        border-radius: 15px;
+    }
+
+    .subrecipe-title-trash {
+        width: 80%;
+    }
+
+    .subrecipe-title-trash > .recipe-title > input {
+        width: 100%;
+        min-width: 160%;
+        max-width: none;
+    }
+
+    .title-season > .recipe-title > input {
+        width: 100%;
+        min-width: 160%;
+        max-width: none;
+    }
+}
+
+@media screen and (max-width: 1456px) {
+    .nr-form {
+        align-items: center;
+        min-width: 700px;
+    }
+
+    .ol-input .components {
+        min-width: 200px;
+    }
+
+    .photo-container{
+        height: 17em;
+    }
+
+    .qty-input {
+        width: 198px;
+    }
+
+    .qty {
+        width: 100%;
+    }
+
+    .sr-ingredient-wrapper .ol-input {
+        width: 100%;
+    }
+
+    .subrecipe-title-trash {
+        width: 80%;
+    }
+}
+
+@media screen and (max-width: 1327px) {
+    .subrecipe-title-trash {
+        width: 80%;
+    }
+
+}
+
+@media screen and (max-width: 1070px) {
+
+    .dish-title { 
+        width: 80%;
+    }
+
+    .dish-title > .recipe-title > input {
+        width: 100%;
+        min-width: 100%;
+        max-width: none;
+    }
+
+    .nr-form {
+        min-width: 500px;
+        max-width: 500px;
+    }
+
+    .subrecipe-title-trash {
+        width: 80%;
+    }
+
+    .subrecipe-title-trash > .recipe-title > input {
+        width: 100%;
+        min-width: 100%;
+        max-width: none;
+    }
+
+    .title-season > .recipe-title > input {
+        width: 100%;
+        min-width: 100%;
+        max-width: none;
+    }
+
+    .photo-container {
+        width: 10em;
+        height: 10em;
+    }
+
+    .components {
+        min-width: 10em;
+    }
 }
