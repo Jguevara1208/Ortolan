@@ -74,108 +74,119 @@ function Dashboard(){
         <div className='db-content'>
             <div className='db-container'>
                 <div className='projects-header'>
-                    <h3>Recent Recipes</h3>
-                    <Link className='link' to='/recipes'>See all recipes</Link>
+                    <h3>Recent Dishes</h3>
+                    {recentRecipes.length 
+                        ?
+                            <Link className='link' to='/recipes'>See all dishes</Link>
+                        :
+                            <Link className='link' to='/recipes/new'>Create a dish</Link>
+                    }
                 </div>
-                <div className='rr-container'>
-                    <div className='rr-wrapper'>
-                        {recentRecipes && recentRecipes.map(recipe => (
-                            <Link key={`recipe-${recipe.id}`} className='recipe-card' to={`/recipes/${recipe.id}`}>
-                                    <p className='rc-title'>{recipe.title}</p>
-                                    <div className='rr-photo' style={{backgroundImage: `url('${recipe.img}')`}} />
-                                    <p className='rc-date'>{formatDate(recipe.created_at)}</p>
-                            </Link>
-                        ))}
-                    </div>
-                </div>
-                <div className='db-double-container'>
-                    <div className='cm-container'>
-                        <div className='projects-header'>
-                            <h3>Current Menu</h3>
-                            <Link className='link' to='/menu'>
-                                See full menu {currentMenu.length - 8 > 0 ? currentMenu.length - 8 === 1 ? ' (1 more dish)' : ` (${currentMenu.length - 8} more dishes)` : '' }
-                                </Link>
-                        </div>
-                        <div className='cm-wrapper'>
-                            {currentMenu && currentMenu.map((recipe, idx) => (
-                                <>
-                                    {
-                                    idx < 8 
-                                    ?
-                                        <Link key={`cm-${recipe.id}`} className='cm-recipe' to={`/recipes/${recipe.id}`}>
-                                                <p>{firstWord(recipe.title)}</p>
-                                                <div className='cm-photo' style={{ backgroundImage: `url('${recipe.img}')` }}/>
-                                        </Link>
-                                    : 
-                                        null
-                                    }
-                                </>
-                            ))}
-                        </div>
-                    </div>
-                    <div className='og-container'>
-                        <div className='projects-header'>
-                            <h3>Ordering Guide</h3>
-                            <Link className='link' to='/ordering'>See full guide</Link>
-                        </div>
-                        <div className='og-wrapper'>
-                            <div className='breakdown-container'>
-                                <p className='breakdown'>Breakdown for current menu: </p>
-                                <span className='breakdown-count'>{findCatLength()} categories - {findIngLength()} ingredients</span>
-                            </div>
-                            <div className='breakdown-wrapper'>
-                                {orderGuide && Object.entries(orderGuide).map(entry => {
-                                    const cat = entry[0]
-                                    const ings = entry[1]
-                                    return (
-                                        <>
-                                            {(cat !== 'None' && cat !== 'Prepared') &&(
-                                                <div className='cat-wrapper'>
-                                                    <p className='cat'>{cat}</p>
-                                                    <p className='cat-length'>{ings.length} {ings.length === 1 ? 'item' : 'items'}</p>
-                                                </div>
-                                            )}
-                                        </>
-                                    )
-                                })}
+                {recentRecipes.length 
+                    ?
+                        <div className='rr-container'>
+                            <div className='rr-wrapper'>
+                                {recentRecipes && recentRecipes.map(recipe => (
+                                    <Link key={`recipe-${recipe.id}`} className='recipe-card' to={`/recipes/${recipe.id}`}>
+                                            <p className='rc-title'>{recipe.title}</p>
+                                            <div className='rr-photo' style={{backgroundImage: `url('${recipe.img}')`}} />
+                                            <p className='rc-date'>{formatDate(recipe.created_at)}</p>
+                                    </Link>
+                                ))}
                             </div>
                         </div>
+                    :
+                        <p className='projects-notice'>No recent recipes</p>
+                }
+                {currentMenu.length ? (
+                    <div className='db-double-container'>
+                        <div className='cm-container'>
+                            <div className='projects-header'>
+                                <h3>Current Menu</h3>
+                                <Link className='link' to='/menu'>
+                                    See full menu {currentMenu.length - 8 > 0 ? currentMenu.length - 8 === 1 ? ' (1 more dish)' : ` (${currentMenu.length - 8} more dishes)` : '' }
+                                    </Link>
+                            </div>
+                            <div className='cm-wrapper'>
+                                {currentMenu && currentMenu.map((recipe, idx) => (
+                                    <>
+                                        {
+                                        idx < 8 
+                                        ?
+                                            <Link key={`cm-${recipe.id}`} className='cm-recipe' to={`/recipes/${recipe.id}`}>
+                                                    <p>{firstWord(recipe.title)}</p>
+                                                    <div className='cm-photo' style={{ backgroundImage: `url('${recipe.img}')` }}/>
+                                            </Link>
+                                        : 
+                                            null
+                                        }
+                                    </>
+                                ))}
+                            </div>
+                        </div>
+                        <div className='og-container'>
+                            <div className='projects-header'>
+                                <h3>Ordering Guide</h3>
+                                <Link className='link' to='/ordering'>See full guide</Link>
+                            </div>
+                            <div className='og-wrapper'>
+                                <div className='breakdown-container'>
+                                    <p className='breakdown'>Breakdown for current menu: </p>
+                                    <span className='breakdown-count'>{findCatLength()} categories - {findIngLength()} ingredients</span>
+                                </div>
+                                <div className='breakdown-wrapper'>
+                                    {orderGuide && Object.entries(orderGuide).map(entry => {
+                                        const cat = entry[0]
+                                        const ings = entry[1]
+                                        return (
+                                            <>
+                                                {(cat !== 'None' && cat !== 'Prepared') &&(
+                                                    <div className='cat-wrapper'>
+                                                        <p className='cat'>{cat}</p>
+                                                        <p className='cat-length'>{ings.length} {ings.length === 1 ? 'item' : 'items'}</p>
+                                                    </div>
+                                                )}
+                                            </>
+                                        )
+                                    })}
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                ) : null}
                 
                 <div className='projects-header'>
                     <h3>Projects</h3>
-                    <Link className='link' to='/projects'>See all projects</Link>
+                    <Link className='link' to='/projects'>{Object.values(projects).length ? 'See all projects' : 'Create a project'}</Link>
                 </div>
-                <div className='project-container'>
-                    <div className='project-wrapper'>
-                        {projects && Object.values(projects).map((project, idx) => (
-                            <>
-                                {idx < 5 && (
-                                    <div key={`project-${idx}`} className='db-project'>
-                                        <p className='p-title'>{project.title}</p>
-                                        <p className='p-assigned'>{project.assigned.length ? project.assigned.length : 'No'} {project.assigned.length === 1 ? 'cook' : 'cooks'} assigned</p>
-                                        <p className='p-tasks'>{taskDiff(project.tasks)}</p>
-                                        <div className='percent-outer'>
-                                            {taskPercent(project.tasks) === 0 && <p className='p-percent'>0%</p> }
-                                            <div className='percent-inner' style={{width: `${taskPercent(project.tasks)}%`}}>
-                                                {taskPercent(project.tasks) > 0 && <p className='p-percent'>{taskPercent(project.tasks)}%</p> }
+                {Object.values(projects).length 
+                    ?
+                        <div className='project-container'>
+                            <div className='project-wrapper'>
+                                {projects && Object.values(projects).map((project, idx) => (
+                                    <>
+                                        {idx < 5 && (
+                                            <div key={`project-${idx}`} className='db-project'>
+                                                <p className='p-title'>{project.title}</p>
+                                                <p className='p-assigned'>{project.assigned.length ? project.assigned.length : 'No'} {project.assigned.length === 1 ? 'cook' : 'cooks'} assigned</p>
+                                                <p className='p-tasks'>{taskDiff(project.tasks)}</p>
+                                                <div className='percent-outer'>
+                                                    {taskPercent(project.tasks) === 0 && <p className='p-percent'>0%</p> }
+                                                    <div className='percent-inner' style={{width: `${taskPercent(project.tasks)}%`}}>
+                                                        {taskPercent(project.tasks) > 0 && <p className='p-percent'>{taskPercent(project.tasks)}%</p> }
+                                                    </div>
+                                                </div>
+                                                <p className='p-info'>Info</p>
+                                                <p className='p-description'>{project.description ? project.description : 'No info...'}</p>
                                             </div>
-                                        </div>
-                                        <p className='p-info'>Info</p>
-                                        <p className='p-description'>{project.description ? project.description : 'No info...'}</p>
-                                    </div>
-                                )}
-                            </>
-                        ))}
-                    </div>
-                </div>
-                {/* <div className='projects-header'>
-                    <h3>Team Members</h3>
-                </div>
-                <div className='og-wrapper'>
-                    
-                </div> */}
+                                        )}
+                                    </>
+                                ))}
+                            </div>
+                        </div>
+                    :
+                        <p className='projects-notice'>No projects</p>
+                }
             </div>
         </div>
     );

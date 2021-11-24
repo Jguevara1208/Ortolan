@@ -34,17 +34,22 @@ const Menu = () => {
                 <button onClick={() => setShowModal(!showModal)} className='update-menu'>Update Menu</button>
             </div>
             <div>
-                <div className='rr-container'>
-                    <div className='rr-wrapper'>
-                        {currentMenu && currentMenu.map(recipe => (
-                            <Link key={`recipe-${recipe.id}`} className='recipe-card' to={`/recipes/${recipe.id}`}>
-                                <p className='rc-title'>{recipe.title}</p>
-                                <div className='rr-photo' style={{ backgroundImage: `url('${recipe.img}')` }} />
-                                <p className='rc-date'>{formatDate(recipe.created_at)}</p>
-                            </Link>
-                        ))}
-                    </div>
-                </div>
+                {currentMenu.length 
+                    ?
+                        <div className='rr-container'>
+                            <div className='rr-wrapper'>
+                                {currentMenu && currentMenu.map(recipe => (
+                                    <Link key={`recipe-${recipe.id}`} className='recipe-card' to={`/recipes/${recipe.id}`}>
+                                        <p className='rc-title'>{recipe.title}</p>
+                                        <div className='rr-photo' style={{ backgroundImage: `url('${recipe.img}')` }} />
+                                        <p className='rc-date'>{formatDate(recipe.created_at)}</p>
+                                    </Link>
+                                ))}
+                            </div>
+                        </div>
+                    :
+                    <p className='projects-notice'>No dishes on your current menu.</p>
+                }
             </div>
             {showModal && (
                 <Modal recipe={true} onClose={() => setShowModal(false)} >

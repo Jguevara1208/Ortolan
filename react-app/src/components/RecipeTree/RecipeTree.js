@@ -21,17 +21,17 @@ function RecipeTree(){
 
     return (
         <div className='tree'>
-                <Link className='new-recipe' to='/recipes/new'>New Recipe</Link>
+                <Link className='new-recipe' to='/recipes/new'>New Dish</Link>
                 <Search />
             <div>
-                <p>Recipes by Season</p>
+                <p>Dishes by season</p>
                 {recipeTree.tree && Object.keys(recipeTree.tree).map(year => (
                     <Year key={`tree-year-${year}`} year={year} seasons={recipeTree.tree[year]}/>
                 ))}
 
             </div>
             <div>
-                <p>Recipes by Tag</p>
+                <p>Dishes by Tag</p>
                 {recipeTree.tags && Object.keys(recipeTree.tags).map(tag => (
                     <Tag key={`tree-tag-${tag}`} tag={tag} dishes={recipeTree.tags[tag]}/>
                 ))}

@@ -281,3 +281,8 @@
     align-items: center;
     justify-content: space-between;
 }
+.db-container > .projects-notice {
+    text-align: left;
+    align-self: flex-start;
+    font-size: 1rem;
+}

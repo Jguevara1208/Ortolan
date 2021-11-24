@@ -1,10 +1,19 @@
 .order-guide-container {
     display: flex;
     flex-direction: column;
-    margin-top: 20px;
+    margin-top: 43px;
     margin-left: 9%;
     margin-bottom: 100px;
     width: 100%;
+}
+
+
+.order-guide-notice {
+    position: relative;
+    font-size: 1.3rem;
+    font-weight: 300;
+    margin-top: 30px;
+    color: rgba(0,0,0,.5);
 }
 
 .order-guide-wrapper {

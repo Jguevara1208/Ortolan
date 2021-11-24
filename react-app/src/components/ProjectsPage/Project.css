@@ -53,9 +53,10 @@
     border-radius: 15px;
     width: 45%;
     max-width: 480px;
+    min-width: 435px
 }
 
-.projects-container > button {
+.projects-new-button {
     padding: 10px 25px;
     border-radius: 5px;
     border: 2px solid var(--green);
@@ -67,7 +68,7 @@
     transition: .3s cubic-bezier(1, 0, 0, 1);
 }
 
-.projects-container > button:hover {
+.projects-new-button:hover {
     background-color: var(--green);
     color: white;
     transition: .3s cubic-bezier(1, 0, 0, 1);
@@ -460,4 +461,11 @@
     border-bottom: var(--border);
     font-weight: 500;
     font-size: 1.1rem;
+}
+
+.projects-notice {
+    position: relative;
+    font-size: 1.3rem;
+    font-weight: 300;
+    color: rgba(0,0,0,.5);
 }

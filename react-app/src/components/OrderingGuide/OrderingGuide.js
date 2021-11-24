@@ -62,60 +62,65 @@ const OrderingGuide = () => {
     return (
         <div className='order-guide-container'>
             <h3>Current Menu's Order Guide</h3>
-            <div className='order-guide-wrapper'>
-                {cols && (
-                    <>
-                        <div className="og-column">
-                            {cols['0'].map(cat => (
-                                <div className='og-category-container'>
-                                    <p className='og-category'>{cat.key}</p>
-                                    <div className='og-ings-container'>
-                                        {cat.ings.map(ing => (
-                                            <p className='og-ing'>{ing}</p>
-                                        ))}
-                                    </div>
+            {Object.keys(orderGuide).length === 0 
+                ? 
+                    <p className='order-guide-notice'>No dishes on your current menu.</p>
+                :
+                    <div className='order-guide-wrapper'>
+                        {cols && (
+                            <>
+                                <div className="og-column">
+                                    {cols['0'].map(cat => (
+                                        <div className='og-category-container'>
+                                            <p className='og-category'>{cat.key}</p>
+                                            <div className='og-ings-container'>
+                                                {cat.ings.map(ing => (
+                                                    <p className='og-ing'>{ing}</p>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    ))}
                                 </div>
-                            ))}
-                        </div>
-                        <div className="og-column">
-                            {cols['1'].map(cat => (
-                                <div className='og-category-container'>
-                                    <p className='og-category'>{cat.key}</p>
-                                    <div className='og-ings-container'>
-                                        {cat.ings.map(ing => (
-                                            <p className='og-ing'>{ing}</p>
-                                        ))}
-                                    </div>
+                                <div className="og-column">
+                                    {cols['1'].map(cat => (
+                                        <div className='og-category-container'>
+                                            <p className='og-category'>{cat.key}</p>
+                                            <div className='og-ings-container'>
+                                                {cat.ings.map(ing => (
+                                                    <p className='og-ing'>{ing}</p>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    ))}
                                 </div>
-                            ))}
-                        </div>
-                        <div className="og-column">
-                            {cols['2'].map(cat => (
-                                <div className='og-category-container'>
-                                    <p className='og-category'>{cat.key}</p>
-                                    <div className='og-ings-container'>
-                                        {cat.ings.map(ing => (
-                                            <p className='og-ing'>{ing}</p>
-                                        ))}
-                                    </div>
+                                <div className="og-column">
+                                    {cols['2'].map(cat => (
+                                        <div className='og-category-container'>
+                                            <p className='og-category'>{cat.key}</p>
+                                            <div className='og-ings-container'>
+                                                {cat.ings.map(ing => (
+                                                    <p className='og-ing'>{ing}</p>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    ))}
                                 </div>
-                            ))}
-                        </div>
-                        <div className="og-column">
-                            {cols['3'].map(cat => (
-                                <div className='og-category-container'>
-                                    <p className='og-category'>{cat.key}</p>
-                                    <div className='og-ings-container'>
-                                        {cat.ings.map(ing => (
-                                            <p className='og-ing'>{ing}</p>
-                                        ))}
-                                    </div>
+                                <div className="og-column">
+                                    {cols['3'].map(cat => (
+                                        <div className='og-category-container'>
+                                            <p className='og-category'>{cat.key}</p>
+                                            <div className='og-ings-container'>
+                                                {cat.ings.map(ing => (
+                                                    <p className='og-ing'>{ing}</p>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    ))}
                                 </div>
-                            ))}
-                        </div>
-                    </>
-                )}
-            </div>
+                            </>
+                        )}
+                    </div>
+            }
         </div>
     );
 };

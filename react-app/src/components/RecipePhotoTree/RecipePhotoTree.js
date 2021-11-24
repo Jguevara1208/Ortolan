@@ -37,7 +37,7 @@ function RecipePhotoTree(){
     return (
         <div className='pt-container'>
             <div className='header-container'>
-                <h3 className='pt-header'>Filter Recipes</h3>
+                <h3 className='pt-header'>Filter Dishes</h3>
             </div>
             {recipesTree && (
                 <div className='pt-wrapper'>
