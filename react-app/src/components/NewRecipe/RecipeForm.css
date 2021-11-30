@@ -221,6 +221,7 @@ textarea::placeholder {
     left: 10px;
     font-size: 1rem;
 }
+
 .ol-input .components {
     padding: 25px;
     height: 5em;
@@ -426,7 +427,8 @@ textarea::placeholder {
     }
 
     .sr-ingredient-wrapper .ol-input {
-        width: 48%;
+        width: 48.5%;
+
     }
 
     .photo-container {
@@ -448,6 +450,7 @@ textarea::placeholder {
 
     .subrecipe-title-trash {
         width: 80%;
+        align-items: center;
     }
 
     .subrecipe-title-trash > .recipe-title > input {
@@ -458,7 +461,7 @@ textarea::placeholder {
 
     .title-season > .recipe-title > input {
         width: 100%;
-        min-width: 160%;
+        min-width: 100%;
         max-width: none;
     }
 }
@@ -485,9 +488,27 @@ textarea::placeholder {
         width: 100%;
     }
 
+    .sr-ingredient-wrapper {
+        justify-content: center;
+    }
+
     .sr-ingredient-wrapper .ol-input {
         width: 100%;
+        display: flex;
+        justify-content: center;
     }
+
+    .sr-ingredient-wrapper .ol-input label {
+        left: 30%
+    }
+
+    .ol-input input:not(:placeholder-shown) ~ label,
+    .ol-input input:focus ~ label {
+    top: 0px;
+    left: 29%;
+    font-size: 1rem;
+    color: var(--d-green);
+}
 
     .subrecipe-title-trash {
         width: 80%;
@@ -505,6 +526,12 @@ textarea::placeholder {
 
     .dish-title { 
         width: 80%;
+    }
+
+    .ol-input .components {
+        min-width: 167px;
+        max-width: 167px;
+        width: 167px;
     }
 
     .dish-title > .recipe-title > input {
