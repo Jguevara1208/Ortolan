@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { Redirect, Link } from 'react-router-dom';
 import { signUp } from '../../store/session';
+import { login } from '../../store/session';
 
 const SignUpForm = () => {
   
@@ -30,6 +31,7 @@ const SignUpForm = () => {
     if (restaurant.length > 50) err.push('restaurant:Restaurant must be less than 50 characters')
     if (position === '') err.push('position:Position is required')
     if (position.length > 50) err.push('position:Position must be less than 50 characters')
+    if (password.length < 1) err.push('password:Password is required')
     if (password !== repeatPassword) err.push('repeatPassword:Passwords do not match')
     if (email === '') err.push('email:Email is required')
     if (email.length > 255) err.push('email:Email must be less than 255 characters')
@@ -82,6 +84,14 @@ const SignUpForm = () => {
   const handleUpload = () => {
     fileUpload.current.click()
   }
+
+  const demoUser = async (e) => {
+    e.preventDefault();
+    const data = await dispatch(login('jordansacct@gmail.com', 'password'));
+    if (data) {
+      setErrors(data)
+    };
+  };
 
   if (user) {
     return <Redirect to='/' />;
@@ -220,11 +230,11 @@ const SignUpForm = () => {
           name='repeat_password'
           onChange={(e) => setRepeatPassword(e.target.value)}
           value={repeatPassword}
-          required={true}
         ></input>
         <label htmlFor="repeat_password">Repeat Password</label>
       </div>
       <button className='form-button' type='submit'>Sign Up</button>
+      <button className='form-demo link' onClick={demoUser}>Demo</button>
       <p>Already have an account? <Link className='log-in-link link' to='/login'>Log In</Link></p>
     </form>
   );

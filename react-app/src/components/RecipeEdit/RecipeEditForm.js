@@ -32,7 +32,12 @@ function RecipeEditForm() {
     const [year, setYear] = useState((new Date()).getFullYear())
     const [component, setComponent] = useState('')
     const [createdAt, setCreatedAt] = useState('')
-    const [subRecipes, setSubRecipes] = useState([{ title: '', description: '', ingredients: [{ qty: '', ingredientId: '', unitId: '', description: '', category: '' }] }])
+    const [subRecipes, setSubRecipes] = useState([
+        { title: '', description: '', ingredients: [
+                { qty: '', ingredientId: '', unitId: '', description: '', category: '' }
+            ] 
+        }
+    ])
     const [tags, setTags] = useState('')
 
     const resetState = () => {
@@ -40,7 +45,12 @@ function RecipeEditForm() {
         setSeason('Winter')
         setPhoto(false)
         setComponent('')
-        setSubRecipes([{ title: '', description: '', ingredients: [{ qty: '', ingredientId: '', unitId: '', description: '', category: '' }] }])
+        setSubRecipes([
+            { title: '', description: '', ingredients: [
+                    { qty: '', ingredientId: '', unitId: '', description: '', category: '' }
+                ] 
+            }
+        ])
         setTags('')
     }
 
@@ -61,6 +71,7 @@ function RecipeEditForm() {
             setYear(currentRecipe.year)
             setComponent(currentRecipe.components)
             setCreatedAt(currentRecipe.created_at)
+
             if(currentRecipe.subRecipes) {
                 const subRecipesArr = Object.values(currentRecipe.subRecipes)
                 const subRec = subRecipesArr.map(sub => {
@@ -103,7 +114,13 @@ function RecipeEditForm() {
     }
 
     const handleAddClickSubRecipe = () => {
-        setSubRecipes([...subRecipes, { title: '', description: '', ingredients: [{ qty: '', ingredientId: '', unitId: '', description: '', category: '' }] }])
+        setSubRecipes([
+            ...subRecipes,
+            { title: '', description: '', ingredients: [
+                    { qty: '', ingredientId: '', unitId: '', description: '', category: '' }
+                ] 
+            }
+        ])
     }
 
     const handleAddClickSubRecipeIngredient = (subRecipeIndex) => {
@@ -138,7 +155,7 @@ function RecipeEditForm() {
             if (formattedValue.toLowerCase() in temp) {
                 let cat = document.querySelector(`#category-${subRecipeIndex}-${ingredientIndex}`)
                 list[subRecipeIndex].ingredients[ingredientIndex].category = ingredients[temp[formattedValue.toLowerCase()]].category.name
-                cat.value = ingredients[temp[formattedValue.toLowerCase()]].category.name
+                cat.value = ingredients[temp[formattedValue.toLowerCase()] ].category.name
             }
         }
         list[subRecipeIndex].ingredients[ingredientIndex][name] = value

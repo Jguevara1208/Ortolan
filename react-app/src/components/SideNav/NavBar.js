@@ -30,7 +30,7 @@ const SideNav = () => {
           <div className='nav-icon-container'>
             <BsFillFileEarmarkTextFill/>
           </div>
-          <p>Recipes</p>
+          <p>Dishes</p>
         </div>
       </NavLink>
       <NavLink to='/menu' exact={true} activeClassName='active'>

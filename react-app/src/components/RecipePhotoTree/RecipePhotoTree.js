@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { MdOutlinePhotoSizeSelectActual } from 'react-icons/md'
 import './RecipePhotoTree.css'
 
 function RecipePhotoTree(){
@@ -34,10 +35,16 @@ function RecipePhotoTree(){
         setSeason(sn)
     }
 
+    const getRandomColor = () => {
+        const colors = ['#65916c', '#d7b968', '#7c6c66', '#cf8541']
+        const randomInt = Math.floor(Math.random() * (3 + 1));
+        return colors[randomInt]
+    }
+
     return (
         <div className='pt-container'>
             <div className='header-container'>
-                <h3 className='pt-header'>Filter Recipes</h3>
+                <h3 className='pt-header'>Filter Dishes</h3>
             </div>
             {recipesTree && (
                 <div className='pt-wrapper'>
@@ -81,7 +88,9 @@ function RecipePhotoTree(){
                     {recipesTree.tree[year][season] && recipesTree.tree[year][season].map(recipe => (
                         <Link key={`ssn-${recipe.id}`} className='pt-recipe-link' to={`/recipes/${recipe.id}`}>
                             <p>{recipe.title}</p>
-                            <div className='recipe-tree-photo' style={{backgroundImage: `url('${recipe.photo}')`}}></div>
+                            <div className='recipe-tree-photo' style={ recipe.photo !== 'false' ? {backgroundImage: `url('${recipe.photo}')`} : {backgroundColor: `${getRandomColor()}`}}>
+                                {recipe.photo === 'false' && <MdOutlinePhotoSizeSelectActual className='db-no-photo'/>}
+                            </div>
                         </Link>
                     ))}
                 </div>
@@ -91,7 +100,8 @@ function RecipePhotoTree(){
                     {recipesTree.tags[tag] && recipesTree.tags[tag].map(recipe => (
                         <Link key={`tag-${recipe.id}`} className='pt-recipe-link' to={`/recipes/${recipe.id}`}>
                             <p>{recipe.title}</p>
-                            <div className='recipe-tree-photo' style={{ backgroundImage: `url('${recipe.photo}')` }}> 
+                            <div className='recipe-tree-photo' style={ recipe.photo !== 'false' ? {backgroundImage: `url('${recipe.photo}')`} : {backgroundColor: `${getRandomColor()}`}}>
+                                {recipe.photo === 'false' && <MdOutlinePhotoSizeSelectActual className='db-no-photo'/>}
                             </div>
                         </Link>
                     ))}

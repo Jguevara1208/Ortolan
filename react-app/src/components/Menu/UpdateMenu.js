@@ -19,7 +19,7 @@ const UpdateMenu = ({userId, showModal, currentMenu, allRecipes}) => {
 
     const handleRemoveSelect = (e) => {
         const recipe_id = e.target.id;
-
+        console.log(recipe_id, 'REMOVE ID')
         if (dishesToRemove.includes(recipe_id)) {
             const index = dishesToRemove.indexOf(recipe_id)
             const newArr = [...dishesToRemove.slice(0, index), ...dishesToRemove.slice(index + 1)]
@@ -32,7 +32,7 @@ const UpdateMenu = ({userId, showModal, currentMenu, allRecipes}) => {
 
     const handleAddSelect = (e) => {
         const recipe_id = e.target.id;
-
+        console.log(recipe_id, 'recipe id from update menu')
         if (dishesToAdd.includes(recipe_id)) {
             const index = dishesToAdd.indexOf(recipe_id)
             const newArr = [...dishesToAdd.slice(0, index), ...dishesToAdd.slice(index + 1)]
