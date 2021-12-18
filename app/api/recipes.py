@@ -17,7 +17,6 @@ def create_recipe():
 
     if 'created_at' not in body:
         body['created_at'] = datetime.utcnow()
-        print(body['created_at'])
 
     recipe = Recipe(
         title=body['title'],

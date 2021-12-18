@@ -20,7 +20,6 @@ def user(id):
 @user_routes.route('/<int:id>/recentRecipes/')
 def recent_recipes(id):
     recent_recipes_list = Recipe.query.filter(Recipe.user_id == id).order_by(Recipe.created_at.desc()).limit(6)
-    print(recent_recipes_list, 'recent recipes list from route')
     return {"recentRecipes": [ recipe.to_recent_dict() for recipe in recent_recipes_list ]}
 
 @user_routes.route('/<int:id>/treeRecipes/')
