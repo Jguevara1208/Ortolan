@@ -341,7 +341,7 @@ textarea::placeholder {
     font-size: 1rem;
     font-weight: normal;
     max-width: 100%;
-    padding: 10px 4px 10px 15px;
+    padding: 7px 4px 10px 15px;
     border: none;
     cursor: pointer;
     text-align: center;
