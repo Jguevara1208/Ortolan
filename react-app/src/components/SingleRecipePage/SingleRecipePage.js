@@ -34,7 +34,6 @@ function SingleRecipePage(){
         return colors[randomInt]
     }
 
-    console.log(currentRecipe.photo === 'false')
     return (
         <div className='srp-container'>
             {currentRecipe && (

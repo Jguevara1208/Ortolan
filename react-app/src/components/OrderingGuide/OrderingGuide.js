@@ -57,8 +57,6 @@ const OrderingGuide = () => {
         setCols(cols)
     }
 
-    console.log(cols)
-
     return (
         <div className='order-guide-container'>
             <h3>Current Menu's Order Guide</h3>
